@@ -42,7 +42,7 @@ class PrismService
         );
 
         $response = $this->prism->structured()
-            ->using(Provider::OpenAI, 'gpt-4')
+            ->using(Provider::OpenAI, 'gpt-3.5-turbo')
             ->withPrompt($prompt)
             ->withSchema($recommendationsSchema)
             ->asStructured();

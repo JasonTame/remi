@@ -57,14 +57,10 @@ class TaskController extends Controller
     {
         $validated = $request->validated();
 
-        // Analyze timing description using LLM
-        $timingAnalysis = $this->prismService->analyzeTiming($validated['timing_description']);
-
-        $task = Auth::user()->tasks()->create([
+        Auth::user()->tasks()->create([
             'title' => $validated['title'],
             'timing_description' => $validated['timing_description'],
             'category_id' => $validated['category_id'] ?? null,
-            // Additional metadata could be stored based on timing analysis
         ]);
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');

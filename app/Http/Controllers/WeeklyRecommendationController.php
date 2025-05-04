@@ -125,14 +125,16 @@ class WeeklyRecommendationController extends Controller
         // Generate recommendations using LLM
         $recommendations = $this->prismService->generateRecommendations($tasks, $weekStartDate);
 
-        // Create recommended tasks
-        foreach ($recommendations as $recommendation) {
-            $weeklyRecommendation->recommendedTasks()->create([
-                'task_id' => $recommendation['task_id'],
-                'priority' => $recommendation['priority'],
-                'reason' => $recommendation['reason'],
-                'completed' => false,
-            ]);
+        if (isset($recommendations['items'])) {
+            // Create recommended tasks
+            foreach ($recommendations['items'] as $recommendation) {
+                $weeklyRecommendation->recommendedTasks()->create([
+                    'task_id' => $recommendation['task_id'],
+                    'priority' => $recommendation['priority'],
+                    'reason' => $recommendation['reason'],
+                    'completed' => false,
+                ]);
+            }
         }
 
         return $weeklyRecommendation->load('recommendedTasks.task');
