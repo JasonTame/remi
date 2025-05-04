@@ -1,0 +1,51 @@
+---
+description: A summary of the app's purpose, core problem, key features, etc
+globs: 
+alwaysApply: false
+---
+# TaskWizard App Summary
+
+## Purpose
+
+TaskWizard is a task management application that addresses the limitations of traditional todo apps by focusing on recurring tasks with irregular schedules. Unlike standard todo apps that require rigid scheduling patterns, FlexiTask allows users to input natural language descriptions of when tasks should occur.
+
+## Core Problem
+
+Many important recurring tasks don't follow strict schedules:
+- Medical appointments (dentist, doctor checkups)
+- Administrative tasks (renewing licenses, paying quarterly taxes)
+- Personal connections (calling family members, catching up with friends)
+- Home maintenance (changing filters, servicing appliances)
+
+These tasks are important but often fall through the cracks in traditional task management systems.
+
+## Key Features
+
+1. **Natural Language Task Timing**
+   - Users can describe when tasks should happen in plain text
+   - Examples: "Every 6 months", "Roughly once a quarter", "2-3 times per year"
+
+2. **Last Occurrence Tracking**
+   - Records when tasks were last completed to inform future scheduling
+
+3. **LLM-Powered Scheduling**
+   - An LLM interprets task descriptions and last completion dates
+   - Generates weekly recommendations for which tasks should be prioritized
+
+4. **Simple Weekly View**
+   - Provides a straightforward list of suggested tasks for the current week
+   - No complex calendar views or overwhelming interfaces
+
+5. **Minimal Task Structure**
+   - Tasks include just a title, description of timing, and last completion date
+   - Focus on simplicity and ease of use
+
+## User Experience
+
+TaskWizard aims to serve as a gentle reminder system rather than a rigid scheduler. It helps users maintain awareness of important but irregular tasks by suggesting when it might be appropriate to address them based on natural language descriptions and past completion patterns.
+
+## Target Audience
+
+- Busy professionals managing both work and personal responsibilities
+- People who find traditional todo apps too rigid for certain types of tasks
+- Anyone who struggles with remembering irregular but important obligations

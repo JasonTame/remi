@@ -1,0 +1,70 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+erDiagram
+    User ||--o{ Task : "creates and manages"
+    User ||--o{ Category : "creates and manages"
+    Task ||--o{ TaskHistory : "has completion history"
+    Task }o--|| Category : "may belong to"
+    
+    User {
+        id integer PK
+        name string
+        email string
+        password string
+        created_at datetime
+        updated_at datetime
+    }
+    
+    Task {
+        id integer PK
+        user_id integer FK
+        category_id integer FK
+        title string
+        timing_description text "Natural language description of when task should occur"
+        last_completed_at datetime
+        created_at datetime
+        updated_at datetime
+    }
+    
+    TaskHistory {
+        id integer PK
+        task_id integer FK
+        completed_at datetime
+        notes text "Optional notes about completion"
+        created_at datetime
+        updated_at datetime
+    }
+    
+    Category {
+        id integer PK
+        user_id integer FK
+        name string
+        color string "For UI differentiation"
+        created_at datetime
+        updated_at datetime
+    }
+    
+    WeeklyRecommendation {
+        id integer PK
+        user_id integer FK
+        week_start_date date
+        generated_at datetime
+        created_at datetime
+        updated_at datetime
+    }
+    
+    RecommendedTask {
+        id integer PK
+        weekly_recommendation_id integer FK
+        task_id integer FK
+        priority integer "Relative priority assigned by LLM"
+        reason text "LLM-generated explanation for recommendation"
+        completed boolean
+        created_at datetime
+        updated_at datetime
+    }
+    
+    WeeklyRecommendation ||--o{ RecommendedTask : "contains"

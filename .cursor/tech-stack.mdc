@@ -1,0 +1,106 @@
+---
+description: A list of technologies used in this app
+globs: 
+alwaysApply: false
+---
+# TaskWizard Technology Stack
+
+## Backend
+
+### Laravel Framework
+- **Version**: Laravel 10.x
+- **Purpose**: Server-side application framework
+- **Key Features**:
+  - Eloquent ORM for database interactions
+  - Robust routing system
+  - Middleware support
+  - Authentication and authorization systems
+  - Queue management for background processing (LLM tasks)
+  - Scheduler for generating weekly recommendations
+
+### PostgreSQL
+- **Purpose**: Relational database
+- **Benefits**:
+  - Excellent support for JSON data types (useful for storing LLM responses)
+  - Robust transaction support
+  - High reliability
+  - Advanced indexing capabilities
+
+### Prism PHP
+- **Purpose**: Server-side LLM integration
+- **Implementation**:
+  - Create a dedicated PrismService for LLM interactions
+  - Handle task analysis and weekly recommendations generation
+  - Process natural language timing descriptions
+
+## Frontend
+
+### Inertia.js
+- **Purpose**: Enables building single-page apps with server-side routing
+- **Benefits**:
+  - Retains Laravel's routing and controller pattern
+  - Reduces API complexity
+  - Maintains a traditional MVC approach
+
+### React
+- **Purpose**: Frontend component library
+- **Implementation**:
+  - Functional components with hooks
+  - Context API for state management
+  - Custom hooks for reusable logic
+
+### shadcn/ui
+- **Purpose**: UI component library based on Radix UI and Tailwind CSS
+- **Key Components**:
+  - Form elements (inputs, buttons, etc.)
+  - Cards for task display
+  - Modals for task creation/editing
+  - Dropdowns for category selection
+  - Toast notifications for system messages
+
+### Vercel AI SDK
+- **Purpose**: Client-side LLM interaction components
+- **Implementation**:
+  - AI chat interface for task creation assistance
+  - Streaming responses for real-time feedback
+
+## Deployment
+
+### Laravel Cloud
+- **Purpose**: Hosting and deployment platform
+- **Benefits**:
+  - Optimized for Laravel applications
+  - Easy scaling
+  - Built-in CI/CD
+  - Simplified environment configuration
+
+## Development Tools
+
+### Cursor
+- **Purpose**: AI-assisted code editor
+- **Usage**:
+  - Leverage .mdc context files for consistent development
+  - Utilize AI code suggestions for faster implementation
+
+### Git/GitHub
+- **Purpose**: Version control and collaboration
+- **Implementation**:
+  - Feature branch workflow
+  - Pull requests for code review
+  - GitHub Actions for CI/CD
+
+## External Services
+
+### OpenAI API
+- **Purpose**: LLM provider accessed through Prism
+- **Models**:
+  - GPT-4 for complex timing interpretation
+  - GPT-3.5 Turbo for simpler interactions (cost optimization)
+
+## Authentication
+
+### Laravel Sanctum
+- **Purpose**: API token authentication
+- **Implementation**:
+  - SPA authentication
+  - Scoped API tokens for potential future integrations
