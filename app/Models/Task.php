@@ -60,7 +60,7 @@ class Task extends Model
     /**
      * Get the recommended tasks related to this task.
      */
-    public function recommendations(): HasMany
+    public function recommendedTasks(): HasMany
     {
         return $this->hasMany(RecommendedTask::class);
     }
