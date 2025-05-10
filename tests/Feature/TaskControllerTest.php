@@ -40,16 +40,6 @@ test('store creates a new task', function () {
     $user = User::factory()->create();
     $category = Category::factory()->create(['user_id' => $user->id]);
 
-    $this->mock(PrismService::class, function ($mock) {
-        $mock->shouldReceive('analyzeTiming')
-            ->once()
-            ->andReturn([
-                'estimated_frequency_days' => 30,
-                'explanation' => 'This task occurs monthly',
-                'confidence' => 8
-            ]);
-    });
-
     $response = $this->actingAs($user)->post(route('tasks.store'), [
         'title' => 'Test Task',
         'timing_description' => 'Once a month',

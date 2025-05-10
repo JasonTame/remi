@@ -42,37 +42,9 @@ class PrismService
         );
 
         $response = $this->prism->structured()
-            ->using(Provider::OpenAI, 'gpt-3.5-turbo')
+            ->using(Provider::OpenAI, 'gpt-4.1-mini')
             ->withPrompt($prompt)
             ->withSchema($recommendationsSchema)
-            ->asStructured();
-
-        return $response->structured;
-    }
-
-    /**
-     * Parse natural language timing description
-     */
-    public function analyzeTiming(string $timingDescription): array
-    {
-        $prompt = $this->buildTimingAnalysisPrompt($timingDescription);
-
-        // Define the schema for timing analysis
-        $timingSchema = new ObjectSchema(
-            name: 'timing_analysis',
-            description: 'Analysis of a natural language timing description',
-            properties: [
-                new NumberSchema('estimated_frequency_days', 'Estimated frequency in days'),
-                new StringSchema('explanation', 'Explanation of the timing interpretation'),
-                new NumberSchema('confidence', 'Confidence level (1-10)')
-            ],
-            requiredFields: ['estimated_frequency_days', 'explanation', 'confidence']
-        );
-
-        $response = $this->prism->structured()
-            ->using(Provider::OpenAI, 'gpt-3.5-turbo')
-            ->withPrompt($prompt)
-            ->withSchema($timingSchema)
             ->asStructured();
 
         return $response->structured;
@@ -94,28 +66,15 @@ Below is a list of tasks with their timing descriptions and when they were last 
 
 {$tasksText}
 
-Based on the timing descriptions and last completion dates, recommend which tasks should be prioritized this week.
+Based on the timing descriptions and last completion dates, recommend which tasks should be prioritized this week. DO NOT overwhelm the user with too many tasks - try keep it to 3-5 tasks at a maximum.
 For each recommended task, provide:
 1. The task_id
-2. A priority level (1-5, with 5 being highest priority)
+2. A priority level (1-5, with 1 being the highest priority)
 3. A brief reason for the recommendation
 
-Respond with an array of task recommendations, focusing only on tasks that should reasonably be done this week.
-EOT;
-    }
+Respond with an array of task recommendations, focusing only on tasks that should reasonably be done this week. If the task was already completed this week, do not recommend it.
 
-    /**
-     * Build prompt for timing analysis
-     */
-    private function buildTimingAnalysisPrompt(string $timingDescription): string
-    {
-        return <<<EOT
-Analyze the following natural language description of when a task should occur: "{$timingDescription}"
-
-Determine:
-1. The estimated frequency in days (e.g., "once a week" would be 7, "monthly" would be 30)
-2. A brief explanation of your interpretation
-3. A confidence level (1-10) in your interpretation
+If no tasks are recommended, respond with an empty array.
 EOT;
     }
 }

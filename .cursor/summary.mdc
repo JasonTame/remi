@@ -3,11 +3,11 @@ description: A summary of the app's purpose, core problem, key features, etc
 globs: 
 alwaysApply: false
 ---
-# TaskWizard App Summary
+# Remi App Summary
 
 ## Purpose
 
-TaskWizard is a task management application that addresses the limitations of traditional todo apps by focusing on recurring tasks with irregular schedules. Unlike standard todo apps that require rigid scheduling patterns, FlexiTask allows users to input natural language descriptions of when tasks should occur.
+Remi is a task management application that addresses the limitations of traditional todo apps by focusing on recurring tasks with irregular schedules. Unlike standard todo apps that require rigid scheduling patterns, FlexiTask allows users to input natural language descriptions of when tasks should occur.
 
 ## Core Problem
 
@@ -42,7 +42,7 @@ These tasks are important but often fall through the cracks in traditional task 
 
 ## User Experience
 
-TaskWizard aims to serve as a gentle reminder system rather than a rigid scheduler. It helps users maintain awareness of important but irregular tasks by suggesting when it might be appropriate to address them based on natural language descriptions and past completion patterns.
+Remi aims to serve as a gentle reminder system rather than a rigid scheduler. It helps users maintain awareness of important but irregular tasks by suggesting when it might be appropriate to address them based on natural language descriptions and past completion patterns.
 
 ## Target Audience
 

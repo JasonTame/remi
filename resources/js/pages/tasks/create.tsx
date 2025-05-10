@@ -15,6 +15,7 @@ export default function Create({ categories }: PageProps) {
         title: '',
         timing_description: '',
         category_id: '',
+        last_completed_at: '',
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -31,12 +32,13 @@ export default function Create({ categories }: PageProps) {
                 { title: 'Create New Task', href: route('tasks.create') },
             ]}
         >
-            <div className="mx-auto max-w-2xl py-6 sm:px-6 lg:px-8">
+            <div className="mx-auto w-2xl py-6 sm:px-6 lg:px-8">
                 <div className="bg-white shadow sm:rounded-lg dark:bg-gray-800">
                     <div className="p-6">
                         <h1 className="mb-6 text-2xl font-semibold text-gray-900 dark:text-white">Create New Task</h1>
 
                         <form onSubmit={handleSubmit}>
+                            {/* Title */}
                             <div className="mb-4">
                                 <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     Task Title
@@ -52,6 +54,7 @@ export default function Create({ categories }: PageProps) {
                                 {errors.title && <p className="mt-1 text-sm text-red-600 dark:text-red-500">{errors.title}</p>}
                             </div>
 
+                            {/* Category */}
                             <div className="mb-4">
                                 <label htmlFor="category_id" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     Category
@@ -72,6 +75,7 @@ export default function Create({ categories }: PageProps) {
                                 {errors.category_id && <p className="mt-1 text-sm text-red-600 dark:text-red-500">{errors.category_id}</p>}
                             </div>
 
+                            {/* Timing Description */}
                             <div className="mb-6">
                                 <label htmlFor="timing_description" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     Timing Description
@@ -88,6 +92,20 @@ export default function Create({ categories }: PageProps) {
                                 {errors.timing_description && (
                                     <p className="mt-1 text-sm text-red-600 dark:text-red-500">{errors.timing_description}</p>
                                 )}
+                            </div>
+
+                            {/* Last Completed At */}
+                            <div className="mb-6">
+                                <label htmlFor="last_completed_at" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Last Completed At
+                                </label>
+                                <input
+                                    type="date"
+                                    id="last_completed_at"
+                                    value={data.last_completed_at}
+                                    onChange={(e) => setData('last_completed_at', e.target.value)}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                />
                             </div>
 
                             <div className="flex justify-end">

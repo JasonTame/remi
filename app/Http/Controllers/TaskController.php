@@ -61,6 +61,7 @@ class TaskController extends Controller
             'title' => $validated['title'],
             'timing_description' => $validated['timing_description'],
             'category_id' => $validated['category_id'] ?? null,
+            'last_completed_at' => $validated['last_completed_at'] ?? null,
         ]);
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
@@ -108,6 +109,7 @@ class TaskController extends Controller
             'title' => $validated['title'],
             'timing_description' => $validated['timing_description'],
             'category_id' => $validated['category_id'] ?? null,
+            'last_completed_at' => $validated['last_completed_at'] ?? null,
         ]);
 
         return redirect()->route('tasks.show', $task)->with('success', 'Task updated successfully.');
