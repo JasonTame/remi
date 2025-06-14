@@ -31,18 +31,23 @@ export interface SharedData {
     [key: string]: unknown;
 }
 
-interface RecommendedTask {
+export interface RecommendedTask {
     task_id: number;
     completed: boolean;
     priority: number;
     reason: string;
 }
 
-interface Task {
+export interface Category {
+    id: number;
+    name: string;
+}
+
+export interface Task {
     id: number;
     title: string;
     timing_description: string;
-    last_completed_at: string | null;
+    last_completed_at: Date | null;
     category: Category | null;
 }
 
@@ -54,5 +59,5 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
+    [key: string]: unknown;
 }
