@@ -2,16 +2,16 @@
 
 namespace App\Agents;
 
-use App\Models\User;
 use App\Models\Task;
-use Prism\Prism\Prism;
-use Prism\Prism\Enums\Provider;
-use Prism\Prism\Schema\NumberSchema;
-use Prism\Prism\Schema\StringSchema;
-use Prism\Prism\Schema\ArraySchema;
-use Prism\Prism\Schema\ObjectSchema;
-use Illuminate\Support\Facades\Log;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
+use Prism\Prism\Enums\Provider;
+use Prism\Prism\Prism;
+use Prism\Prism\Schema\ArraySchema;
+use Prism\Prism\Schema\NumberSchema;
+use Prism\Prism\Schema\ObjectSchema;
+use Prism\Prism\Schema\StringSchema;
 
 class TaskRecommendationAgent
 {
@@ -25,6 +25,7 @@ class TaskRecommendationAgent
 
         if ($tasks->isEmpty()) {
             Log::info('TaskRecommendationAgent - No tasks provided for recommendations');
+
             return [];
         }
 
@@ -45,6 +46,7 @@ class TaskRecommendationAgent
 
         if ($tasks->isEmpty()) {
             Log::info('TaskRecommendationAgent - No tasks provided for custom recommendations');
+
             return [];
         }
 
@@ -63,6 +65,7 @@ class TaskRecommendationAgent
 
         if ($tasks->isEmpty()) {
             Log::info('TaskRecommendationAgent - No tasks provided for urgent recommendations');
+
             return [];
         }
 
@@ -83,7 +86,7 @@ class TaskRecommendationAgent
             properties: [
                 new NumberSchema('task_id', 'The ID of the task'),
                 new NumberSchema('priority', 'Priority level (1-5)'),
-                new StringSchema('reason', 'The reason for recommending this task')
+                new StringSchema('reason', 'The reason for recommending this task'),
             ],
             requiredFields: ['task_id', 'priority', 'reason']
         );
@@ -104,7 +107,7 @@ class TaskRecommendationAgent
         Log::info('TaskRecommendationAgent - Structured Response:', [
             'structured' => $structuredResponse->structured,
             'text' => $structuredResponse->text ?? 'no text',
-            'finish_reason' => $structuredResponse->finishReason->name ?? 'unknown'
+            'finish_reason' => $structuredResponse->finishReason->name ?? 'unknown',
         ]);
 
         $recommendations = $structuredResponse->structured ?? [];
@@ -115,11 +118,12 @@ class TaskRecommendationAgent
         }
 
         // Ensure we return an array and validate the structure
-        if (!is_array($recommendations)) {
+        if (! is_array($recommendations)) {
             Log::warning('TaskRecommendationAgent - Structured response is not an array:', [
                 'type' => gettype($recommendations),
-                'value' => $recommendations
+                'value' => $recommendations,
             ]);
+
             return [];
         }
 
@@ -128,7 +132,7 @@ class TaskRecommendationAgent
 
         Log::info('TaskRecommendationAgent - Validation data:', [
             'valid_task_ids' => $validTaskIds,
-            'raw_recommendations' => $recommendations
+            'raw_recommendations' => $recommendations,
         ]);
 
         // Filter out any invalid recommendations
@@ -137,17 +141,17 @@ class TaskRecommendationAgent
                 isset($rec['task_id'], $rec['priority'], $rec['reason']) &&
                 is_numeric($rec['task_id']) &&
                 is_numeric($rec['priority']) &&
-                in_array((int)$rec['task_id'], $validTaskIds);
+                in_array((int) $rec['task_id'], $validTaskIds);
 
             // Debug each recommendation validation
-            if (!$isValid) {
+            if (! $isValid) {
                 Log::warning('TaskRecommendationAgent - Invalid recommendation:', [
                     'recommendation' => $rec,
                     'is_array' => is_array($rec),
                     'has_required_fields' => isset($rec['task_id'], $rec['priority'], $rec['reason']),
                     'task_id_numeric' => isset($rec['task_id']) ? is_numeric($rec['task_id']) : false,
                     'priority_numeric' => isset($rec['priority']) ? is_numeric($rec['priority']) : false,
-                    'task_id_in_valid_list' => isset($rec['task_id']) ? in_array((int)$rec['task_id'], $validTaskIds) : false
+                    'task_id_in_valid_list' => isset($rec['task_id']) ? in_array((int) $rec['task_id'], $validTaskIds) : false,
                 ]);
             }
 
@@ -157,7 +161,7 @@ class TaskRecommendationAgent
         Log::info('TaskRecommendationAgent - Final recommendations:', [
             'total_received' => count($recommendations),
             'valid_recommendations' => count($validRecommendations),
-            'recommendations' => $validRecommendations
+            'recommendations' => $validRecommendations,
         ]);
 
         return array_values($validRecommendations);
@@ -179,11 +183,11 @@ class TaskRecommendationAgent
 
             $category = $task->category ? $task->category->name : 'No Category';
 
-            return "Task ID: {$task->id}\n" .
-                "Title: {$task->title}\n" .
-                "Timing Description: {$task->timing_description}\n" .
-                "Last Completed: {$lastCompleted}\n" .
-                "Days Since Completion: {$daysSinceCompletion}\n" .
+            return "Task ID: {$task->id}\n".
+                "Title: {$task->title}\n".
+                "Timing Description: {$task->timing_description}\n".
+                "Last Completed: {$lastCompleted}\n".
+                "Days Since Completion: {$daysSinceCompletion}\n".
                 "Category: {$category}\n";
         })->join("\n");
     }

@@ -3,7 +3,6 @@
 use App\Models\Category;
 use App\Models\Task;
 use App\Models\User;
-use App\Services\PrismService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -16,7 +15,7 @@ test('index displays user tasks', function () {
 
     $response->assertStatus(200);
     $response->assertInertia(
-        fn($assert) => $assert
+        fn ($assert) => $assert
             ->component('tasks/index')
             ->has('tasks', 3)
     );
@@ -30,7 +29,7 @@ test('create shows task creation form', function () {
 
     $response->assertStatus(200);
     $response->assertInertia(
-        fn($assert) => $assert
+        fn ($assert) => $assert
             ->component('tasks/create')
             ->has('categories', 2)
     );
@@ -63,11 +62,11 @@ test('show displays the task details', function () {
 
     $response->assertStatus(200);
     $response->assertInertia(
-        fn($assert) => $assert
+        fn ($assert) => $assert
             ->component('tasks/show')
             ->has(
                 'task',
-                fn($assert) => $assert
+                fn ($assert) => $assert
                     ->where('id', $task->id)
                     ->where('title', $task->title)
             )
@@ -82,11 +81,11 @@ test('edit displays the edit form', function () {
 
     $response->assertStatus(200);
     $response->assertInertia(
-        fn($assert) => $assert
+        fn ($assert) => $assert
             ->component('tasks/edit')
             ->has(
                 'task',
-                fn($assert) => $assert
+                fn ($assert) => $assert
                     ->where('id', $task->id)
                     ->where('title', $task->title)
             )

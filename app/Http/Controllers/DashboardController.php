@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WeeklyRecommendation;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
-use App\Models\WeeklyRecommendation;
 
 class DashboardController extends Controller
 {
@@ -45,7 +44,7 @@ class DashboardController extends Controller
         return Inertia::render('dashboard', [
             'recommendedTasks' => $recommendedTasks,
             'weekStartDate' => $weekStartDate,
-            'hasRecommendations' => !empty($recommendedTasks),
+            'hasRecommendations' => ! empty($recommendedTasks),
         ]);
     }
 }

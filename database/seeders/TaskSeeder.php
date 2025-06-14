@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Task;
 use App\Models\User;
-use App\Models\Category;
-use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class TaskSeeder extends Seeder
 {
@@ -18,8 +18,9 @@ class TaskSeeder extends Seeder
         // Find the first user
         $user = User::first();
 
-        if (!$user) {
+        if (! $user) {
             $this->command->info('No users found. Please run UserSeeder first.');
+
             return;
         }
 

@@ -34,7 +34,7 @@ test('current shows existing recommendations', function () {
 
     $response->assertStatus(200);
     $response->assertInertia(
-        fn($assert) => $assert
+        fn ($assert) => $assert
             ->component('recommendations/current')
             ->where('weekStartDate', $weekStartDate)
             ->has('recommendedTasks', 3)

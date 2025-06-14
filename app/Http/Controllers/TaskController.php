@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use App\Models\Category;
 use App\Models\Task;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TaskController extends Controller
 {
@@ -29,19 +28,7 @@ class TaskController extends Controller
 
         return Inertia::render('tasks/index', [
             'tasks' => $tasks,
-            'categories' => $categories
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new task.
-     */
-    public function create()
-    {
-        $categories = Auth::user()->categories()->get();
-
-        return Inertia::render('tasks/create', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -72,7 +59,7 @@ class TaskController extends Controller
         $task->load(['category', 'history']);
 
         return Inertia::render('tasks/show', [
-            'task' => $task
+            'task' => $task,
         ]);
     }
 

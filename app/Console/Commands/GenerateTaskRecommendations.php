@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Agents\TaskRecommendationAgent;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\WeeklyRecommendation;
-use App\Agents\TaskRecommendationAgent;
 use App\Services\TaskService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -34,8 +34,9 @@ class GenerateTaskRecommendations extends Command
         $userId = $this->argument('user_id');
         $user = User::find($userId);
 
-        if (!$user) {
+        if (! $user) {
             $this->error("User with ID {$userId} not found.");
+
             return 1;
         }
 
@@ -50,8 +51,9 @@ class GenerateTaskRecommendations extends Command
             ->first();
 
         if ($existingRecommendation) {
-            if (!$this->confirm("Recommendations already exist for this week. Do you want to regenerate them?")) {
-                $this->info("Operation canceled.");
+            if (! $this->confirm('Recommendations already exist for this week. Do you want to regenerate them?')) {
+                $this->info('Operation canceled.');
+
                 return 0;
             }
 
@@ -64,16 +66,18 @@ class GenerateTaskRecommendations extends Command
         $taskCount = Task::where('user_id', $userId)->count();
 
         if ($taskCount === 0) {
-            $this->warn("No tasks found for this user.");
+            $this->warn('No tasks found for this user.');
+
             return 0;
         }
 
         // Fetch tasks that are due for completion (default: 7 days)
-        $this->info("Fetching tasks that are due for completion...");
+        $this->info('Fetching tasks that are due for completion...');
         $tasks = $taskService->getTasksDueForUser($user, 7);
 
         if ($tasks->isEmpty()) {
-            $this->info("No tasks are currently due for completion.");
+            $this->info('No tasks are currently due for completion.');
+
             return 0;
         }
 
@@ -87,20 +91,22 @@ class GenerateTaskRecommendations extends Command
         ]);
 
         // Generate recommendations using TaskRecommendationAgent with task data
-        $this->info("Generating AI recommendations...");
+        $this->info('Generating AI recommendations...');
         try {
             $recommendations = $taskRecommendationAgent->generateWeeklyRecommendations($user, $weekStartDate, $tasks);
 
             if (empty($recommendations)) {
-                $this->info("No recommendations were generated for this week.");
+                $this->info('No recommendations were generated for this week.');
+
                 return 0;
             }
 
             // Create recommended tasks
             $count = 0;
             foreach ($recommendations as $recommendation) {
-                if (!isset($recommendation['task_id'], $recommendation['priority'], $recommendation['reason'])) {
-                    $this->warn("Skipping recommendation with missing required fields: " . json_encode($recommendation));
+                if (! isset($recommendation['task_id'], $recommendation['priority'], $recommendation['reason'])) {
+                    $this->warn('Skipping recommendation with missing required fields: '.json_encode($recommendation));
+
                     continue;
                 }
 
@@ -116,10 +122,11 @@ class GenerateTaskRecommendations extends Command
             if ($count > 0) {
                 $this->info("Created {$count} task recommendations for the week starting {$weekStartDate}.");
             } else {
-                $this->warn("No valid recommendations were created.");
+                $this->warn('No valid recommendations were created.');
             }
         } catch (\Exception $e) {
-            $this->error("Error generating recommendations: " . $e->getMessage());
+            $this->error('Error generating recommendations: '.$e->getMessage());
+
             return 1;
         }
 
