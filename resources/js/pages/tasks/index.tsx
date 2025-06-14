@@ -1,4 +1,4 @@
-import AppLayout from '@/layouts/app-layout';
+import AppLayout from '@/layouts/main-layout';
 import { Link } from '@inertiajs/react';
 import { useState } from 'react';
 

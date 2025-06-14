@@ -1,56 +1,46 @@
-import { NavFooter } from '@/components/nav-footer';
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
+import { Elephant } from '@/components/icons/logo';
+import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
-import AppLogo from './app-logo';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
+import { Calendar, Clock, Home, Settings } from 'lucide-react';
 
 export function AppSidebar() {
     return (
-        <Sidebar collapsible="icon" variant="inset">
-            <SidebarHeader>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild>
-                            <Link href="/dashboard" prefetch>
-                                <AppLogo />
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarHeader>
-
-            <SidebarContent>
-                <NavMain items={mainNavItems} />
-            </SidebarContent>
-
-            <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
-                <NavUser />
-            </SidebarFooter>
-        </Sidebar>
+        <div className="flex h-screen w-64 flex-col border-r bg-white dark:bg-gray-900">
+            <div className="border-b p-4">
+                <Link href="/" className="flex items-center gap-2">
+                    <Elephant className="text-primary h-8 w-8" />
+                    <span className="app-title text-primary text-xl font-bold">Remi</span>
+                </Link>
+                <p className="text-muted-foreground mt-1 text-xs">Flexible Reminders for Real Life</p>
+            </div>
+            <nav className="flex-1 space-y-2 p-4">
+                <Button variant="ghost" className="w-full justify-start" asChild>
+                    <Link href="/dashboard">
+                        <Home className="mr-2 h-4 w-4" />
+                        Dashboard
+                    </Link>
+                </Button>
+                <Button variant="ghost" className="w-full justify-start" asChild>
+                    <Link href="/tasks">
+                        <Clock className="mr-2 h-4 w-4" />
+                        All Tasks
+                    </Link>
+                </Button>
+                <Button variant="ghost" className="w-full justify-start" asChild>
+                    <Link href="/calendar">
+                        <Calendar className="mr-2 h-4 w-4" />
+                        Calendar
+                    </Link>
+                </Button>
+            </nav>
+            <div className="mt-auto border-t p-4">
+                <Button variant="ghost" className="w-full justify-start" asChild>
+                    <Link href="/settings">
+                        <Settings className="mr-2 h-4 w-4" />
+                        Settings
+                    </Link>
+                </Button>
+            </div>
+        </div>
     );
 }

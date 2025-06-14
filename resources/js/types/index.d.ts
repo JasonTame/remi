@@ -31,6 +31,21 @@ export interface SharedData {
     [key: string]: unknown;
 }
 
+interface RecommendedTask {
+    task_id: number;
+    completed: boolean;
+    priority: number;
+    reason: string;
+}
+
+interface Task {
+    id: number;
+    title: string;
+    timing_description: string;
+    last_completed_at: string | null;
+    category: Category | null;
+}
+
 export interface User {
     id: number;
     name: string;
