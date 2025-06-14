@@ -6,15 +6,18 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { formatDate } from '@/lib/helpers/format';
 import { getCategoryColor } from '@/lib/utils/tasks/get-category-color';
-import type { Task } from '@/types';
+import type { Category, Task } from '@/types';
 import { Check, Eye, MoreHorizontal, Pencil } from 'lucide-react';
 import { useState } from 'react';
+import { TaskEdit } from './task-edit';
 
 type Props = {
     tasks: Task[];
+    categories: Category[];
 };
-export const TaskCards = ({ tasks }: Props) => {
+export const TaskCards = ({ tasks, categories }: Props) => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [viewDialogOpen, setViewDialogOpen] = useState(false);
 
     const handleViewTask = (task: Task) => {
@@ -90,6 +93,8 @@ export const TaskCards = ({ tasks }: Props) => {
                     {selectedTask && <TaskDetail task={selectedTask} />}
                 </DialogContent>
             </Dialog>
+
+            {selectedTask && <TaskEdit task={selectedTask} categories={categories} open={editDialogOpen} onOpenChange={setEditDialogOpen} />}
         </>
     );
 };

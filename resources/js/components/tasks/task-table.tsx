@@ -5,20 +5,23 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatDate } from '@/lib/helpers/format';
-import type { Task } from '@/types';
+import type { Category, Task } from '@/types';
 import { formatDistanceToNow } from 'date-fns';
 import { ArrowUpDown, Check, Eye, MoreHorizontal, Pencil } from 'lucide-react';
 import { useState } from 'react';
+import { TaskEdit } from './task-edit';
 
 type Props = {
     tasks: Task[];
+    categories: Category[];
     sortOrder: 'asc' | 'desc';
     onSortChange: (order: 'asc' | 'desc') => void;
 };
 
-export const TaskTable = ({ tasks, sortOrder, onSortChange }: Props) => {
+export const TaskTable = ({ tasks, categories, sortOrder, onSortChange }: Props) => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [viewDialogOpen, setViewDialogOpen] = useState(false);
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
 
     const getCategoryColor = (category: string) => {
         const colors: Record<string, string> = {
@@ -36,6 +39,11 @@ export const TaskTable = ({ tasks, sortOrder, onSortChange }: Props) => {
     const handleViewTask = (task: Task) => {
         setSelectedTask(task);
         setViewDialogOpen(true);
+    };
+
+    const handleEditTask = (task: Task) => {
+        setSelectedTask(task);
+        setEditDialogOpen(true);
     };
 
     const toggleSortOrder = () => {
@@ -96,7 +104,7 @@ export const TaskTable = ({ tasks, sortOrder, onSortChange }: Props) => {
                                                     </Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem>
+                                                    <DropdownMenuItem onClick={() => handleEditTask(task)}>
                                                         <Pencil className="mr-2 h-4 w-4" />
                                                         Edit
                                                     </DropdownMenuItem>
@@ -123,6 +131,8 @@ export const TaskTable = ({ tasks, sortOrder, onSortChange }: Props) => {
                     {selectedTask && <TaskDetail task={selectedTask} />}
                 </DialogContent>
             </Dialog>
+
+            {selectedTask && <TaskEdit task={selectedTask} categories={categories} open={editDialogOpen} onOpenChange={setEditDialogOpen} />}
         </>
     );
 };

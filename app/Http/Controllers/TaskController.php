@@ -77,21 +77,6 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for editing the specified task.
-     */
-    public function edit(Task $task)
-    {
-        $this->authorize('update', $task);
-
-        $categories = Auth::user()->categories()->get();
-
-        return Inertia::render('tasks/edit', [
-            'task' => $task,
-            'categories' => $categories
-        ]);
-    }
-
-    /**
      * Update the specified task in storage.
      */
     public function update(UpdateTaskRequest $request, Task $task)
@@ -107,7 +92,7 @@ class TaskController extends Controller
             'last_completed_at' => $validated['last_completed_at'] ?? null,
         ]);
 
-        return redirect()->route('tasks.show', $task)->with('success', 'Task updated successfully.');
+        return redirect()->route('tasks.index', $task)->with('success', 'Task updated successfully.');
     }
 
     /**

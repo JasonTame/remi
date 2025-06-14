@@ -29,7 +29,7 @@ export default function Index({ tasks, categories }: PageProps) {
 
                     <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} categories={categories} />
 
-                    <TaskList tasks={filteredTasks} sortOrder="desc" onSortChange={() => {}} />
+                    <TaskList tasks={filteredTasks} categories={categories} sortOrder="desc" onSortChange={() => {}} />
                 </div>
             </div>
         </AppLayout>
