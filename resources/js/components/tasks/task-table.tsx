@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatDate } from '@/lib/helpers/format';
+import { getCategoryColor } from '@/lib/utils/tasks/get-category-color';
 import type { Category, Task } from '@/types';
 import { formatDistanceToNow } from 'date-fns';
 import { ArrowUpDown, Check, Eye, MoreHorizontal, Pencil } from 'lucide-react';
@@ -22,19 +23,6 @@ export const TaskTable = ({ tasks, categories, sortOrder, onSortChange }: Props)
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [viewDialogOpen, setViewDialogOpen] = useState(false);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
-
-    const getCategoryColor = (category: string) => {
-        const colors: Record<string, string> = {
-            Health: 'bg-blue-500 hover:bg-blue-600',
-            Home: 'bg-green-500 hover:bg-green-600',
-            Personal: 'bg-purple-500 hover:bg-purple-600',
-            Auto: 'bg-orange-500 hover:bg-orange-600',
-            Documents: 'bg-gray-500 hover:bg-gray-600',
-            Tech: 'bg-indigo-500 hover:bg-indigo-600',
-        };
-
-        return colors[category] || 'bg-primary hover:bg-primary/80';
-    };
 
     const handleViewTask = (task: Task) => {
         setSelectedTask(task);
@@ -75,7 +63,7 @@ export const TaskTable = ({ tasks, categories, sortOrder, onSortChange }: Props)
                                     <TableCell className="font-medium">{task.title}</TableCell>
                                     <TableCell>
                                         {task.category ? (
-                                            <Badge className={getCategoryColor(task.category.name)}>{task.category.name}</Badge>
+                                            <Badge className={getCategoryColor(task.category.color)}>{task.category.name}</Badge>
                                         ) : (
                                             <span className="text-muted-foreground">-</span>
                                         )}

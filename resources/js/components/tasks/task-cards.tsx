@@ -61,7 +61,7 @@ export const TaskCards = ({ tasks, categories }: Props) => {
                                     <div>
                                         <span className="text-muted-foreground">Category:</span>
                                         <div className="mt-1">
-                                            <Badge className={getCategoryColor(task.category.name)}>{task.category.name}</Badge>
+                                            <Badge className={getCategoryColor(task.category.color)}>{task.category.name}</Badge>
                                         </div>
                                     </div>
                                 )}
