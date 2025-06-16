@@ -26,13 +26,6 @@ alwaysApply: false
   - High reliability
   - Advanced indexing capabilities
 
-### Prism PHP
-- **Purpose**: Server-side LLM integration
-- **Implementation**:
-  - Create a dedicated PrismService for LLM interactions
-  - Handle task analysis and weekly recommendations generation
-  - Process natural language timing descriptions
-
 ## Frontend
 
 ### Inertia.js
