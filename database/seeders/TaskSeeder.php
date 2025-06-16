@@ -24,8 +24,14 @@ class TaskSeeder extends Seeder
             return;
         }
 
-        // Get default category if it exists
-        $defaultCategory = Category::first();
+        $categories = Category::all();
+
+        if (! $categories->count()) {
+            $this->command->info('No categories found. Please run CategorySeeder first.');
+
+            return;
+        }
+
 
         $tasks = [
             [
@@ -33,28 +39,28 @@ class TaskSeeder extends Seeder
                 'timing_description' => 'Every 6 months',
                 'last_completed_at' => Carbon::create(2024, 11, 15),
                 'user_id' => $user->id,
-                'category_id' => $defaultCategory ? $defaultCategory->id : null,
+                'category_id' => $categories->where('name', 'Health')->first()->id,
             ],
             [
                 'title' => 'Change air filters',
                 'timing_description' => 'Every 3 months',
                 'last_completed_at' => Carbon::create(2025, 3, 1),
                 'user_id' => $user->id,
-                'category_id' => $defaultCategory ? $defaultCategory->id : null,
+                'category_id' => $categories->where('name', 'Home')->first()->id,
             ],
             [
                 'title' => 'Call parents',
                 'timing_description' => 'Every 2 weeks',
                 'last_completed_at' => Carbon::create(2025, 5, 25),
                 'user_id' => $user->id,
-                'category_id' => $defaultCategory ? $defaultCategory->id : null,
+                'category_id' => $categories->where('name', 'Personal')->first()->id,
             ],
             [
                 'title' => 'Car maintenance',
                 'timing_description' => 'Every 6 months',
                 'last_completed_at' => Carbon::create(2024, 12, 10),
                 'user_id' => $user->id,
-                'category_id' => $defaultCategory ? $defaultCategory->id : null,
+                'category_id' => $categories->where('name', 'Admin')->first()->id,
             ],
         ];
 
