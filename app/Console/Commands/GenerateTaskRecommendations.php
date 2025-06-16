@@ -93,7 +93,7 @@ class GenerateTaskRecommendations extends Command
         // Generate recommendations using Remi AI
         $this->info('Generating AI recommendations via Remi AI...');
         try {
-            $response = Http::timeout(60)->post(config('remi-ai.base_url') . '/agents/task-suggestion-agent/default', $apiData);
+            $response = Http::timeout(60)->post(config('remi-ai.base_url') . '/agents/task-suggestion-agent/' . $user->id, $apiData);
 
             if (! $response->successful()) {
                 $this->error('API request failed: ' . $response->status() . ' - ' . $response->body());
