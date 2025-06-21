@@ -27,6 +27,11 @@ class DashboardController extends Controller
                 ->with(['task', 'task.category'])
                 ->orderBy('priority')
                 ->get()
+                ->filter(function ($recommendedTask) {
+                    // If the task has been completed in the last 7 days, don't show it
+                    return ! $recommendedTask->task->last_completed_at || $recommendedTask->task->last_completed_at->diffInDays(Carbon::now()) > 7;
+                })
+                ->values()
                 ->map(function ($recommendedTask) {
                     return [
                         'id' => $recommendedTask->id,
