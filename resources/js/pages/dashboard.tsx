@@ -58,7 +58,7 @@ export default function Dashboard({ recommendedTasks, weekStartDate, hasRecommen
     };
 
     return (
-        <MainLayout title="Dashboard" showAddButton onAddClick={() => setOpen(true)}>
+        <MainLayout title="Dashboard">
             <Head title="Dashboard" />
             <div className="h-full space-y-6 p-6">
                 <div className="space-y-2">
