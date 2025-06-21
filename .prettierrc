@@ -4,7 +4,18 @@
     "singleAttributePerLine": false,
     "htmlWhitespaceSensitivity": "css",
     "printWidth": 150,
-    "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"],
+    "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"],
+    "importOrder": [
+        "<THIRD_PARTY_MODULES>",
+        "^@/components/(.*)$",
+        "^@/lib/(.*)$",
+        "^@/hooks/(.*)$",
+        "^@/types/(.*)$",
+        "^@/(.*)$",
+        "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
     "tailwindFunctions": ["clsx", "cn"],
     "tabWidth": 4,
     "overrides": [
