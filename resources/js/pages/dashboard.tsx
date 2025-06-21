@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import MainLayout from '@/layouts/main-layout';
 
-import { RecommendedTaskCard } from '@/components/dashboard/recommended-task-card';
+import { RecommendedTaskCard } from '@/components/dashboard/task-card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 import { RecommendedTask } from '@/types';
