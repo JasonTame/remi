@@ -1,9 +1,9 @@
 import { type PropsWithChildren } from 'react';
 
-import { AppContent } from '@/components/app-content';
-import { AppHeader } from '@/components/app-header';
-import { AppShell } from '@/components/app-shell';
-import { AppSidebar } from '@/components/app-sidebar';
+import { AppContent } from '@/components/app/content';
+import { AppHeader } from '@/components/app/header';
+import { AppShell } from '@/components/app/shell';
+import { AppSidebar } from '@/components/app/sidebar';
 
 interface AppLayoutProps extends PropsWithChildren {
     children: React.ReactNode;

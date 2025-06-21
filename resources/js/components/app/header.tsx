@@ -1,6 +1,6 @@
 import { Bell, PlusCircle } from 'lucide-react';
 
-import { ModeToggle } from '@/components/mode-toggle';
+import { ModeToggle } from '@/components/app/mode-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
