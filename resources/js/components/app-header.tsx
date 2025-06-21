@@ -11,6 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Link } from '@inertiajs/react';
 
 interface HeaderProps {
     title: string;
@@ -49,7 +50,11 @@ export function AppHeader({ title, showAddButton = false, onAddClick }: HeaderPr
                         <DropdownMenuItem>Profile</DropdownMenuItem>
                         <DropdownMenuItem>Settings</DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Log out</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Link href={route('logout')} method="post" as="button">
+                                Log out
+                            </Link>
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
