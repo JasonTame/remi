@@ -1,16 +1,14 @@
-import { TaskDetail } from '@/components/tasks/task-detail';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { formatDate } from '@/lib/helpers/format';
 import { getCategoryColor } from '@/lib/utils/tasks/get-category-color';
 import type { Category, Task } from '@/types';
 import { formatDistanceToNow } from 'date-fns';
-import { ArrowUpDown, Check, Eye, MoreHorizontal, Pencil } from 'lucide-react';
+import { ArrowUpDown, Check, Eye, MoreHorizontal, Pencil, Trash } from 'lucide-react';
 import { useState } from 'react';
-import { TaskEdit } from './task-edit';
+import { TaskDialogs } from './task-dialogs';
 
 type Props = {
     tasks: Task[];
@@ -23,6 +21,7 @@ export const TaskTable = ({ tasks, categories, sortOrder, onSortChange }: Props)
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [viewDialogOpen, setViewDialogOpen] = useState(false);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     const handleViewTask = (task: Task) => {
         setSelectedTask(task);
@@ -32,6 +31,11 @@ export const TaskTable = ({ tasks, categories, sortOrder, onSortChange }: Props)
     const handleEditTask = (task: Task) => {
         setSelectedTask(task);
         setEditDialogOpen(true);
+    };
+
+    const handleDeleteTask = (task: Task) => {
+        setSelectedTask(task);
+        setDeleteDialogOpen(true);
     };
 
     const toggleSortOrder = () => {
@@ -96,6 +100,10 @@ export const TaskTable = ({ tasks, categories, sortOrder, onSortChange }: Props)
                                                         <Pencil className="mr-2 h-4 w-4" />
                                                         Edit
                                                     </DropdownMenuItem>
+                                                    <DropdownMenuItem onClick={() => handleDeleteTask(task)}>
+                                                        <Trash className="mr-2 h-4 w-4" />
+                                                        Delete
+                                                    </DropdownMenuItem>
                                                     <DropdownMenuItem>
                                                         <Check className="mr-2 h-4 w-4" />
                                                         Mark as complete
@@ -111,16 +119,18 @@ export const TaskTable = ({ tasks, categories, sortOrder, onSortChange }: Props)
                 </div>
             </div>
 
-            <Dialog open={viewDialogOpen} onOpenChange={setViewDialogOpen}>
-                <DialogContent className="sm:max-w-[550px]">
-                    <DialogHeader>
-                        <DialogTitle>Task Details</DialogTitle>
-                    </DialogHeader>
-                    {selectedTask && <TaskDetail task={selectedTask} />}
-                </DialogContent>
-            </Dialog>
-
-            {selectedTask && <TaskEdit task={selectedTask} categories={categories} open={editDialogOpen} onOpenChange={setEditDialogOpen} />}
+            {selectedTask && (
+                <TaskDialogs
+                    deleteDialogOpen={deleteDialogOpen}
+                    viewDialogOpen={viewDialogOpen}
+                    editDialogOpen={editDialogOpen}
+                    selectedTask={selectedTask}
+                    categories={categories}
+                    setViewDialogOpen={setViewDialogOpen}
+                    setEditDialogOpen={setEditDialogOpen}
+                    setDeleteDialogOpen={setDeleteDialogOpen}
+                />
+            )}
         </>
     );
 };

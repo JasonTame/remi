@@ -13,7 +13,7 @@ interface TaskEditProps {
     onOpenChange: (open: boolean) => void;
 }
 
-export function TaskEdit({ task, categories, open, onOpenChange }: TaskEditProps) {
+export function TaskEditDialog({ task, categories, open, onOpenChange }: TaskEditProps) {
     const { data, setData, put, processing, errors } = useForm({
         title: task.title,
         timing_description: task.timing_description,

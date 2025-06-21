@@ -1,15 +1,13 @@
-import { TaskDetail } from '@/components/tasks/task-detail';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { formatDate } from '@/lib/helpers/format';
 import { getCategoryColor } from '@/lib/utils/tasks/get-category-color';
 import type { Category, Task } from '@/types';
-import { Check, Eye, MoreHorizontal, Pencil } from 'lucide-react';
+import { Check, Eye, MoreHorizontal, Pencil, Trash } from 'lucide-react';
 import { useState } from 'react';
-import { TaskEdit } from './task-edit';
+import { TaskDialogs } from './task-dialogs';
 
 type Props = {
     tasks: Task[];
@@ -17,12 +15,23 @@ type Props = {
 };
 export const TaskCards = ({ tasks, categories }: Props) => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-    const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [viewDialogOpen, setViewDialogOpen] = useState(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
 
     const handleViewTask = (task: Task) => {
         setSelectedTask(task);
         setViewDialogOpen(true);
+    };
+
+    const handleEditTask = (task: Task) => {
+        setSelectedTask(task);
+        setEditDialogOpen(true);
+    };
+
+    const handleDeleteTask = (task: Task) => {
+        setSelectedTask(task);
+        setDeleteDialogOpen(true);
     };
 
     return (
@@ -44,7 +53,11 @@ export const TaskCards = ({ tasks, categories }: Props) => {
                                             <Eye className="mr-2 h-4 w-4" />
                                             View
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleDeleteTask(task)}>
+                                            <Trash className="mr-2 h-4 w-4" />
+                                            Delete
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleEditTask(task)}>
                                             <Pencil className="mr-2 h-4 w-4" />
                                             Edit
                                         </DropdownMenuItem>
@@ -85,16 +98,18 @@ export const TaskCards = ({ tasks, categories }: Props) => {
                 ))}
             </div>
 
-            <Dialog open={viewDialogOpen} onOpenChange={setViewDialogOpen}>
-                <DialogContent className="sm:max-w-[550px]">
-                    <DialogHeader>
-                        <DialogTitle>Task Details</DialogTitle>
-                    </DialogHeader>
-                    {selectedTask && <TaskDetail task={selectedTask} />}
-                </DialogContent>
-            </Dialog>
-
-            {selectedTask && <TaskEdit task={selectedTask} categories={categories} open={editDialogOpen} onOpenChange={setEditDialogOpen} />}
+            {selectedTask && (
+                <TaskDialogs
+                    deleteDialogOpen={deleteDialogOpen}
+                    viewDialogOpen={viewDialogOpen}
+                    editDialogOpen={editDialogOpen}
+                    selectedTask={selectedTask}
+                    categories={categories}
+                    setViewDialogOpen={setViewDialogOpen}
+                    setEditDialogOpen={setEditDialogOpen}
+                    setDeleteDialogOpen={setDeleteDialogOpen}
+                />
+            )}
         </>
     );
 };
