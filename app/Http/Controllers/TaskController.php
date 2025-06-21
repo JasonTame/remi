@@ -103,7 +103,7 @@ class TaskController extends Controller
 
         // Create task history entry
         $task->history()->create([
-            'completed_at' => now(),
+            'completed_at' => $request->input('completed_at') ?? now(),
             'notes' => $request->input('notes'),
         ]);
 
