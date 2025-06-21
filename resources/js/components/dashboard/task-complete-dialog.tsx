@@ -22,7 +22,7 @@ export const TaskCompleteDialog = ({ task, open, onOpenChange }: TaskCompleteDia
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        post(route('tasks.complete', task.id), {
+        post(route('tasks.complete', task.task_id), {
             onSuccess: () => {
                 onOpenChange(false);
             },
