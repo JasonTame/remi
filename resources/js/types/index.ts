@@ -32,10 +32,14 @@ export interface SharedData {
 }
 
 export interface RecommendedTask {
+    id: number;
     task_id: number;
-    completed: boolean;
+    title: string;
+    lastCompleted: string | null;
+    category: string | null;
     priority: number;
     reason: string;
+    completed: boolean;
 }
 
 export interface Category {
