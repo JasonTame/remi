@@ -1,10 +1,12 @@
+import { useForm } from '@inertiajs/react';
+
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 import type { Category } from '@/types';
-import { useForm } from '@inertiajs/react';
 
 interface TaskCreateProps {
     categories: Category[];

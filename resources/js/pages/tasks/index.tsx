@@ -1,9 +1,11 @@
+import { useState } from 'react';
+
 import CategoryFilter from '@/components/tasks/category-filter';
 import { TaskCreate } from '@/components/tasks/task-create';
 import { TaskList } from '@/components/tasks/task-list';
+
 import AppLayout from '@/layouts/main-layout';
 import { type Category, type Task } from '@/types';
-import { useState } from 'react';
 
 interface PageProps {
     tasks: Task[];

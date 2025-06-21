@@ -1,5 +1,6 @@
-import AppLayout from '@/layouts/main-layout';
 import { Link, useForm } from '@inertiajs/react';
+
+import AppLayout from '@/layouts/main-layout';
 
 interface Category {
     id: number;

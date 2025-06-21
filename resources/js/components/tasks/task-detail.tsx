@@ -1,9 +1,12 @@
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { getCategoryColor } from '@/lib/utils/tasks/get-category-color';
-import type { Task } from '@/types';
 import { format, formatDistanceToNow } from 'date-fns';
 import { BarChart2, Calendar, Check, Clock } from 'lucide-react';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+
+import { getCategoryColor } from '@/lib/utils/tasks/get-category-color';
+
+import type { Task } from '@/types';
 
 interface TaskDetailProps {
     task: Task;

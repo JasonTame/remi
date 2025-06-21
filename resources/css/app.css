@@ -8,7 +8,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --font-sans: 'Inter', 'Nunito', 'Comfortaa', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        'Inter', 'Nunito', 'Comfortaa', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -78,36 +80,36 @@
 
 :root {
     /* Converted from HSL to OKLCH for Tailwind v4 */
-    --background: oklch(0.97 0.02 80);        /* 40deg 30% 96% */
-    --foreground: oklch(0.145 0.04 255);      /* 222.2deg 84% 4.9% */
-    
-    --card: oklch(1 0 0);                     /* 0deg 0% 100% */
+    --background: oklch(0.97 0.02 80); /* 40deg 30% 96% */
+    --foreground: oklch(0.145 0.04 255); /* 222.2deg 84% 4.9% */
+
+    --card: oklch(1 0 0); /* 0deg 0% 100% */
     --card-foreground: oklch(0.145 0.04 255); /* 222.2deg 84% 4.9% */
-    
-    --popover: oklch(1 0 0);                  /* 0deg 0% 100% */
+
+    --popover: oklch(1 0 0); /* 0deg 0% 100% */
     --popover-foreground: oklch(0.145 0.04 255); /* 222.2deg 84% 4.9% */
-    
-    --primary: oklch(0.57 0.05 230);          /* 200deg 18% 46% - Dusty blue-gray */
+
+    --primary: oklch(0.57 0.05 230); /* 200deg 18% 46% - Dusty blue-gray */
     --primary-foreground: oklch(0.97 0.02 240); /* 210deg 40% 98% */
-    
-    --secondary: oklch(0.7 0.12 40);          /* 14deg 60% 64% - Soft terracotta */
+
+    --secondary: oklch(0.7 0.12 40); /* 14deg 60% 64% - Soft terracotta */
     --secondary-foreground: oklch(0.2 0.05 255); /* 222.2deg 47.4% 11.2% */
-    
-    --muted: oklch(0.97 0.02 240);            /* 210deg 40% 96.1% */
-    --muted-foreground: oklch(0.6 0.03 250);  /* 215.4deg 16.3% 46.9% */
-    
-    --accent: oklch(0.7 0.06 160);            /* 150deg 20% 62% - Sage green */
+
+    --muted: oklch(0.97 0.02 240); /* 210deg 40% 96.1% */
+    --muted-foreground: oklch(0.6 0.03 250); /* 215.4deg 16.3% 46.9% */
+
+    --accent: oklch(0.7 0.06 160); /* 150deg 20% 62% - Sage green */
     --accent-foreground: oklch(0.2 0.05 255); /* 222.2deg 47.4% 11.2% */
-    
-    --destructive: oklch(0.65 0.2 30);        /* 0deg 84.2% 60.2% */
+
+    --destructive: oklch(0.65 0.2 30); /* 0deg 84.2% 60.2% */
     --destructive-foreground: oklch(0.97 0.02 240); /* 210deg 40% 98% */
-    
-    --border: oklch(0.9 0.02 250);            /* 214.3deg 31.8% 91.4% */
-    --input: oklch(0.9 0.02 250);             /* 214.3deg 31.8% 91.4% */
-    --ring: oklch(0.57 0.05 230);             /* 200deg 18% 46% */
-    
+
+    --border: oklch(0.9 0.02 250); /* 214.3deg 31.8% 91.4% */
+    --input: oklch(0.9 0.02 250); /* 214.3deg 31.8% 91.4% */
+    --ring: oklch(0.57 0.05 230); /* 200deg 18% 46% */
+
     --radius: 0.5rem;
-    
+
     --sidebar: var(--card);
     --sidebar-foreground: var(--card-foreground);
     --sidebar-primary: var(--primary);
@@ -120,34 +122,34 @@
 
 .dark {
     /* Converted from HSL to OKLCH for Tailwind v4 */
-    --background: oklch(0.145 0.04 255);      /* 222.2deg 84% 4.9% */
-    --foreground: oklch(0.97 0.02 240);       /* 210deg 40% 98% */
-    
-    --card: oklch(0.145 0.04 255);            /* 222.2deg 84% 4.9% */
-    --card-foreground: oklch(0.97 0.02 240);  /* 210deg 40% 98% */
-    
-    --popover: oklch(0.145 0.04 255);         /* 222.2deg 84% 4.9% */
+    --background: oklch(0.145 0.04 255); /* 222.2deg 84% 4.9% */
+    --foreground: oklch(0.97 0.02 240); /* 210deg 40% 98% */
+
+    --card: oklch(0.145 0.04 255); /* 222.2deg 84% 4.9% */
+    --card-foreground: oklch(0.97 0.02 240); /* 210deg 40% 98% */
+
+    --popover: oklch(0.145 0.04 255); /* 222.2deg 84% 4.9% */
     --popover-foreground: oklch(0.97 0.02 240); /* 210deg 40% 98% */
-    
-    --primary: oklch(0.57 0.05 230);          /* 200deg 18% 46% */
+
+    --primary: oklch(0.57 0.05 230); /* 200deg 18% 46% */
     --primary-foreground: oklch(0.97 0.02 240); /* 210deg 40% 98% */
-    
-    --secondary: oklch(0.7 0.12 40);          /* 14deg 60% 64% */
+
+    --secondary: oklch(0.7 0.12 40); /* 14deg 60% 64% */
     --secondary-foreground: oklch(0.97 0.02 240); /* 210deg 40% 98% */
-    
-    --muted: oklch(0.3 0.04 255);             /* 217.2deg 32.6% 17.5% */
-    --muted-foreground: oklch(0.7 0.04 245);  /* 215deg 20.2% 65.1% */
-    
-    --accent: oklch(0.7 0.06 160);            /* 150deg 20% 62% */
+
+    --muted: oklch(0.3 0.04 255); /* 217.2deg 32.6% 17.5% */
+    --muted-foreground: oklch(0.7 0.04 245); /* 215deg 20.2% 65.1% */
+
+    --accent: oklch(0.7 0.06 160); /* 150deg 20% 62% */
     --accent-foreground: oklch(0.97 0.02 240); /* 210deg 40% 98% */
-    
-    --destructive: oklch(0.4 0.18 30);        /* 0deg 62.8% 30.6% */
+
+    --destructive: oklch(0.4 0.18 30); /* 0deg 62.8% 30.6% */
     --destructive-foreground: oklch(0.97 0.02 240); /* 210deg 40% 98% */
-    
-    --border: oklch(0.3 0.04 255);            /* 217.2deg 32.6% 17.5% */
-    --input: oklch(0.3 0.04 255);             /* 217.2deg 32.6% 17.5% */
-    --ring: oklch(0.85 0.03 235);             /* 212.7deg 26.8% 83.9% */
-    
+
+    --border: oklch(0.3 0.04 255); /* 217.2deg 32.6% 17.5% */
+    --input: oklch(0.3 0.04 255); /* 217.2deg 32.6% 17.5% */
+    --ring: oklch(0.85 0.03 235); /* 212.7deg 26.8% 83.9% */
+
     --sidebar: var(--card);
     --sidebar-foreground: var(--card-foreground);
     --sidebar-primary: var(--primary);
@@ -163,7 +165,6 @@
         @apply border-border;
     }
 
-    
     h1,
     h2,
     h3,
@@ -172,7 +173,7 @@
     h6 {
         @apply font-bold;
     }
-    
+
     .app-title {
         /* Font styles for Comfortaa will be applied via CSS variables */
     }

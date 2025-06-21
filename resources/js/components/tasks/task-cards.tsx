@@ -1,12 +1,16 @@
+import { Check, Eye, MoreHorizontal, Pencil, Trash } from 'lucide-react';
+import { useState } from 'react';
+
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+
 import { formatDate } from '@/lib/helpers/format';
 import { getCategoryColor } from '@/lib/utils/tasks/get-category-color';
+
 import type { Category, Task } from '@/types';
-import { Check, Eye, MoreHorizontal, Pencil, Trash } from 'lucide-react';
-import { useState } from 'react';
+
 import { TaskDialogs } from './task-dialogs';
 
 type Props = {

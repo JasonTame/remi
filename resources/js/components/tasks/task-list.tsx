@@ -1,7 +1,9 @@
 'use client';
 
 import { useIsMobile } from '@/hooks/use-mobile';
+
 import type { Category, Task } from '@/types';
+
 import { TaskCards } from './task-cards';
 import { TaskTable } from './task-table';
 

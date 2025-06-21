@@ -1,7 +1,8 @@
-import { AppLogo } from '@/components/app/logo';
-import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/react';
 import { Calendar, Clock, Home, Settings } from 'lucide-react';
+
+import { AppLogo } from '@/components/app/logo';
+import { Button } from '@/components/ui/button';
 
 export function AppSidebar() {
     return (

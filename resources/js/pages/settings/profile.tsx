@@ -1,4 +1,3 @@
-import { type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
@@ -9,8 +8,10 @@ import HeadingSmall from '@/components/shared/heading-small';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+
 import AppLayout from '@/layouts/main-layout';
 import SettingsLayout from '@/layouts/settings/layout';
+import { type SharedData } from '@/types';
 
 type ProfileForm = {
     name: string;

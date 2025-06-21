@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import { Bell, PlusCircle } from 'lucide-react';
 
 import { ModeToggle } from '@/components/app/mode-toggle';
@@ -11,7 +12,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Link } from '@inertiajs/react';
 
 interface HeaderProps {
     title: string;
