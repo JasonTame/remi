@@ -109,7 +109,12 @@ class TaskController extends Controller
 
         // Update the last completed timestamp
         $task->update([
-            'last_completed_at' => now(),
+            'last_completed_at' => $request->input('completed_at') ?? now(),
+        ]);
+
+        // Update the weekly recommendation
+        $task->recommendedTasks()->update([
+            'completed' => true,
         ]);
 
         return redirect()->back()->with('success', 'Task marked as completed.');
