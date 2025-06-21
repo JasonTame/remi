@@ -3,10 +3,10 @@ import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
+import AuthLayout from '@/layouts/auth-layout';
+
 import TextLink from '@/components/shared/text-link';
 import { Button } from '@/components/ui/button';
-
-import AuthLayout from '@/layouts/auth-layout';
 
 export default function VerifyEmail({ status }: { status?: string }) {
     const { post, processing } = useForm({});

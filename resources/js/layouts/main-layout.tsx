@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
 
 import AppLayout from '@/layouts/app/layout';
+
 import { type BreadcrumbItem } from '@/types';
 
 interface AppLayoutProps {
