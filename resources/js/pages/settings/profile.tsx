@@ -12,6 +12,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
+import { useFlashMessages } from '@/hooks/use-flash-messages';
+
 import { type SharedData } from '@/types';
 
 type ProfileForm = {
@@ -20,6 +22,7 @@ type ProfileForm = {
 };
 
 export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
+    useFlashMessages();
     const { auth } = usePage<SharedData>().props;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({

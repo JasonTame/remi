@@ -6,6 +6,8 @@ import CategoryFilter from '@/components/tasks/category-filter';
 import { TaskCreate } from '@/components/tasks/task-create';
 import { TaskList } from '@/components/tasks/task-list';
 
+import { useFlashMessages } from '@/hooks/use-flash-messages';
+
 import { type Category, type Task } from '@/types';
 
 interface PageProps {
@@ -14,6 +16,8 @@ interface PageProps {
 }
 
 export default function Index({ tasks, categories }: PageProps) {
+    useFlashMessages();
+
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 

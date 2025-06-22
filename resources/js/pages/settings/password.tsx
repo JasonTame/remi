@@ -11,6 +11,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
+import { useFlashMessages } from '@/hooks/use-flash-messages';
+
 import { type BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -21,6 +23,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Password() {
+    useFlashMessages();
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);
 

@@ -1,11 +1,11 @@
 import { Head } from '@inertiajs/react';
 import { Trophy } from 'lucide-react';
-import { useState } from 'react';
 
 import MainLayout from '@/layouts/main-layout';
 
 import { RecommendedTaskCard } from '@/components/dashboard/task-card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+
+import { useFlashMessages } from '@/hooks/use-flash-messages';
 
 import { RecommendedTask } from '@/types';
 
@@ -16,7 +16,7 @@ interface PageProps {
 }
 
 export default function Dashboard({ recommendedTasks, weekStartDate, hasRecommendations }: PageProps) {
-    const [open, setOpen] = useState(false);
+    useFlashMessages();
 
     // Parse the week start date and calculate the end date
     const weekStart = new Date(weekStartDate);
@@ -54,15 +54,6 @@ export default function Dashboard({ recommendedTasks, weekStartDate, hasRecommen
                     ))}
                 </div>
             </div>
-
-            <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Add New Task</DialogTitle>
-                    </DialogHeader>
-                    {/* <TaskForm onSubmit={() => setOpen(false)} /> */}
-                </DialogContent>
-            </Dialog>
         </MainLayout>
     );
 }

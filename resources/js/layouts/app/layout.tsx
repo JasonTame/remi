@@ -4,6 +4,7 @@ import { AppContent } from '@/components/app/content';
 import { AppHeader } from '@/components/app/header';
 import { AppShell } from '@/components/app/shell';
 import { AppSidebar } from '@/components/app/sidebar';
+import { Toaster } from '@/components/ui/sonner';
 
 interface AppLayoutProps extends PropsWithChildren {
     children: React.ReactNode;
@@ -19,6 +20,7 @@ export default function AppLayout({ children, title, showAddButton, onAddClick }
             <AppContent>
                 <AppHeader title={title} showAddButton={showAddButton} onAddClick={onAddClick} />
                 {children}
+                <Toaster />
             </AppContent>
         </AppShell>
     );

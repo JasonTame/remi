@@ -46,21 +46,7 @@ class TaskController extends Controller
             'last_completed_at' => $validated['last_completed_at'] ?? null,
         ]);
 
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
-    }
-
-    /**
-     * Display the specified task.
-     */
-    public function show(Task $task)
-    {
-        $this->authorize('view', $task);
-
-        $task->load(['category', 'history']);
-
-        return Inertia::render('tasks/show', [
-            'task' => $task,
-        ]);
+        return redirect()->route('tasks.index')->with('type', 'success')->with('message', 'Task created successfully.');
     }
 
     /**
@@ -79,7 +65,7 @@ class TaskController extends Controller
             'last_completed_at' => $validated['last_completed_at'] ?? null,
         ]);
 
-        return redirect()->route('tasks.index', $task)->with('success', 'Task updated successfully.');
+        return redirect()->route('tasks.index', $task)->with('type', 'success')->with('message', 'Task updated successfully.');
     }
 
     /**
@@ -91,7 +77,7 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
+        return redirect()->route('tasks.index')->with('type', 'success')->with('message', 'Task deleted successfully.');
     }
 
     /**
@@ -117,6 +103,9 @@ class TaskController extends Controller
             'completed' => true,
         ]);
 
-        return redirect()->back()->with('success', 'Task marked as completed.');
+        return redirect()
+            ->route('dashboard')
+            ->with('type', 'success')
+            ->with('message', 'Task marked as completed.');
     }
 }
