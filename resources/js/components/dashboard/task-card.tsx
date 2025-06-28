@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { getPriorityLabel } from '@/lib/utils/tasks/get-priority-label';
+import { cn } from '@/lib/utils';
+import { getPriorityColor, getPriorityLabel } from '@/lib/utils/tasks/get-priority-formatting';
 
 import { RecommendedTask } from '@/types';
 
@@ -27,7 +28,9 @@ export const RecommendedTaskCard = ({ task }: Props) => {
                 <CardHeader className="pb-2">
                     <div className="flex items-start justify-between">
                         <CardTitle className="text-xl">{task.title}</CardTitle>
-                        <span className="bg-accent/20 text-accent-foreground rounded-full px-2 py-1 text-xs">{getPriorityLabel(task.priority)}</span>
+                        <span className={cn('bg-accent/20 text-accent-foreground rounded-full px-2 py-1 text-xs', getPriorityColor(task.priority))}>
+                            {getPriorityLabel(task.priority)}
+                        </span>
                     </div>
                     {task.category && <div className="text-muted-foreground text-xs">{task.category}</div>}
                 </CardHeader>
