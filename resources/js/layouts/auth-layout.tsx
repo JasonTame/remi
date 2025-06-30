@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
 import { AppLogo } from '@/components/app/logo';
@@ -18,10 +19,10 @@ export default function AuthLayout({ children, title, subtitle }: PropsWithChild
 
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center">
-                    <div className="flex items-center gap-3">
+                    <Link href="/" className="flex items-center gap-3">
                         <AppLogo className="h-12 w-12 text-primary" />
                         <span className="app-title text-3xl font-bold text-primary font-comfortaa">Remi</span>
-                    </div>
+                    </Link>
                 </div>
                 <h2 className="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">{title}</h2>
                 <p className="mt-2 text-center text-sm text-muted-foreground">{subtitle}</p>
