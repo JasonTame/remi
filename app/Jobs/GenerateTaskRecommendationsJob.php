@@ -1,0 +1,258 @@
+<?php
+
+namespace App\Jobs;
+
+use App\Models\Category;
+use App\Models\RecommendedTask;
+use App\Models\Task;
+use App\Models\User;
+use App\Models\WeeklyRecommendation;
+use App\Services\TaskService;
+use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+
+class GenerateTaskRecommendationsJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected int $userId;
+    protected bool $regenerate;
+
+    /**
+     * Create a new job instance.
+     */
+    public function __construct(int $userId, bool $regenerate = false)
+    {
+        $this->userId = $userId;
+        $this->regenerate = $regenerate;
+    }
+
+    /**
+     * Execute the job.
+     */
+    public function handle(TaskService $taskService): void
+    {
+        $user = User::find($this->userId);
+
+        if (! $user) {
+            Log::error("GenerateTaskRecommendationsJob: User with ID {$this->userId} not found.");
+            return;
+        }
+
+        Log::info("GenerateTaskRecommendationsJob: Generating recommendations for user: {$user->name}", [
+            'user_id' => $this->userId,
+            'regenerate' => $this->regenerate,
+        ]);
+
+        // Determine the current week's start date (Monday)
+        $weekStartDate = Carbon::now()->startOfWeek()->format('Y-m-d');
+
+        // Check if recommendations already exist for this user and week
+        $existingRecommendation = WeeklyRecommendation::where('user_id', $this->userId)
+            ->where('week_start_date', $weekStartDate)
+            ->first();
+
+        if ($existingRecommendation && !$this->regenerate) {
+            Log::info('GenerateTaskRecommendationsJob: Recommendations already exist for this week and regenerate is false. Exiting early.', [
+                'user_id' => $this->userId,
+                'week_start_date' => $weekStartDate,
+            ]);
+            return;
+        }
+
+        if ($existingRecommendation && $this->regenerate) {
+            Log::info('GenerateTaskRecommendationsJob: Regenerating existing recommendations.', [
+                'user_id' => $this->userId,
+                'week_start_date' => $weekStartDate,
+            ]);
+
+            // Delete existing recommended tasks
+            $existingRecommendation->recommendedTasks()->delete();
+            $existingRecommendation->delete();
+        }
+
+        // Check if user has tasks
+        $taskCount = Task::where('user_id', $this->userId)->count();
+
+        if ($taskCount === 0) {
+            Log::warning('GenerateTaskRecommendationsJob: No tasks found for this user.', [
+                'user_id' => $this->userId,
+            ]);
+            return;
+        }
+
+        // Fetch tasks that are due for completion (default: 7 days)
+        Log::info('GenerateTaskRecommendationsJob: Fetching tasks that are due for completion...', [
+            'user_id' => $this->userId,
+        ]);
+
+        $tasks = $taskService->getTasksDueForUser($user, 7);
+
+        if ($tasks->isEmpty()) {
+            Log::info('GenerateTaskRecommendationsJob: No tasks are currently due for completion.', [
+                'user_id' => $this->userId,
+            ]);
+            return;
+        }
+
+        Log::info("GenerateTaskRecommendationsJob: Found {$tasks->count()} tasks that are due for completion.", [
+            'user_id' => $this->userId,
+            'task_count' => $tasks->count(),
+        ]);
+
+        // Prepare data for API request
+        Log::info('GenerateTaskRecommendationsJob: Preparing data for API request...', [
+            'user_id' => $this->userId,
+        ]);
+
+        $apiData = $this->prepareApiData($user, $weekStartDate, $tasks);
+
+        // Generate recommendations using Remi AI
+        Log::info('GenerateTaskRecommendationsJob: Generating AI recommendations via Remi AI...', [
+            'user_id' => $this->userId,
+        ]);
+
+        try {
+            $response = Http::timeout(60)->post(config('remi-ai.base_url') . '/agents/task-suggestion-agent/' . $user->id, $apiData);
+
+            if (! $response->successful()) {
+                Log::error('GenerateTaskRecommendationsJob: API request failed', [
+                    'user_id' => $this->userId,
+                    'status' => $response->status(),
+                    'body' => $response->body(),
+                ]);
+                throw new \Exception("API request failed: {$response->status()} - {$response->body()}");
+            }
+
+            $apiResponse = $response->json();
+
+            if (! isset($apiResponse['recommended_tasks']) || empty($apiResponse['recommended_tasks'])) {
+                Log::info('GenerateTaskRecommendationsJob: No recommendations were generated by the API.', [
+                    'user_id' => $this->userId,
+                ]);
+                return;
+            }
+
+            // Create a new weekly recommendation
+            $weeklyRecommendation = WeeklyRecommendation::create([
+                'user_id' => $this->userId,
+                'week_start_date' => $weekStartDate,
+                'generated_at' => now(),
+            ]);
+
+            // Create recommended tasks from API response
+            $count = 0;
+            foreach ($apiResponse['recommended_tasks'] as $recommendedTask) {
+                if (! isset($recommendedTask['task_id'], $recommendedTask['priority'], $recommendedTask['reason'])) {
+                    Log::warning('GenerateTaskRecommendationsJob: Skipping recommendation with missing required fields', [
+                        'user_id' => $this->userId,
+                        'recommendation' => $recommendedTask,
+                    ]);
+                    continue;
+                }
+
+                $weeklyRecommendation->recommendedTasks()->create([
+                    'task_id' => $recommendedTask['task_id'],
+                    'priority' => $recommendedTask['priority'],
+                    'reason' => $recommendedTask['reason'],
+                    'completed' => false,
+                ]);
+                $count++;
+            }
+
+            if ($count > 0) {
+                Log::info("GenerateTaskRecommendationsJob: Created {$count} task recommendations for the week starting {$weekStartDate}.", [
+                    'user_id' => $this->userId,
+                    'week_start_date' => $weekStartDate,
+                    'recommendations_count' => $count,
+                ]);
+            } else {
+                Log::warning('GenerateTaskRecommendationsJob: No valid recommendations were created.', [
+                    'user_id' => $this->userId,
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::error('GenerateTaskRecommendationsJob: Error calling Remi AI API', [
+                'error' => $e->getMessage(),
+                'user_id' => $this->userId,
+                'week_start_date' => $weekStartDate,
+            ]);
+            throw $e;
+        }
+    }
+
+    /**
+     * Prepare data for the API request
+     */
+    private function prepareApiData(User $user, string $weekStartDate, $tasks): array
+    {
+        // Get all categories for the user
+        $categories = Category::where('user_id', $user->id)->get();
+
+        $sixMonthsAgo = Carbon::now()->subMonths(6);
+
+        // Get skipped tasks from the last 6 months
+        $skippedTasks = RecommendedTask::whereHas('task', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })
+            ->whereNotNull('skipped_at')
+            ->where('skipped_at', '>=', $sixMonthsAgo)
+            ->with(['task'])
+            ->orderBy('skipped_at', 'desc')
+            ->get();
+
+        $formattedTasks = $tasks->map(function ($task) {
+            return [
+                'id' => $task->id,
+                'user_id' => $task->user_id,
+                'category_id' => $task->category_id,
+                'title' => $task->title,
+                'timing_description' => $task->timing_description,
+                'description' => $task->description,
+                'last_completed_at' => $task->last_completed_at?->toISOString(),
+                'created_at' => $task->created_at->toISOString(),
+                'updated_at' => $task->updated_at->toISOString(),
+            ];
+        })->toArray();
+
+        $formattedCategories = $categories->map(function ($category) {
+            return [
+                'id' => $category->id,
+                'user_id' => $category->user_id,
+                'name' => $category->name,
+                'color' => $category->color,
+                'created_at' => $category->created_at->toISOString(),
+                'updated_at' => $category->updated_at->toISOString(),
+            ];
+        })->toArray();
+
+        $formattedSkippedTasks = $skippedTasks->map(function ($skippedTask) {
+            return [
+                'id' => $skippedTask->id,
+                'user_id' => $skippedTask->user_id,
+                'task_id' => $skippedTask->task_id,
+                'task_title' => $skippedTask->task->title,
+                'priority' => $skippedTask->priority,
+                'reason' => $skippedTask->reason,
+                'skip_reason' => $skippedTask->skip_reason,
+                'skipped_at' => $skippedTask->skipped_at->toISOString(),
+                'created_at' => $skippedTask->created_at->toISOString(),
+                'updated_at' => $skippedTask->updated_at->toISOString(),
+            ];
+        })->toArray();
+
+        return [
+            'user_id' => $user->id,
+            'week_start_date' => Carbon::parse($weekStartDate)->startOfWeek()->toISOString(),
+            'tasks' => $formattedTasks,
+            'categories' => $formattedCategories,
+            'skipped_tasks' => $formattedSkippedTasks,
+        ];
+    }
+}
