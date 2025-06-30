@@ -16,10 +16,11 @@ import {
 interface HeaderProps {
     title: string;
     showAddButton?: boolean;
+    avatar?: string;
     onAddClick?: () => void;
 }
 
-export function AppHeader({ title, showAddButton = false, onAddClick }: HeaderProps) {
+export function AppHeader({ title, showAddButton = false, onAddClick, avatar }: HeaderProps) {
     return (
         <header className="flex items-center justify-between border-b bg-white p-4 lg:p-6 dark:bg-gray-900">
             <h1 className="text-2xl font-bold">{title}</h1>
@@ -38,8 +39,8 @@ export function AppHeader({ title, showAddButton = false, onAddClick }: HeaderPr
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                            <Avatar className="h-8 w-8">
-                                <AvatarImage src="/placeholder-user.jpg" alt="@user" />
+                            <Avatar className="h-8 w-8 p-1 border border-gray-200">
+                                <AvatarImage src={avatar} alt="@user" />
                                 <AvatarFallback>U</AvatarFallback>
                             </Avatar>
                         </Button>
