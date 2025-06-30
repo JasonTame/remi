@@ -40,6 +40,8 @@ export interface RecommendedTask {
     priority: number;
     reason: string;
     completed: boolean;
+    skipped_at: string | null;
+    skip_reason: string | null;
 }
 
 export interface Category {

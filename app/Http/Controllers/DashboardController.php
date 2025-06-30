@@ -37,6 +37,8 @@ class DashboardController extends Controller
                         'priority' => $recommendedTask->priority,
                         'reason' => $recommendedTask->reason,
                         'completed' => $recommendedTask->completed,
+                        'skipped_at' => $recommendedTask->skipped_at,
+                        'skip_reason' => $recommendedTask->skip_reason,
                     ];
                 });
         }

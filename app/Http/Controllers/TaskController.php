@@ -87,18 +87,15 @@ class TaskController extends Controller
     {
         $this->authorize('update', $task);
 
-        // Create task history entry
         $task->history()->create([
             'completed_at' => $request->input('completed_at') ?? now(),
             'notes' => $request->input('notes'),
         ]);
 
-        // Update the last completed timestamp
         $task->update([
             'last_completed_at' => $request->input('completed_at') ?? now(),
         ]);
 
-        // Update the weekly recommendation
         $task->recommendedTasks()->update([
             'completed' => true,
         ]);
@@ -107,5 +104,23 @@ class TaskController extends Controller
             ->route('dashboard')
             ->with('type', 'success')
             ->with('message', 'Task marked as completed.');
+    }
+
+    /**
+     * Mark a task as skipped.
+     */
+    public function skip(Request $request, Task $task)
+    {
+        $this->authorize('update', $task);
+
+        $task->recommendedTasks()->update([
+            'skipped_at' => $request->input('skipped_at') ?? now(),
+            'skip_reason' => $request->input('reason'),
+        ]);
+
+        return redirect()
+            ->route('dashboard')
+            ->with('type', 'success')
+            ->with('message', 'Task skipped.');
     }
 }

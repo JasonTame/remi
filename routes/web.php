@@ -11,6 +11,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Task routes
     Route::resource('tasks', TaskController::class);
     Route::post('tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
+    Route::post('tasks/{task}/skip', [TaskController::class, 'skip'])->name('tasks.skip');
 });
 
 require __DIR__ . '/auth.php';

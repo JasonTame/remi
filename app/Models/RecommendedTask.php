@@ -21,6 +21,8 @@ class RecommendedTask extends Model
         'priority',
         'reason',
         'completed',
+        'skipped_at',
+        'skip_reason',
     ];
 
     /**
@@ -31,6 +33,7 @@ class RecommendedTask extends Model
     protected $casts = [
         'priority' => 'integer',
         'completed' => 'boolean',
+        'skipped_at' => 'datetime',
     ];
 
     /**

@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Category;
+use App\Models\RecommendedTask;
 use App\Models\Task;
-use App\Models\TaskHistory;
 use App\Models\User;
 use App\Models\WeeklyRecommendation;
 use App\Services\TaskService;
@@ -161,14 +161,16 @@ class GenerateTaskRecommendations extends Command
         // Get all categories for the user
         $categories = Category::where('user_id', $user->id)->get();
 
-        // Get task IDs to fetch task histories
-        $taskIds = $tasks->pluck('id')->toArray();
-
-        // Get task histories for the last 6 months
         $sixMonthsAgo = Carbon::now()->subMonths(6);
-        $taskHistories = TaskHistory::whereIn('task_id', $taskIds)
-            ->where('completed_at', '>=', $sixMonthsAgo)
-            ->orderBy('completed_at', 'desc')
+
+        // Get skipped tasks from the last 6 months
+        $skippedTasks = RecommendedTask::whereHas('task', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })
+            ->whereNotNull('skipped_at')
+            ->where('skipped_at', '>=', $sixMonthsAgo)
+            ->with(['task'])
+            ->orderBy('skipped_at', 'desc')
             ->get();
 
         // Format tasks for API
@@ -197,15 +199,19 @@ class GenerateTaskRecommendations extends Command
             ];
         })->toArray();
 
-        // Format task histories for API
-        $formattedTaskHistories = $taskHistories->map(function ($history) {
+        // Format skipped tasks for API
+        $formattedSkippedTasks = $skippedTasks->map(function ($skippedTask) {
             return [
-                'id' => $history->id,
-                'task_id' => $history->task_id,
-                'completed_at' => $history->completed_at->toISOString(),
-                'notes' => $history->notes,
-                'created_at' => $history->created_at->toISOString(),
-                'updated_at' => $history->updated_at->toISOString(),
+                'id' => $skippedTask->id,
+                'user_id' => $skippedTask->user_id,
+                'task_id' => $skippedTask->task_id,
+                'task_title' => $skippedTask->task->title,
+                'priority' => $skippedTask->priority,
+                'reason' => $skippedTask->reason,
+                'skip_reason' => $skippedTask->skip_reason,
+                'skipped_at' => $skippedTask->skipped_at->toISOString(),
+                'created_at' => $skippedTask->created_at->toISOString(),
+                'updated_at' => $skippedTask->updated_at->toISOString(),
             ];
         })->toArray();
 
@@ -214,7 +220,7 @@ class GenerateTaskRecommendations extends Command
             'week_start_date' => Carbon::parse($weekStartDate)->startOfWeek()->toISOString(),
             'tasks' => $formattedTasks,
             'categories' => $formattedCategories,
-            'task_histories' => $formattedTaskHistories,
+            'skipped_tasks' => $formattedSkippedTasks,
         ];
     }
 }
