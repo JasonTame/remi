@@ -16,7 +16,7 @@ export function AppSidebar() {
             </div>
             <nav className="flex-1 space-y-2 p-4 overflow-y-auto">
                 <Button variant="ghost" className="w-full justify-start" asChild>
-                    <Link href="/">
+                    <Link href="/dashboard">
                         <Home className="mr-2 h-4 w-4" />
                         Dashboard
                     </Link>

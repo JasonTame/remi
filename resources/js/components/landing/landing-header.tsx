@@ -8,8 +8,15 @@ import { AppLogo } from '@/components/app/logo';
 import { ModeToggle } from '@/components/app/mode-toggle';
 import { Button } from '@/components/ui/button';
 
-export function LandingHeader() {
+import { type SharedData } from '@/types';
+
+interface LandingHeaderProps {
+    auth: SharedData['auth'];
+}
+
+export function LandingHeader({ auth }: LandingHeaderProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const isAuthenticated = !!auth.user;
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
@@ -31,12 +38,25 @@ export function LandingHeader() {
                     </nav>
 
                     <div className="hidden md:flex items-center justify-center gap-4 w-auto lg:w-[250px]">
-                        <Link href="/login">
-                            <Button variant="ghost">Log in</Button>
-                        </Link>
-                        <Link href="/register">
-                            <Button>Get started</Button>
-                        </Link>
+                        {isAuthenticated ? (
+                            <>
+                                <Link href="/dashboard">
+                                    <Button>View Dashboard</Button>
+                                </Link>
+                                <Link href="/logout" method="post" as="button">
+                                    <Button variant="outline">Log out</Button>
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link href="/login">
+                                    <Button variant="ghost">Log in</Button>
+                                </Link>
+                                <Link href="/register">
+                                    <Button>Get started</Button>
+                                </Link>
+                            </>
+                        )}
                     </div>
 
                     {/* Mobile menu button */}
@@ -73,15 +93,30 @@ export function LandingHeader() {
                             >
                                 Reviews
                             </Link>
-                            <div className="flex flex-col gap-2 pt-4 border-t  ">
-                                <Link href="/login">
-                                    <Button variant="ghost" className="w-full justify-start">
-                                        Log in
-                                    </Button>
-                                </Link>
-                                <Link href="/register">
-                                    <Button className="w-full">Get started</Button>
-                                </Link>
+                            <div className="flex flex-col gap-2 pt-4 border-t">
+                                {isAuthenticated ? (
+                                    <>
+                                        <Link href="/dashboard">
+                                            <Button className="w-full">View Dashboard</Button>
+                                        </Link>
+                                        <Link href="/logout" method="post" as="button">
+                                            <Button variant="outline" className="w-full">
+                                                Log out
+                                            </Button>
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link href="/login">
+                                            <Button variant="ghost" className="w-full justify-start">
+                                                Log in
+                                            </Button>
+                                        </Link>
+                                        <Link href="/register">
+                                            <Button className="w-full">Get started</Button>
+                                        </Link>
+                                    </>
+                                )}
                             </div>
                         </nav>
                     </div>
