@@ -2,7 +2,6 @@ import { type PropsWithChildren } from 'react';
 
 import { AppContent } from '@/components/app/content';
 import { AppHeader } from '@/components/app/header';
-import { AppShell } from '@/components/app/shell';
 import { AppSidebar } from '@/components/app/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -15,13 +14,15 @@ interface AppLayoutProps extends PropsWithChildren {
 
 export default function AppLayout({ children, title, showAddButton, onAddClick }: AppLayoutProps) {
     return (
-        <AppShell variant="sidebar">
+        <div className="flex h-screen w-full overflow-hidden">
             <AppSidebar />
-            <AppContent>
+            <div className="flex flex-1 flex-col">
                 <AppHeader title={title} showAddButton={showAddButton} onAddClick={onAddClick} />
-                {children}
+                <div className="flex-1 overflow-y-auto bg-neutral-50 dark:bg-gray-950">
+                    <AppContent>{children}</AppContent>
+                </div>
                 <Toaster />
-            </AppContent>
-        </AppShell>
+            </div>
+        </div>
     );
 }

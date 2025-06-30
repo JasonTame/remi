@@ -21,7 +21,7 @@ interface HeaderProps {
 
 export function AppHeader({ title, showAddButton = false, onAddClick }: HeaderProps) {
     return (
-        <header className="flex items-center justify-between border-b bg-white p-4 dark:bg-gray-900">
+        <header className="flex items-center justify-between border-b bg-white p-4 lg:p-6 dark:bg-gray-900">
             <h1 className="text-2xl font-bold">{title}</h1>
             <div className="flex items-center gap-2">
                 {showAddButton && (
