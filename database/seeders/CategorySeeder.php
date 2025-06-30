@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Enums\CategoryColor;
 use App\Models\Category;
 use App\Models\User;
-use App\Enums\CategoryColor;
-
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder

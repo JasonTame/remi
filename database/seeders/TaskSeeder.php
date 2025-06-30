@@ -43,7 +43,7 @@ class TaskSeeder extends Seeder
                 'history' => [
                     ['completed_at' => Carbon::create(2024, 5, 10), 'notes' => 'Regular cleaning and checkup'],
                     ['completed_at' => Carbon::create(2024, 11, 15), 'notes' => 'Small cavity filled'],
-                ]
+                ],
             ],
             [
                 'title' => 'Change air filters',
@@ -54,7 +54,7 @@ class TaskSeeder extends Seeder
                 'history' => [
                     ['completed_at' => Carbon::create(2024, 12, 1), 'notes' => 'Replaced all HVAC filters'],
                     ['completed_at' => Carbon::create(2025, 3, 1), 'notes' => 'Spring filter replacement'],
-                ]
+                ],
             ],
             [
                 'title' => 'Call parents',
@@ -65,7 +65,7 @@ class TaskSeeder extends Seeder
                 'history' => [
                     ['completed_at' => Carbon::create(2025, 5, 11), 'notes' => 'Caught up on family news'],
                     ['completed_at' => Carbon::create(2025, 5, 25), 'notes' => 'Discussed holiday plans'],
-                ]
+                ],
             ],
             [
                 'title' => 'Car maintenance',
@@ -76,7 +76,7 @@ class TaskSeeder extends Seeder
                 'history' => [
                     ['completed_at' => Carbon::create(2024, 6, 15), 'notes' => 'Oil change and tire rotation'],
                     ['completed_at' => Carbon::create(2024, 12, 10), 'notes' => 'Full service including brake inspection'],
-                ]
+                ],
             ],
             [
                 'title' => 'System updates and backups',
@@ -87,7 +87,7 @@ class TaskSeeder extends Seeder
                 'history' => [
                     ['completed_at' => Carbon::create(2025, 4, 15), 'notes' => 'Updated OS and backed up important files'],
                     ['completed_at' => Carbon::create(2025, 5, 15), 'notes' => 'Security updates and cloud backup verification'],
-                ]
+                ],
             ],
             [
                 'title' => 'Deep clean house',
@@ -98,7 +98,7 @@ class TaskSeeder extends Seeder
                 'history' => [
                     ['completed_at' => Carbon::create(2025, 2, 15), 'notes' => 'Spring cleaning - deep cleaned all rooms'],
                     ['completed_at' => Carbon::create(2025, 4, 20), 'notes' => 'Focus on kitchen and bathrooms'],
-                ]
+                ],
             ],
             [
                 'title' => 'Review and organize finances',
@@ -109,7 +109,7 @@ class TaskSeeder extends Seeder
                 'history' => [
                     ['completed_at' => Carbon::create(2025, 4, 28), 'notes' => 'Reviewed monthly expenses and updated budget'],
                     ['completed_at' => Carbon::create(2025, 5, 30), 'notes' => 'Paid bills and reviewed investment portfolio'],
-                ]
+                ],
             ],
             [
                 'title' => 'Exercise routine',
@@ -120,7 +120,7 @@ class TaskSeeder extends Seeder
                 'history' => [
                     ['completed_at' => Carbon::create(2025, 6, 15), 'notes' => '45-minute cardio and strength training'],
                     ['completed_at' => Carbon::create(2025, 6, 18), 'notes' => 'Yoga and stretching session'],
-                ]
+                ],
             ],
             [
                 'title' => 'Water and care for plants',
@@ -130,7 +130,7 @@ class TaskSeeder extends Seeder
                 'category_id' => $categories->where('name', 'Home')->first()->id,
                 'history' => [
                     ['completed_at' => Carbon::create(2025, 6, 9), 'notes' => 'Watered all plants and added fertilizer'],
-                ]
+                ],
             ],
         ];
 
@@ -152,6 +152,6 @@ class TaskSeeder extends Seeder
             }
         }
 
-        $this->command->info('Created ' . count($tasks) . ' tasks with their completion history.');
+        $this->command->info('Created '.count($tasks).' tasks with their completion history.');
     }
 }

@@ -93,10 +93,10 @@ class GenerateTaskRecommendations extends Command
         // Generate recommendations using Remi AI
         $this->info('Generating AI recommendations via Remi AI...');
         try {
-            $response = Http::timeout(60)->post(config('remi-ai.base_url') . '/agents/task-suggestion-agent/' . $user->id, $apiData);
+            $response = Http::timeout(60)->post(config('remi-ai.base_url').'/agents/task-suggestion-agent/'.$user->id, $apiData);
 
             if (! $response->successful()) {
-                $this->error('API request failed: ' . $response->status() . ' - ' . $response->body());
+                $this->error('API request failed: '.$response->status().' - '.$response->body());
 
                 return 1;
             }
@@ -120,7 +120,7 @@ class GenerateTaskRecommendations extends Command
             $count = 0;
             foreach ($apiResponse['recommended_tasks'] as $recommendedTask) {
                 if (! isset($recommendedTask['task_id'], $recommendedTask['priority'], $recommendedTask['reason'])) {
-                    $this->warn('Skipping recommendation with missing required fields: ' . json_encode($recommendedTask));
+                    $this->warn('Skipping recommendation with missing required fields: '.json_encode($recommendedTask));
 
                     continue;
                 }
@@ -140,7 +140,7 @@ class GenerateTaskRecommendations extends Command
                 $this->warn('No valid recommendations were created.');
             }
         } catch (\Exception $e) {
-            $this->error('Error calling Remi AI API: ' . $e->getMessage());
+            $this->error('Error calling Remi AI API: '.$e->getMessage());
             Log::error('GenerateTaskRecommendations API Error', [
                 'error' => $e->getMessage(),
                 'user_id' => $userId,
