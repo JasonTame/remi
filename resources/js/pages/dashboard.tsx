@@ -1,9 +1,13 @@
 import { Head } from '@inertiajs/react';
-import { Ban, CheckCircle, Trophy, XCircle } from 'lucide-react';
+import { Ban, Trophy } from 'lucide-react';
 
 import MainLayout from '@/layouts/main-layout';
 
-import { RecommendedTaskCard } from '@/components/dashboard/task-card';
+import { CompletedTasksSection } from '@/components/dashboard/completed-tasks-section';
+import { PendingTasksSection } from '@/components/dashboard/pending-tasks-section';
+import { SkippedTasksSection } from '@/components/dashboard/skipped-tasks-section';
+
+import { getWeekRange } from '@/lib/utils/tasks/get-week-range';
 
 import { useFlashMessages } from '@/hooks/use-flash-messages';
 
@@ -19,17 +23,7 @@ interface PageProps {
 
 export default function Dashboard({ pendingTasks, completedTasks, skippedTasks, weekStartDate, hasRecommendations }: PageProps) {
     useFlashMessages();
-
-    // Parse the week start date and calculate the end date
-    const weekStart = new Date(weekStartDate);
-    const weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekStart.getDate() + 6);
-
-    const formatDate = (date: Date) => {
-        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    };
-
-    const weekRange = `${formatDate(weekStart)} - ${formatDate(weekEnd)}`;
+    const weekRange = getWeekRange(weekStartDate);
 
     return (
         <MainLayout title="Dashboard">
@@ -48,17 +42,7 @@ export default function Dashboard({ pendingTasks, completedTasks, skippedTasks, 
                     </div>
                 )}
 
-                {/* Pending Tasks Section */}
-                {pendingTasks.length > 0 && (
-                    <div className="space-y-4">
-                        <h4 className="text-lg font-medium">Recommended Tasks</h4>
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            {pendingTasks.map((task) => (
-                                <RecommendedTaskCard key={task.id} task={task} />
-                            ))}
-                        </div>
-                    </div>
-                )}
+                <PendingTasksSection tasks={pendingTasks} />
 
                 {/* All tasks completed/skipped message */}
                 {pendingTasks.length === 0 && (completedTasks.length > 0 || skippedTasks.length > 0) && (
@@ -71,37 +55,9 @@ export default function Dashboard({ pendingTasks, completedTasks, skippedTasks, 
                     </div>
                 )}
 
-                {/* Completed Tasks Section */}
-                {completedTasks.length > 0 && (
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-2">
-                            <CheckCircle className="h-5 w-5 text-green-600" />
-                            <h4 className="text-lg font-medium">Completed Tasks</h4>
-                            <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">{completedTasks.length}</span>
-                        </div>
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            {completedTasks.map((task) => (
-                                <RecommendedTaskCard key={task.id} task={task} />
-                            ))}
-                        </div>
-                    </div>
-                )}
+                <CompletedTasksSection tasks={completedTasks} />
 
-                {/* Skipped Tasks Section */}
-                {skippedTasks.length > 0 && (
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-2">
-                            <XCircle className="h-5 w-5 text-orange-600" />
-                            <h4 className="text-lg font-medium">Skipped Tasks</h4>
-                            <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">{skippedTasks.length}</span>
-                        </div>
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            {skippedTasks.map((task) => (
-                                <RecommendedTaskCard key={task.id} task={task} />
-                            ))}
-                        </div>
-                    </div>
-                )}
+                <SkippedTasksSection tasks={skippedTasks} />
             </div>
         </MainLayout>
     );
