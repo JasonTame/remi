@@ -33,7 +33,10 @@ export const RecommendedTaskCard = ({ task }: Props) => {
 
     return (
         <>
-            <Card key={task.id} className={`overflow-hidden ${isCompleted ? 'bg-muted/50' : isSkipped ? 'bg-orange-50/50 border-orange-200' : ''}`}>
+            <Card
+                key={task.id}
+                className={`gap-0 overflow-hidden ${isCompleted ? 'bg-muted/50' : isSkipped ? 'bg-orange-50/50 border-orange-200' : ''}`}
+            >
                 <CardHeader className="pb-2">
                     <div className="flex items-start justify-between">
                         <CardTitle className="text-xl">{task.title}</CardTitle>
@@ -43,24 +46,27 @@ export const RecommendedTaskCard = ({ task }: Props) => {
                     </div>
                     {task.category && <div className="text-muted-foreground text-xs">{task.category}</div>}
                 </CardHeader>
-                <CardContent className="space-y-4">
-                    {task.lastCompleted && (
-                        <div className="text-muted-foreground text-sm">
-                            <Clock className="mr-1 inline-block h-3 w-3" />
-                            Last completed: {formatDistanceToNow(new Date(task.lastCompleted))} ago
-                        </div>
-                    )}
-                    {isSkipped && (
-                        <div className="text-orange-600 text-sm space-y-1">
-                            <div>
-                                <X className="mr-1 inline-block h-3 w-3" />
-                                Skipped: {formatDistanceToNow(new Date(task.skipped_at!))} ago
+                <CardContent className="flex flex-col gap-4 h-full justify-between">
+                    <div className="space-y-4">
+                        {task.lastCompleted && (
+                            <div className="text-muted-foreground text-sm">
+                                <Clock className="mr-1 inline-block h-3 w-3" />
+                                Last completed: {formatDistanceToNow(new Date(task.lastCompleted))} ago
                             </div>
-                            {task.skip_reason && <div className="text-orange-500 text-xs pl-4">Reason: {task.skip_reason}</div>}
-                        </div>
-                    )}
-                    <p className="text-sm">{task.reason}</p>
-                    <div className="flex gap-2">
+                        )}
+                        {isSkipped && (
+                            <div className="text-orange-600 text-sm space-y-1">
+                                <div>
+                                    <X className="mr-1 inline-block h-3 w-3" />
+                                    Skipped: {formatDistanceToNow(new Date(task.skipped_at!))} ago
+                                </div>
+                                {task.skip_reason && <div className="text-orange-500 text-xs pl-4">Reason: {task.skip_reason}</div>}
+                            </div>
+                        )}
+                        <p className="text-sm">{task.reason}</p>
+                    </div>
+
+                    <div className="flex gap-2 self">
                         {!isCompleted && !isSkipped ? (
                             <>
                                 <Button className="bg-accent hover:bg-accent/90 flex-1" onClick={handleComplete}>
