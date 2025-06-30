@@ -20,7 +20,7 @@ export default function AuthLayout({ children, title, subtitle }: PropsWithChild
                 <div className="flex justify-center">
                     <div className="flex items-center gap-3">
                         <AppLogo className="h-12 w-12 text-primary" />
-                        <span className="app-title text-3xl font-bold text-primary">Remi</span>
+                        <span className="app-title text-3xl font-bold text-primary font-comfortaa">Remi</span>
                     </div>
                 </div>
                 <h2 className="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">{title}</h2>

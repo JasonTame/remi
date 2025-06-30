@@ -3,17 +3,19 @@ import type React from 'react';
 export function AppLogo(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" {...props}>
-            <style>{`.primary { fill: #607D8B; } .secondary { fill: #E27D60; }.eye { fill: #FFFFFF; }`}</style>
-
             <path
-                className="primary"
-                d="M190,130h-15c0-30-8-50-18-50c-25,0-5,60-30,60
-        c-25,0-10-30-40-30s-15,30-40,30c-30,0-40-95,40-100c-1,4-1,8-1,12c0,5,1,10,3,15c2,5,5,9,9,12
-        c2,1.5,4,3,7,4c3,1,5,1,8,0.5c3-0.5,5-1.5,7-3c2-1.5,4-3,5-5c-15,18-35,2-35-25c0-4,0.5-7.5,1.5-10.5
-        c6-18,28-17,35-4C210,78,200,105,190,130z M170"
+                d="M190,130h-15c0-30-11.526075-46.5-18.52115-47-25,0-4.47885,57-29.47885,57s-10-30-40-30-15,30-40,30C17,140,7,45,87,40c-1,4-1,8-1,12c0,5,1,10,3,15s5,9,9,12c2,1.5,4,3,7,4s5,1,8,.5s5-1.5,7-3s4-3,5-5c-15,18-35,2-35-25c0-4,.5-7.5,1.5-10.5c6-18,28-17,35-4c79.544629,44.5,63.5,68.490895,63.5,94Z"
+                fill="#607d8b"
             />
-
-            <circle className="eye" cx="135" cy="55" r="3.5" />
+            <path
+                d="M45,85q-10-5-20,0-5,3,0,7q5,3,10-2"
+                transform="translate(8.348171-18.355151)"
+                fill="#607d8b"
+                stroke="#607d8b"
+                stroke-width="3"
+                stroke-linecap="round"
+            />
+            <circle r="3.5" transform="translate(135 55)" fill="#fff" />
         </svg>
     );
 }

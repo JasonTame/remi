@@ -10,7 +10,7 @@ export function AppSidebar() {
             <div className="border-b p-4">
                 <Link href="/" className="flex items-center gap-2">
                     <AppLogo className="text-primary h-8 w-10" />
-                    <span className="app-title text-primary text-xl font-bold">Remi</span>
+                    <span className="app-title text-primary text-xl font-bold font-comfortaa">Remi</span>
                 </Link>
                 <p className="text-muted-foreground mt-1 text-xs">Flexible Reminders for Real Life</p>
             </div>
