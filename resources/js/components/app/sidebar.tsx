@@ -1,10 +1,16 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Calendar, Clock, Home, Settings } from 'lucide-react';
 
 import { AppLogo } from '@/components/app/logo';
 import { Button } from '@/components/ui/button';
 
 export function AppSidebar() {
+    const { url } = usePage();
+
+    const isActive = (path: string) => {
+        return url.startsWith(path);
+    };
+
     return (
         <div className="flex h-screen w-64 flex-col border-r bg-white dark:bg-gray-900 flex-shrink-0">
             <div className="border-b p-4">
@@ -16,19 +22,19 @@ export function AppSidebar() {
             </div>
             <nav className="flex-1 space-y-2 p-4 overflow-y-auto">
                 <Button variant="ghost" className="w-full justify-start" asChild>
-                    <Link href="/dashboard">
+                    <Link href="/dashboard" className={isActive('/dashboard') ? 'font-bold' : ''}>
                         <Home className="mr-2 h-4 w-4" />
                         Dashboard
                     </Link>
                 </Button>
                 <Button variant="ghost" className="w-full justify-start" asChild>
-                    <Link href="/tasks">
+                    <Link href="/tasks" className={isActive('/tasks') ? 'font-bold' : ''}>
                         <Clock className="mr-2 h-4 w-4" />
                         All Tasks
                     </Link>
                 </Button>
                 <Button variant="ghost" className="w-full justify-start" asChild>
-                    <Link href="/task-history">
+                    <Link href="/task-history" className={isActive('/task-history') ? 'font-bold' : ''}>
                         <Calendar className="mr-2 h-4 w-4" />
                         History
                     </Link>
@@ -36,7 +42,7 @@ export function AppSidebar() {
             </nav>
             <div className="border-t p-4 flex-shrink-0">
                 <Button variant="ghost" className="w-full justify-start" asChild>
-                    <Link href="/settings">
+                    <Link href="/settings" className={isActive('/settings') ? 'font-bold' : ''}>
                         <Settings className="mr-2 h-4 w-4" />
                         Settings
                     </Link>

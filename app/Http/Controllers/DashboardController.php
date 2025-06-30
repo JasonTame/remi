@@ -61,7 +61,7 @@ class DashboardController extends Controller
             'completedTasks' => $completedTasks,
             'skippedTasks' => $skippedTasks,
             'weekStartDate' => $weekStartDate,
-            'hasRecommendations' => !empty($pendingTasks) || !empty($completedTasks) || !empty($skippedTasks),
+            'hasRecommendations' => ! empty($pendingTasks) || ! empty($completedTasks) || ! empty($skippedTasks),
         ]);
     }
 }

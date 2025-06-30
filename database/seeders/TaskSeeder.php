@@ -157,6 +157,6 @@ class TaskSeeder extends Seeder
             }
         }
 
-        $this->command->info('Created ' . count($tasks) . ' tasks with their completion history.');
+        $this->command->info('Created '.count($tasks).' tasks with their completion history.');
     }
 }

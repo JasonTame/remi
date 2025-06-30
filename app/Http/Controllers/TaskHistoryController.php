@@ -44,7 +44,6 @@ class TaskHistoryController extends Controller
                 ];
             });
 
-
         return Inertia::render('task-history', [
             'taskHistory' => $taskHistory,
         ]);
