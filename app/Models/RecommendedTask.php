@@ -51,4 +51,23 @@ class RecommendedTask extends Model
     {
         return $this->belongsTo(Task::class);
     }
+
+    /**
+     * Get formatted task data for dashboard
+     */
+    public function getDashboardDataAttribute()
+    {
+        return [
+            'id' => $this->id,
+            'task_id' => $this->task_id,
+            'title' => $this->task->title,
+            'lastCompleted' => $this->task->last_completed_at,
+            'category' => $this->task->category?->name,
+            'priority' => $this->priority,
+            'reason' => $this->reason,
+            'completed' => $this->completed,
+            'skipped_at' => $this->skipped_at,
+            'skip_reason' => $this->skip_reason,
+        ];
+    }
 }
