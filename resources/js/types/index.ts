@@ -70,3 +70,20 @@ export interface User {
     updated_at: string;
     [key: string]: unknown;
 }
+
+export interface Paginator<T> {
+    data: T[];
+    current_page: number;
+    from: number | null;
+    last_page: number;
+    links: Array<{
+        url: string | null;
+        label: string;
+        active: boolean;
+    }>;
+    per_page: number;
+    to: number | null;
+    total: number;
+    next_page_url: string | null;
+    prev_page_url: string | null;
+}

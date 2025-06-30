@@ -22,7 +22,7 @@ class TaskController extends Controller
         $tasks = Auth::user()->tasks()
             ->with('category')
             ->orderBy('title')
-            ->get();
+            ->paginate(10);
 
         $categories = Auth::user()->categories()->get();
 

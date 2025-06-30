@@ -1,4 +1,4 @@
-import { Check, Eye, MoreHorizontal, Pencil, Trash } from 'lucide-react';
+import { Eye, MoreHorizontal, Pencil, Trash } from 'lucide-react';
 import { useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
@@ -64,10 +64,6 @@ export const TaskCards = ({ tasks, categories }: Props) => {
                                         <DropdownMenuItem onClick={() => handleEditTask(task)}>
                                             <Pencil className="mr-2 h-4 w-4" />
                                             Edit
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            <Check className="mr-2 h-4 w-4" />
-                                            Mark as complete
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>

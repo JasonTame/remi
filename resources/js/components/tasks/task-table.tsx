@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from 'date-fns';
-import { ArrowUpDown, Check, Eye, MoreHorizontal, Pencil, Trash } from 'lucide-react';
+import { ArrowUpDown, Eye, MoreHorizontal, Pencil, Trash } from 'lucide-react';
 import { useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
@@ -107,10 +107,6 @@ export const TaskTable = ({ tasks, categories, sortOrder, onSortChange }: Props)
                                                     <DropdownMenuItem onClick={() => handleDeleteTask(task)}>
                                                         <Trash className="mr-2 h-4 w-4" />
                                                         Delete
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuItem>
-                                                        <Check className="mr-2 h-4 w-4" />
-                                                        Mark as complete
                                                     </DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
