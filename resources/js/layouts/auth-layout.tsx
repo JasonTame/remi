@@ -1,34 +1,34 @@
-import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
 import { AppLogo } from '@/components/app/logo';
+import { ModeToggle } from '@/components/app/mode-toggle';
 
 interface AuthLayoutProps {
     name?: string;
     title?: string;
-    description?: string;
+    subtitle?: string;
 }
 
-export default function AuthLayout({ children, title, description }: PropsWithChildren<AuthLayoutProps>) {
+export default function AuthLayout({ children, title, subtitle }: PropsWithChildren<AuthLayoutProps>) {
     return (
-        <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-            <div className="w-full max-w-sm">
-                <div className="flex flex-col gap-8">
-                    <div className="flex flex-col items-center gap-4">
-                        <Link href={route('dashboard')} className="flex flex-col items-center gap-2 font-medium">
-                            <div className="mb-1 flex h-8 w-12 items-center justify-center rounded-md">
-                                <AppLogo className="h-8 w-12" />
-                            </div>
-                            <span className="sr-only">{title}</span>
-                        </Link>
+        <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-gray-950 dark:to-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+            <div className="absolute top-4 right-4">
+                <ModeToggle />
+            </div>
 
-                        <div className="space-y-2 text-center">
-                            <h1 className="text-xl font-medium">{title}</h1>
-                            <p className="text-muted-foreground text-center text-sm">{description}</p>
-                        </div>
+            <div className="sm:mx-auto sm:w-full sm:max-w-md">
+                <div className="flex justify-center">
+                    <div className="flex items-center gap-3">
+                        <AppLogo className="h-12 w-12 text-primary" />
+                        <span className="app-title text-3xl font-bold text-primary">Remi</span>
                     </div>
-                    {children}
                 </div>
+                <h2 className="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">{title}</h2>
+                <p className="mt-2 text-center text-sm text-muted-foreground">{subtitle}</p>
+            </div>
+
+            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                <div className="bg-white dark:bg-gray-900 py-8 px-4 shadow-lg sm:rounded-lg sm:px-10 border">{children}</div>
             </div>
         </div>
     );
