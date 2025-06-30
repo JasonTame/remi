@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 import type { Category, Task } from '@/types';
 
+import { Textarea } from '../ui/textarea';
+
 interface TaskEditProps {
     task: Task;
     categories: Category[];
@@ -19,6 +21,7 @@ export function TaskEditDialog({ task, categories, open, onOpenChange }: TaskEdi
     const { data, setData, put, processing, errors } = useForm({
         title: task.title,
         timing_description: task.timing_description,
+        description: task.description || '',
         category_id: task.category?.id?.toString() || '',
     });
 
@@ -39,13 +42,23 @@ export function TaskEditDialog({ task, categories, open, onOpenChange }: TaskEdi
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
-                        <Label htmlFor="title">Task Title</Label>
-                        <Input id="title" value={data.title} onChange={(e) => setData('title', e.target.value)} required />
+                        <Label htmlFor="title">
+                            Task Title <span className="text-red-500">*</span>
+                        </Label>
+                        <Input
+                            id="title"
+                            placeholder="e.g. 'Schedule a dental checkup'"
+                            value={data.title}
+                            onChange={(e) => setData('title', e.target.value)}
+                            required
+                        />
                         {errors.title && <p className="text-sm text-red-600">{errors.title}</p>}
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="category_id">Category</Label>
+                        <Label htmlFor="category_id">
+                            Category <span className="text-red-500">*</span>
+                        </Label>
                         <Select value={data.category_id} onValueChange={(value) => setData('category_id', value)}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a category" />
@@ -62,17 +75,25 @@ export function TaskEditDialog({ task, categories, open, onOpenChange }: TaskEdi
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="timing_description">Timing Description</Label>
-                        <textarea
+                        <Label htmlFor="timing_description">
+                            Timing Description <span className="text-red-500">*</span>
+                        </Label>
+                        <Textarea
                             id="timing_description"
                             value={data.timing_description}
                             onChange={(e) => setData('timing_description', e.target.value)}
-                            rows={4}
-                            className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex min-h-[80px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                             placeholder="Describe how often this task should be done (e.g., 'Every month', 'Once a year in spring', etc.)"
                             required
                         />
                         {errors.timing_description && <p className="text-sm text-red-600">{errors.timing_description}</p>}
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="description">Description (optional)</Label>
+                        <Textarea id="description" value={data.description} onChange={(e) => setData('description', e.target.value)} />
+                        <p className="text-sm text-muted-foreground">
+                            This is a description of the task. It will be displayed in the task details view.
+                        </p>
                     </div>
 
                     <div className="flex justify-end space-x-2 pt-4">

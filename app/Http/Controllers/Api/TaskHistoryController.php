@@ -32,6 +32,7 @@ class TaskHistoryController extends Controller
                                 'id' => $task->id,
                                 'title' => $task->title,
                                 'timing_description' => $task->timing_description,
+                                'description' => $task->description,
                                 'category' => $task->category ? [
                                     'id' => $task->category->id,
                                     'name' => $task->category->name,
@@ -120,6 +121,7 @@ class TaskHistoryController extends Controller
                             'id' => $task->id,
                             'title' => $task->title,
                             'timing_description' => $task->timing_description,
+                            'description' => $task->description,
                             'category' => $task->category ? [
                                 'id' => $task->category->id,
                                 'name' => $task->category->name,

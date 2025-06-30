@@ -21,6 +21,7 @@ class Task extends Model
         'category_id',
         'title',
         'timing_description',
+        'description',
         'last_completed_at',
     ];
 

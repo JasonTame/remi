@@ -40,6 +40,7 @@ class TaskSeeder extends Seeder
                 'last_completed_at' => Carbon::create(2024, 11, 15),
                 'user_id' => $user->id,
                 'category_id' => $categories->where('name', 'Health')->first()->id,
+                'description' => 'Schedule a dental checkup at Northglen Medical Centre.',
                 'history' => [
                     ['completed_at' => Carbon::create(2024, 5, 10), 'notes' => 'Regular cleaning and checkup'],
                     ['completed_at' => Carbon::create(2024, 11, 15), 'notes' => 'Small cavity filled'],
@@ -51,6 +52,7 @@ class TaskSeeder extends Seeder
                 'last_completed_at' => Carbon::create(2025, 3, 1),
                 'user_id' => $user->id,
                 'category_id' => $categories->where('name', 'Home')->first()->id,
+                'description' => 'Change the air filters in the lounge and bedroom.',
                 'history' => [
                     ['completed_at' => Carbon::create(2024, 12, 1), 'notes' => 'Replaced all HVAC filters'],
                     ['completed_at' => Carbon::create(2025, 3, 1), 'notes' => 'Spring filter replacement'],
@@ -84,6 +86,7 @@ class TaskSeeder extends Seeder
                 'last_completed_at' => Carbon::create(2025, 5, 15),
                 'user_id' => $user->id,
                 'category_id' => $categories->where('name', 'Admin')->first()->id,
+                'description' => 'Update the operating system and backup important files.',
                 'history' => [
                     ['completed_at' => Carbon::create(2025, 4, 15), 'notes' => 'Updated OS and backed up important files'],
                     ['completed_at' => Carbon::create(2025, 5, 15), 'notes' => 'Security updates and cloud backup verification'],
@@ -106,6 +109,7 @@ class TaskSeeder extends Seeder
                 'last_completed_at' => Carbon::create(2025, 5, 30),
                 'user_id' => $user->id,
                 'category_id' => $categories->where('name', 'Admin')->first()->id,
+                'description' => 'Check Xero and the family spreadsheet.',
                 'history' => [
                     ['completed_at' => Carbon::create(2025, 4, 28), 'notes' => 'Reviewed monthly expenses and updated budget'],
                     ['completed_at' => Carbon::create(2025, 5, 30), 'notes' => 'Paid bills and reviewed investment portfolio'],
@@ -117,6 +121,7 @@ class TaskSeeder extends Seeder
                 'last_completed_at' => Carbon::create(2025, 6, 18),
                 'user_id' => $user->id,
                 'category_id' => $categories->where('name', 'Health')->first()->id,
+                'description' => 'Do 45 minutes of cardio and strength training every 3 days.',
                 'history' => [
                     ['completed_at' => Carbon::create(2025, 6, 15), 'notes' => '45-minute cardio and strength training'],
                     ['completed_at' => Carbon::create(2025, 6, 18), 'notes' => 'Yoga and stretching session'],
@@ -152,6 +157,6 @@ class TaskSeeder extends Seeder
             }
         }
 
-        $this->command->info('Created '.count($tasks).' tasks with their completion history.');
+        $this->command->info('Created ' . count($tasks) . ' tasks with their completion history.');
     }
 }

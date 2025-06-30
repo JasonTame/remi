@@ -42,6 +42,7 @@ class TaskController extends Controller
         Auth::user()->tasks()->create([
             'title' => $validated['title'],
             'timing_description' => $validated['timing_description'],
+            'description' => $validated['description'] ?? null,
             'category_id' => $validated['category_id'] ?? null,
             'last_completed_at' => $validated['last_completed_at'] ?? null,
         ]);
@@ -61,6 +62,7 @@ class TaskController extends Controller
         $task->update([
             'title' => $validated['title'],
             'timing_description' => $validated['timing_description'],
+            'description' => $validated['description'] ?? null,
             'category_id' => $validated['category_id'] ?? null,
             'last_completed_at' => $validated['last_completed_at'] ?? null,
         ]);

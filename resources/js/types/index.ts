@@ -55,6 +55,7 @@ export interface Task {
     id: number;
     title: string;
     timing_description: string;
+    description: string | null;
     last_completed_at: Date | null;
     category: Category | null;
 }

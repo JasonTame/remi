@@ -32,6 +32,7 @@ class TaskHistoryController extends Controller
                         'id' => $history->task->id,
                         'title' => $history->task->title,
                         'timing_description' => $history->task->timing_description,
+                        'description' => $history->task->description,
                         'last_completed_at' => $history->task->last_completed_at?->toISOString(),
                         'category' => $history->task->category ? [
                             'id' => $history->task->category->id,
@@ -42,6 +43,7 @@ class TaskHistoryController extends Controller
                     ],
                 ];
             });
+
 
         return Inertia::render('task-history', [
             'taskHistory' => $taskHistory,

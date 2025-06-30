@@ -24,6 +24,7 @@ class StoreTaskRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'timing_description' => ['required', 'string', 'max:1000'],
+            'description' => ['nullable', 'string', 'max:1000'],
             'category_id' => ['nullable', 'exists:categories,id'],
             'last_completed_at' => ['nullable', 'date'],
         ];

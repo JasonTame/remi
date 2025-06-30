@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
             $table->string('title');
             $table->text('timing_description');
+            $table->text('description')->nullable();
             $table->timestamp('last_completed_at')->nullable();
             $table->timestamps();
         });

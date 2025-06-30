@@ -24,6 +24,7 @@ class TaskFactory extends Factory
                 'Twice a year',
                 'Every 2-3 weeks',
             ]),
+            'description' => $this->faker->optional(0.7)->sentence(10),
             'last_completed_at' => $this->faker->optional(0.7)->dateTimeBetween('-6 months', 'now'),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),

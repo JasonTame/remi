@@ -1,5 +1,5 @@
 import { format, formatDistanceToNow } from 'date-fns';
-import { BarChart2, Calendar, Clock } from 'lucide-react';
+import { Calendar, Clock, FileText } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 
@@ -40,15 +40,16 @@ export function TaskDetail({ task }: TaskDetailProps) {
                 </div>
             </div>
 
-            <div className="space-y-2">
-                <div className="text-muted-foreground flex items-center text-sm">
-                    <BarChart2 className="mr-2 h-4 w-4" />
-                    Completion history
+            {/* Replace this completion history area with the task description */}
+            {task.description && (
+                <div className="space-y-2">
+                    <div className="text-muted-foreground flex items-center text-sm">
+                        <FileText className="mr-2 h-4 w-4" />
+                        Description
+                    </div>
+                    <p>{task.description}</p>
                 </div>
-                <div className="text-muted-foreground flex h-24 items-center justify-center rounded-md border">
-                    Completion history chart would go here
-                </div>
-            </div>
+            )}
         </div>
     );
 }
