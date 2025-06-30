@@ -6,7 +6,6 @@ import MainLayout from '@/layouts/main-layout';
 
 import { Calendar } from '@/components/calendar';
 import { CalendarHeader } from '@/components/calendar/header';
-import { CalendarLegend } from '@/components/calendar/legend';
 import { TaskViewDialog } from '@/components/tasks/task-view-dialog';
 
 import type { Task } from '@/types';
@@ -71,7 +70,7 @@ export default function TaskHistory({ taskHistory }: TaskHistoryProps) {
                     <div className="border border-input rounded shadow">
                         <Calendar currentDate={currentDate} taskHistory={taskHistory} onTaskClick={handleViewTask} />
                     </div>
-                    <CalendarLegend />
+                    {/* <CalendarLegend /> */}
                 </div>
             </div>
             {selectedTask && <TaskViewDialog task={selectedTask} open={viewDialogOpen} onOpenChange={setViewDialogOpen} />}

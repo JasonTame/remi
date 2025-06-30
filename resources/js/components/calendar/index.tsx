@@ -66,7 +66,7 @@ export function Calendar({ currentDate, taskHistory, onTaskClick }: CalendarProp
                         <div
                             key={dayIdx}
                             className={cn(
-                                'min-h-[80px] sm:min-h-[120px] bg-card p-1 sm:p-2',
+                                'min-h-[80px] sm:min-h-[120px] bg-card p-3',
                                 !isCurrentMonth && 'text-muted-foreground bg-muted/50',
                                 isSelected && 'bg-accent/20',
                             )}
