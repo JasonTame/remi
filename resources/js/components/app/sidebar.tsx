@@ -28,9 +28,9 @@ export function AppSidebar() {
                     </Link>
                 </Button>
                 <Button variant="ghost" className="w-full justify-start" asChild>
-                    <Link href="/calendar">
+                    <Link href="/task-history">
                         <Calendar className="mr-2 h-4 w-4" />
-                        Calendar
+                        History
                     </Link>
                 </Button>
             </nav>
