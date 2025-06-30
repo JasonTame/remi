@@ -7,6 +7,7 @@ import MainLayout from '@/layouts/main-layout';
 import { Calendar } from '@/components/calendar';
 import { CalendarHeader } from '@/components/calendar/header';
 import { CalendarLegend } from '@/components/calendar/legend';
+import { TaskViewDialog } from '@/components/tasks/task-view-dialog';
 
 import type { Task } from '@/types';
 
@@ -24,6 +25,13 @@ interface TaskHistoryProps {
 
 export default function TaskHistory({ taskHistory }: TaskHistoryProps) {
     const [currentDate, setCurrentDate] = useState(new Date());
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const [viewDialogOpen, setViewDialogOpen] = useState(false);
+
+    const handleViewTask = (task: Task) => {
+        setSelectedTask(task);
+        setViewDialogOpen(true);
+    };
 
     const handlePreviousMonth = () => {
         setCurrentDate(subMonths(currentDate, 1));
@@ -45,11 +53,6 @@ export default function TaskHistory({ taskHistory }: TaskHistoryProps) {
         setCurrentDate(new Date());
     };
 
-    const handleTaskClick = (task: Task) => {
-        console.log('Task clicked:', task);
-        // You can add task detail modal or navigation here
-    };
-
     return (
         <MainLayout title="Task History">
             <Head title="Task History" />
@@ -66,11 +69,12 @@ export default function TaskHistory({ taskHistory }: TaskHistoryProps) {
                     />
 
                     <div className="border border-input rounded shadow">
-                        <Calendar currentDate={currentDate} taskHistory={taskHistory} onTaskClick={handleTaskClick} />
+                        <Calendar currentDate={currentDate} taskHistory={taskHistory} onTaskClick={handleViewTask} />
                     </div>
                     <CalendarLegend />
                 </div>
             </div>
+            {selectedTask && <TaskViewDialog task={selectedTask} open={viewDialogOpen} onOpenChange={setViewDialogOpen} />}
         </MainLayout>
     );
 }

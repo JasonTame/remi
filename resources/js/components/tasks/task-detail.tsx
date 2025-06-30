@@ -1,8 +1,7 @@
 import { format, formatDistanceToNow } from 'date-fns';
-import { BarChart2, Calendar, Check, Clock } from 'lucide-react';
+import { BarChart2, Calendar, Clock } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 
 import { getCategoryColor } from '@/lib/utils/tasks/get-category-color';
 
@@ -34,18 +33,11 @@ export function TaskDetail({ task }: TaskDetailProps) {
 
                 <div className="space-y-1">
                     <div className="text-muted-foreground flex items-center text-sm">
-                        <Calendar className="mr-2 h-4 w-4" />
-                        Next suggested
+                        <Clock className="mr-2 h-4 w-4" />
+                        Frequency
                     </div>
+                    <p>{task.timing_description}</p>
                 </div>
-            </div>
-
-            <div className="space-y-1">
-                <div className="text-muted-foreground flex items-center text-sm">
-                    <Clock className="mr-2 h-4 w-4" />
-                    Frequency
-                </div>
-                <p>{task.timing_description}</p>
             </div>
 
             <div className="space-y-2">
@@ -56,16 +48,6 @@ export function TaskDetail({ task }: TaskDetailProps) {
                 <div className="text-muted-foreground flex h-24 items-center justify-center rounded-md border">
                     Completion history chart would go here
                 </div>
-            </div>
-
-            <div className="flex gap-2 pt-4">
-                <Button className="bg-accent hover:bg-accent/90 flex-1">
-                    <Check className="mr-2 h-4 w-4" />
-                    Mark as complete
-                </Button>
-                <Button variant="outline" className="flex-1">
-                    Edit task
-                </Button>
             </div>
         </div>
     );
