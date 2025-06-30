@@ -39,7 +39,7 @@ export function AppHeader({ title, showAddButton = false, onAddClick, avatar }: 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                            <Avatar className="h-8 w-8 p-1 border border-gray-200">
+                            <Avatar className="h-8 w-8 border border-gray-200">
                                 <AvatarImage src={avatar} alt="@user" />
                                 <AvatarFallback>U</AvatarFallback>
                             </Avatar>

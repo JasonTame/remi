@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Creativeorange\Gravatar\Facades\Gravatar;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -12,9 +13,13 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $email = 'jasonmiketame2@gmail.com';
+        $avatar = Gravatar::get($email);
+
         User::factory()->create([
             'name' => 'Jason Tame',
-            'email' => 'jasonmiketame2@gmail.com',
+            'email' => $email,
+            'avatar' => $avatar,
             'password' => bcrypt('password'),
         ]);
     }
