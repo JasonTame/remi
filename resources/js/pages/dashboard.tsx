@@ -31,8 +31,6 @@ export default function Dashboard({ pendingTasks, completedTasks, skippedTasks, 
 
     const weekRange = `${formatDate(weekStart)} - ${formatDate(weekEnd)}`;
 
-    console.log(skippedTasks);
-
     return (
         <MainLayout title="Dashboard">
             <Head title="Dashboard" />
