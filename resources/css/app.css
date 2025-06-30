@@ -9,7 +9,10 @@
 
 @theme {
     --font-sans:
-        'Inter', 'Nunito', 'Comfortaa', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+    --font-nunito:
+        'Nunito', 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
     --radius-lg: var(--radius);
@@ -172,6 +175,7 @@
     h5,
     h6 {
         @apply font-bold;
+        font-family: var(--font-nunito);
     }
 
     .app-title {
