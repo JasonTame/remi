@@ -20,10 +20,12 @@ class DashboardController extends Controller
             ->where('week_start_date', $weekStartDate)
             ->first();
 
-        // Get recommended tasks with their related task data
-        $recommendedTasks = [];
+        $pendingTasks = [];
+        $completedTasks = [];
+        $skippedTasks = [];
+
         if ($weeklyRecommendation) {
-            $recommendedTasks = $weeklyRecommendation->recommendedTasks()
+            $allRecommendedTasks = $weeklyRecommendation->recommendedTasks()
                 ->with(['task', 'task.category'])
                 ->orderBy('priority')
                 ->get()
@@ -41,12 +43,25 @@ class DashboardController extends Controller
                         'skip_reason' => $recommendedTask->skip_reason,
                     ];
                 });
+
+            // Separate tasks by their status
+            foreach ($allRecommendedTasks as $task) {
+                if ($task['completed']) {
+                    $completedTasks[] = $task;
+                } elseif ($task['skipped_at'] !== null) {
+                    $skippedTasks[] = $task;
+                } else {
+                    $pendingTasks[] = $task;
+                }
+            }
         }
 
         return Inertia::render('dashboard', [
-            'recommendedTasks' => $recommendedTasks,
+            'pendingTasks' => $pendingTasks,
+            'completedTasks' => $completedTasks,
+            'skippedTasks' => $skippedTasks,
             'weekStartDate' => $weekStartDate,
-            'hasRecommendations' => ! empty($recommendedTasks),
+            'hasRecommendations' => !empty($pendingTasks) || !empty($completedTasks) || !empty($skippedTasks),
         ]);
     }
 }
