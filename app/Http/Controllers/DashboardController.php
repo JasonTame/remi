@@ -31,13 +31,13 @@ class DashboardController extends Controller
 
         $allRecommendedTasks = $weeklyRecommendation->recommendedTasks()
             ->with(['task', 'task.category'])
-            ->orderBy('priority')
+            ->orderBy('priority', 'desc')
             ->get();
 
         return Inertia::render('dashboard', [
-            'pendingTasks' => $allRecommendedTasks->filter(fn ($task) => ! $task->completed && $task->skipped_at === null)->pluck('dashboard_data')->values(),
-            'completedTasks' => $allRecommendedTasks->filter(fn ($task) => $task->completed)->pluck('dashboard_data')->values(),
-            'skippedTasks' => $allRecommendedTasks->filter(fn ($task) => $task->skipped_at !== null)->pluck('dashboard_data')->values(),
+            'pendingTasks' => $allRecommendedTasks->filter(fn($task) => ! $task->completed && $task->skipped_at === null)->pluck('dashboard_data')->values(),
+            'completedTasks' => $allRecommendedTasks->filter(fn($task) => $task->completed)->pluck('dashboard_data')->values(),
+            'skippedTasks' => $allRecommendedTasks->filter(fn($task) => $task->skipped_at !== null)->pluck('dashboard_data')->values(),
             'weekStartDate' => $weekStartDate,
             'hasRecommendations' => $allRecommendedTasks->isNotEmpty(),
         ]);
