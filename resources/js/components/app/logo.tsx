@@ -2,7 +2,7 @@ import type React from 'react';
 
 export function AppLogo(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190" {...props}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" {...props}>
             <style>{`.primary { fill: #607D8B; } .secondary { fill: #E27D60; }.eye { fill: #FFFFFF; }`}</style>
 
             <path
