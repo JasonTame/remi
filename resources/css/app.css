@@ -80,7 +80,7 @@
 
 :root {
     /* Converted from HSL to OKLCH for Tailwind v4 */
-    --background: oklch(0.97 0.02 80); /* 40deg 30% 96% */
+    --background: oklch(0.99 0.01 90); /* 40deg 30% 96% */
     --foreground: oklch(0.145 0.04 255); /* 222.2deg 84% 4.9% */
 
     --card: oklch(1 0 0); /* 0deg 0% 100% */
