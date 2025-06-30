@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('priority');
             $table->text('reason');
             $table->boolean('completed')->default(false);
+            $table->timestamp('skipped_at')->nullable();
+            $table->text('skip_reason')->nullable();
             $table->timestamps();
         });
     }
