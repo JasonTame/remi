@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 export function LandingHero() {
     return (
-        <section className="relative py-20 sm:py-32 overflow-hidden">
+        <section className="relative py-20 overflow-hidden">
             <div className="absolute inset-0 z-10">
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full blur-3xl"></div>
 
