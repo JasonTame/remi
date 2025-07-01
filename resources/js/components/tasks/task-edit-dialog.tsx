@@ -1,5 +1,6 @@
 import { useForm } from '@inertiajs/react';
 
+import { InputDatePicker } from '@/components/form/input-date-picker';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -23,6 +24,7 @@ export function TaskEditDialog({ task, categories, open, onOpenChange }: TaskEdi
         timing_description: task.timing_description,
         description: task.description || '',
         category_id: task.category?.id?.toString() || '',
+        last_completed_at: task.last_completed_at ? new Date(task.last_completed_at) : undefined,
     });
 
     function handleSubmit(e: React.FormEvent) {
@@ -33,6 +35,10 @@ export function TaskEditDialog({ task, categories, open, onOpenChange }: TaskEdi
             },
         });
     }
+
+    const handleLastCompletedChange = (date: Date | undefined) => {
+        setData('last_completed_at', date);
+    };
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -87,6 +93,15 @@ export function TaskEditDialog({ task, categories, open, onOpenChange }: TaskEdi
                         />
                         {errors.timing_description && <p className="text-sm text-red-600">{errors.timing_description}</p>}
                     </div>
+
+                    <InputDatePicker
+                        id="last_completed_at"
+                        label="Last Completed At (optional)"
+                        value={data.last_completed_at}
+                        onChange={handleLastCompletedChange}
+                        placeholder="Select last completion date"
+                        error={errors.last_completed_at}
+                    />
 
                     <div className="space-y-2">
                         <Label htmlFor="description">Description (optional)</Label>

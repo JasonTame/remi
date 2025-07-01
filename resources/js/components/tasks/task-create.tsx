@@ -1,5 +1,6 @@
 import { useForm } from '@inertiajs/react';
 
+import { InputDatePicker } from '@/components/form/input-date-picker';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -22,6 +23,7 @@ export function TaskCreate({ categories, open, onOpenChange }: TaskCreateProps) 
         timing_description: '',
         description: '',
         category_id: '',
+        last_completed_at: undefined as Date | undefined,
     });
 
     function handleSubmit(e: React.FormEvent) {
@@ -38,6 +40,10 @@ export function TaskCreate({ categories, open, onOpenChange }: TaskCreateProps) 
         onOpenChange(false);
         reset();
     }
+
+    const handleLastCompletedChange = (date: Date | undefined) => {
+        setData('last_completed_at', date);
+    };
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -92,6 +98,15 @@ export function TaskCreate({ categories, open, onOpenChange }: TaskCreateProps) 
                         />
                         {errors.timing_description && <p className="text-sm text-red-600">{errors.timing_description}</p>}
                     </div>
+
+                    <InputDatePicker
+                        id="last_completed_at"
+                        label="Last Completed At (optional)"
+                        value={data.last_completed_at}
+                        onChange={handleLastCompletedChange}
+                        placeholder="Select last completion date"
+                        error={errors.last_completed_at}
+                    />
 
                     <div className="space-y-2">
                         <Label htmlFor="description">Description (optional)</Label>
