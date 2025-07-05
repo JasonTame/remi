@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $email = 'jasonmiketame2@gmail.com';
+        $email = 'jason@useremi.app';
         $avatar = Gravatar::get($email);
 
         User::factory()->create([

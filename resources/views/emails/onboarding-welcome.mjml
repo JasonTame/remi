@@ -1,0 +1,239 @@
+<mjml>
+    <mj-head>
+        <mj-title>Welcome to Remi</mj-title>
+        <mj-font name="Inter" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+        <mj-attributes>
+            <mj-text
+                font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif"
+                color="#4b5563"
+                line-height="1.6"
+            />
+            <mj-section background-color="#f8f9fa" padding="0" />
+            <mj-column padding="0" />
+        </mj-attributes>
+        <mj-style>
+            .logo-container { text-align: center; margin-bottom: 8px; } .logo-background { background-color: #ffffff; border-radius: 50%; padding:
+            12px; margin: 0 auto 12px; box-shadow: 0 4px 12px rgba(96, 125, 139, 0.15); display: inline-block; } .tip-number { background-color:
+            #607D8B; color: #ffffff; border-radius: 50%; width: 32px; height: 32px; line-height: 32px; text-align: center; font-weight: 600; font-size: 14px; margin: 0 auto 16px; display: block; } .pro-tip {
+            background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px; } .cta-button { background-color: #607D8B
+            !important; border-radius: 8px !important; color: #ffffff !important; font-weight: 600 !important; text-decoration: none !important;
+            padding: 14px 28px !important; } .welcome-title { text-align: center !important; }
+        </mj-style>
+    </mj-head>
+    <mj-body background-color="#f8f9fa">
+        <!-- Header with logo -->
+        <mj-section background-color="#f8f9fa" padding="32px 0">
+            <mj-column>
+                <mj-text align="center" css-class="logo-container">
+                    <div class="logo-background">
+                        <img src="{{ asset('favicon.svg') }}" width="48" height="48" alt="Remi logo" style="display: block" />
+                    </div>
+                    <div style="font-size: 28px; font-weight: bold; color: #607d8b; margin: 0; font-family: Georgia, serif; display: inline-block">
+                        Remi
+                    </div>
+                </mj-text>
+                <mj-text align="center" font-size="14px" color="#6b7280" font-style="italic" padding="0"> Flexible Reminders for Real Life </mj-text>
+            </mj-column>
+        </mj-section>
+
+        <!-- Welcome message -->
+        <mj-section background-color="#ffffff" border-radius="12px" padding="32px">
+            <mj-column>
+                <mj-text
+                    align="center"
+                    font-size="28px"
+                    font-weight="bold"
+                    color="#1f2937"
+                    line-height="1.3"
+                    padding-bottom="16px"
+                    css-class="welcome-title"
+                >
+                    Welcome to Remi! 🎉
+                </mj-text>
+                <mj-text align="center" font-size="16px" color="#4b5563" line-height="1.6">
+                    We're thrilled you've joined thousands of people who never forget important tasks anymore. Remi is here to help you stay on top of
+                    life's irregular but important commitments – from dental checkups to catching up with old friends.
+                </mj-text>
+            </mj-column>
+        </mj-section>
+
+        <!-- Getting started tips -->
+        <mj-section background-color="#ffffff" border-radius="12px" padding="32px">
+            <mj-column>
+                <mj-text align="center" font-size="22px" font-weight="bold" color="#1f2937" padding-bottom="24px">
+                    🚀 Get the most out of Remi in 3 simple steps
+                </mj-text>
+
+                <!-- Tip 1 -->
+                <mj-table>
+                    <tr>
+                        <td style="width: 50px; vertical-align: top; padding-top: 4px">
+                            <div
+                                style="
+                                    background-color: #607d8b;
+                                    color: #ffffff;
+                                    border-radius: 50%;
+                                    width: 32px;
+                                    height: 32px;
+                                    line-height: 32px;
+                                    text-align: center;
+                                    font-weight: 600;
+                                    font-size: 14px;
+                                    margin: 0 auto;
+                                    display: block;
+                                "
+                            >
+                                1
+                            </div>
+                        </td>
+                        <td style="padding-left: 16px">
+                            <h3 style="font-size: 18px; font-weight: bold; color: #1f2937; margin: 0 0 8px 0">Add your first tasks</h3>
+                            <p style="font-size: 14px; color: #4b5563; line-height: 1.5; margin: 0 0 8px 0">
+                                Start by adding 3-5 recurring tasks using natural language. Try phrases like:
+                            </p>
+                            <ul style="font-size: 14px; color: #4b5563; line-height: 1.5; margin: 0 0 8px 0; padding-left: 20px">
+                                <li style="margin-bottom: 4px">"Dental checkup every 6 months"</li>
+                                <li style="margin-bottom: 4px">"Call parents weekly"</li>
+                                <li style="margin-bottom: 4px">"Car maintenance about twice a year"</li>
+                                <li style="margin-bottom: 4px">"Deep clean kitchen every few months"</li>
+                            </ul>
+                            <p style="font-size: 14px; color: #4b5563; line-height: 1.5; margin: 0">
+                                Remi's AI understands how you naturally think about time – no rigid scheduling needed!
+                            </p>
+                        </td>
+                    </tr>
+                </mj-table>
+
+                <mj-spacer height="24px" />
+
+                <!-- Tip 2 -->
+                <mj-table>
+                    <tr>
+                        <td style="width: 50px; vertical-align: top; padding-top: 4px">
+                            <div
+                                style="
+                                    background-color: #607d8b;
+                                    color: #ffffff;
+                                    border-radius: 50%;
+                                    width: 32px;
+                                    height: 32px;
+                                    line-height: 32px;
+                                    text-align: center;
+                                    font-weight: 600;
+                                    font-size: 14px;
+                                    margin: 0 auto;
+                                    display: block;
+                                "
+                            >
+                                2
+                            </div>
+                        </td>
+                        <td style="padding-left: 16px">
+                            <h3 style="font-size: 18px; font-weight: bold; color: #1f2937; margin: 0 0 8px 0">Complete tasks to teach the AI</h3>
+                            <p style="font-size: 14px; color: #4b5563; line-height: 1.5; margin: 0">
+                                When you complete tasks, mark them as done in Remi. This helps our AI learn your patterns and make better suggestions.
+                                The more you use Remi, the smarter it gets at understanding your schedule and preferences.
+                            </p>
+                        </td>
+                    </tr>
+                </mj-table>
+
+                <mj-spacer height="24px" />
+
+                <!-- Tip 3 -->
+                <mj-table>
+                    <tr>
+                        <td style="width: 50px; vertical-align: top; padding-top: 4px">
+                            <div
+                                style="
+                                    background-color: #607d8b;
+                                    color: #ffffff;
+                                    border-radius: 50%;
+                                    width: 32px;
+                                    height: 32px;
+                                    line-height: 32px;
+                                    text-align: center;
+                                    font-weight: 600;
+                                    font-size: 14px;
+                                    margin: 0 auto;
+                                    display: block;
+                                "
+                            >
+                                3
+                            </div>
+                        </td>
+                        <td style="padding-left: 16px">
+                            <h3 style="font-size: 18px; font-weight: bold; color: #1f2937; margin: 0 0 8px 0">Check your weekly digest</h3>
+                            <p style="font-size: 14px; color: #4b5563; line-height: 1.5; margin: 0">
+                                Every week, Remi will send you a gentle email with suggested tasks. These aren't rigid deadlines – they're friendly
+                                suggestions based on your patterns. Complete what makes sense, skip what doesn't.
+                            </p>
+                        </td>
+                    </tr>
+                </mj-table>
+            </mj-column>
+        </mj-section>
+
+        <!-- CTA Button -->
+        <mj-section background-color="#ffffff" border-radius="12px" padding="32px" >
+            <mj-column>
+                <mj-button
+                    href="https://remi.app/dashboard"
+                    background-color="#607D8B"
+                    color="#ffffff"
+                    font-weight="600"
+                    border-radius="8px"
+                    padding="14px 28px"
+                >
+                    Add Your First Task
+                </mj-button>
+                <mj-text align="center" font-size="14px" color="#6b7280">
+                    It takes less than 30 seconds to add a task and start building better habits.
+                </mj-text>
+            </mj-column>
+        </mj-section>
+
+        <!-- Pro tip -->
+        <mj-section background-color="#f8f9fa" padding="0 20px 24px">
+            <mj-column>
+                <mj-text>
+                    <div style="background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px">
+                        <p style="font-size: 14px; font-weight: bold; color: #0369a1; margin: 0 0 8px 0">💡 Pro Tip</p>
+                        <p style="font-size: 14px; line-height: 1.5; color: #0c4a6e; margin: 0">
+                            Start with tasks you already do regularly but sometimes forget. Remi works best when it learns from your existing habits!
+                        </p>
+                    </div>
+                </mj-text>
+            </mj-column>
+        </mj-section>
+
+        <!-- Divider -->
+        <mj-section background-color="#f8f9fa" padding="0 20px">
+            <mj-column>
+                <mj-divider border-color="#e5e7eb" border-width="1px" padding="16px 0" />
+            </mj-column>
+        </mj-section>
+
+        <!-- Footer -->
+        <mj-section background-color="#f8f9fa" padding="0 20px 48px">
+            <mj-column>
+                <mj-text align="center" font-size="14px" color="#6b7280" line-height="1.5" padding-bottom="12px">
+                    Questions? Just reply to this email – we'd love to help you get started!
+                </mj-text>
+                <mj-text align="center" font-size="14px" color="#6b7280" line-height="1.5" padding-bottom="16px">
+                    Happy remembering,<br />
+                    The Remi Team 🐘
+                </mj-text>
+                <mj-text align="center" font-size="12px" color="#9ca3af">
+                    <a href="https://remi.app" style="color: #607d8b; text-decoration: none; margin: 0 4px">Visit Remi</a>
+                    •
+                    <a href="https://remi.app/help" style="color: #607d8b; text-decoration: none; margin: 0 4px">Help Center</a>
+                    •
+                    <a href="https://remi.app/settings/notifications" style="color: #607d8b; text-decoration: none; margin: 0 4px"
+                        >Email Preferences</a
+                    >
+                </mj-text>
+            </mj-column>
+        </mj-section>
+    </mj-body>
+</mjml>
