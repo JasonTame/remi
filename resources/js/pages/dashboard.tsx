@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import { CheckCircle, Trophy, XCircle } from 'lucide-react';
+import { Ban, CheckCircle, Trophy, XCircle } from 'lucide-react';
 
 import MainLayout from '@/layouts/main-layout';
 
@@ -42,11 +42,9 @@ export default function Dashboard({ pendingTasks, completedTasks, skippedTasks, 
 
                 {!hasRecommendations && (
                     <div className="flex flex-col items-center justify-center py-12 text-center">
-                        <Trophy className="text-muted-foreground mb-4 h-12 w-12" />
-                        <h3 className="text-xl font-medium">No recommendations yet</h3>
-                        <p className="text-muted-foreground mt-2 max-w-md">
-                            You don't have any task recommendations for this week. Run the recommendation generator to get started.
-                        </p>
+                        <Ban className="text-muted-foreground mb-4 h-12 w-12" />
+                        <h3 className="text-xl font-medium">No recommendations</h3>
+                        <p className="text-muted-foreground mt-2 max-w-md">You don't have any task recommendations for this week.</p>
                     </div>
                 )}
 
