@@ -174,18 +174,6 @@ class TaskSeeder extends Seeder
                 ],
             ],
             [
-                'title' => 'Update Resume',
-                'description' => 'Refresh work experience, skills, and formatting on resume',
-                'timing_description' => 'Every 6 months',
-                'last_completed_at' => Carbon::create(2025, 1, 20),
-                'user_id' => $user->id,
-                'category_id' => $categories->where('name', 'Administrative & Financial')->first()->id,
-                'history' => [
-                    ['completed_at' => Carbon::create(2024, 7, 15), 'notes' => 'Added new project experience and skills'],
-                    ['completed_at' => Carbon::create(2025, 1, 20), 'notes' => 'Updated with recent accomplishments'],
-                ],
-            ],
-            [
                 'title' => 'Backup Computer Files',
                 'description' => 'Full backup of important documents and photos to external drive',
                 'timing_description' => 'Once a month',
@@ -281,6 +269,6 @@ class TaskSeeder extends Seeder
             }
         }
 
-        $this->command->info('Created '.count($tasks).' tasks with their completion history.');
+        $this->command->info('Created ' . count($tasks) . ' tasks with their completion history.');
     }
 }
