@@ -24,28 +24,23 @@ class CategorySeeder extends Seeder
 
         $categories = [
             [
-                'name' => 'Health',
+                'name' => 'Medical & Health',
                 'color' => CategoryColor::Blue->value,
                 'user_id' => $user->id,
             ],
             [
-                'name' => 'Home',
+                'name' => 'Home Maintenance',
                 'color' => CategoryColor::Green->value,
                 'user_id' => $user->id,
             ],
             [
-                'name' => 'Tech',
-                'color' => CategoryColor::Red->value,
-                'user_id' => $user->id,
-            ],
-            [
-                'name' => 'Personal',
-                'color' => CategoryColor::Orange->value,
-                'user_id' => $user->id,
-            ],
-            [
-                'name' => 'Admin',
+                'name' => 'Administrative & Financial',
                 'color' => CategoryColor::Gray->value,
+                'user_id' => $user->id,
+            ],
+            [
+                'name' => 'Personal & Social',
+                'color' => CategoryColor::Orange->value,
                 'user_id' => $user->id,
             ],
         ];
