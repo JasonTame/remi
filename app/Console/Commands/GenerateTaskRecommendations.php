@@ -2,17 +2,17 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
+use App\Models\Category;
+use App\Models\RecommendedTask;
 use App\Models\Task;
 use App\Models\User;
-use App\Models\Category;
+use App\Models\WeeklyRecommendation;
 use App\Services\TaskService;
-use App\Models\RecommendedTask;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use App\Models\WeeklyRecommendation;
-use JasonTame\LangGraphClient\Facades\LangGraphClient;
 use JasonTame\LangGraphClient\Exceptions\LangGraphException;
+use JasonTame\LangGraphClient\Facades\LangGraphClient;
 
 class GenerateTaskRecommendations extends Command
 {
@@ -95,18 +95,18 @@ class GenerateTaskRecommendations extends Command
         try {
             $this->info('Creating thread for task recommendations...');
             $thread = LangGraphClient::threads()->create([
-                'metadata' => ['purpose' => 'task_recommendations', 'user_id' => $userId]
+                'metadata' => ['purpose' => 'task_recommendations', 'user_id' => $userId],
             ]);
 
             $this->info('Creating and waiting for run completion with LangGraph SDK...');
             $runResult = LangGraphClient::runs()->wait($thread['thread_id'], [
                 'assistant_id' => 'task_suggestion_agent',
                 'input' => [
-                    'request' => $apiData
+                    'request' => $apiData,
                 ],
                 'config' => [
-                    'configurable' => (object)[]
-                ]
+                    'configurable' => (object) [],
+                ],
             ]);
 
             $this->info('Run completed successfully! Fetching AI response...');
@@ -115,7 +115,7 @@ class GenerateTaskRecommendations extends Command
 
             $apiResponse = [
                 'run_result' => $runResult,
-                'messages' => $threadState['values']['messages'] ?? []
+                'messages' => $threadState['values']['messages'] ?? [],
             ];
 
             // Extract recommendations from the AI message content
@@ -125,12 +125,11 @@ class GenerateTaskRecommendations extends Command
                 $this->warn('No recommendations found in the response.');
                 $this->info('Full response structure for debugging:');
                 $this->info(json_encode($apiResponse, JSON_PRETTY_PRINT));
+
                 return 0;
             }
 
-            $this->info("Successfully extracted " . count($recommendations) . " recommendations!");
-
-
+            $this->info('Successfully extracted '.count($recommendations).' recommendations!');
 
             // Create a new weekly recommendation
             $weeklyRecommendation = WeeklyRecommendation::create([
@@ -139,11 +138,12 @@ class GenerateTaskRecommendations extends Command
                 'generated_at' => now(),
             ]);
 
-            // Create recommended tasks from API response  
+            // Create recommended tasks from API response
             $count = 0;
             foreach ($recommendations as $recommendedTask) {
-                if (!isset($recommendedTask['task_id'], $recommendedTask['priority'], $recommendedTask['reason'])) {
-                    $this->warn('Skipping recommendation with missing required fields: ' . json_encode($recommendedTask));
+                if (! isset($recommendedTask['task_id'], $recommendedTask['priority'], $recommendedTask['reason'])) {
+                    $this->warn('Skipping recommendation with missing required fields: '.json_encode($recommendedTask));
+
                     continue;
                 }
 
@@ -170,11 +170,11 @@ class GenerateTaskRecommendations extends Command
                 // Log but don't fail the command if cleanup fails
                 Log::warning('Failed to clean up temporary thread', [
                     'thread_id' => $thread['thread_id'],
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
                 ]);
             }
         } catch (LangGraphException $e) {
-            $this->error('Error calling LangGraph API: ' . $e->getMessage());
+            $this->error('Error calling LangGraph API: '.$e->getMessage());
             Log::error('GenerateTaskRecommendations API Error', [
                 'error' => $e->getMessage(),
                 'error_type' => $e->getErrorType(),
@@ -185,7 +185,7 @@ class GenerateTaskRecommendations extends Command
 
             return 1;
         } catch (\Exception $e) {
-            $this->error('Unexpected error: ' . $e->getMessage());
+            $this->error('Unexpected error: '.$e->getMessage());
             Log::error('GenerateTaskRecommendations Unexpected Error', [
                 'error' => $e->getMessage(),
                 'user_id' => $userId,
@@ -284,7 +284,7 @@ class GenerateTaskRecommendations extends Command
             }
         }
 
-        if (!$aiMessage || !isset($aiMessage['content'])) {
+        if (! $aiMessage || ! isset($aiMessage['content'])) {
             return [];
         }
 

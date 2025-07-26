@@ -26,7 +26,7 @@ class UpdateTaskRequest extends FormRequest
             'timing_description' => ['required', 'string', 'max:1000'],
             'description' => ['nullable', 'string', 'max:1000'],
             'category_id' => ['nullable', 'exists:categories,id'],
-            'last_completed_at' => ['nullable', 'date']
+            'last_completed_at' => ['nullable', 'date'],
         ];
     }
 }

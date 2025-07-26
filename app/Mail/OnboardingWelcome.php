@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -49,7 +48,7 @@ class OnboardingWelcome extends Mailable
     {
         $mjmlPath = resource_path('views/emails/onboarding-welcome.mjml');
 
-        if (!file_exists($mjmlPath)) {
+        if (! file_exists($mjmlPath)) {
             throw new \Exception("MJML template not found at: {$mjmlPath}");
         }
 

@@ -17,8 +17,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use JasonTame\LangGraphClient\Facades\LangGraphClient;
 use JasonTame\LangGraphClient\Exceptions\LangGraphException;
+use JasonTame\LangGraphClient\Facades\LangGraphClient;
 
 class GenerateTaskRecommendationsJob implements ShouldQueue
 {
@@ -131,7 +131,7 @@ class GenerateTaskRecommendationsJob implements ShouldQueue
                 'user_id' => $this->userId,
             ]);
             $thread = LangGraphClient::threads()->create([
-                'metadata' => ['purpose' => 'task_recommendations', 'user_id' => $this->userId]
+                'metadata' => ['purpose' => 'task_recommendations', 'user_id' => $this->userId],
             ]);
 
             Log::info('GenerateTaskRecommendationsJob: Creating and waiting for run completion with LangGraph SDK...', [
@@ -141,11 +141,11 @@ class GenerateTaskRecommendationsJob implements ShouldQueue
             $runResult = LangGraphClient::runs()->wait($thread['thread_id'], [
                 'assistant_id' => 'task_suggestion_agent',
                 'input' => [
-                    'request' => $apiData
+                    'request' => $apiData,
                 ],
                 'config' => [
-                    'configurable' => (object)[]
-                ]
+                    'configurable' => (object) [],
+                ],
             ]);
 
             Log::info('GenerateTaskRecommendationsJob: Run completed successfully! Fetching AI response...', [
@@ -157,7 +157,7 @@ class GenerateTaskRecommendationsJob implements ShouldQueue
 
             $apiResponse = [
                 'run_result' => $runResult,
-                'messages' => $threadState['values']['messages'] ?? []
+                'messages' => $threadState['values']['messages'] ?? [],
             ];
 
             // Extract recommendations from the AI message content
@@ -168,10 +168,11 @@ class GenerateTaskRecommendationsJob implements ShouldQueue
                     'user_id' => $this->userId,
                     'full_response' => $apiResponse,
                 ]);
+
                 return;
             }
 
-            Log::info("GenerateTaskRecommendationsJob: Successfully extracted " . count($recommendations) . " recommendations!", [
+            Log::info('GenerateTaskRecommendationsJob: Successfully extracted '.count($recommendations).' recommendations!', [
                 'user_id' => $this->userId,
                 'recommendations_count' => count($recommendations),
             ]);
@@ -355,7 +356,7 @@ class GenerateTaskRecommendationsJob implements ShouldQueue
             }
         }
 
-        if (!$aiMessage || !isset($aiMessage['content'])) {
+        if (! $aiMessage || ! isset($aiMessage['content'])) {
             return [];
         }
 
