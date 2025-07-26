@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('settings/notifications');
     })->name('notifications.edit');
 
-    Route::get('settings/appearance', function () {
-        return Inertia::render('settings/appearance');
-    })->name('appearance');
+    Route::get('settings/categories', function () {
+        return Inertia::render('settings/categories');
+    })->name('categories.edit');
 });

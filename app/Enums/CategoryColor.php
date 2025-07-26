@@ -9,4 +9,6 @@ enum CategoryColor: string
     case Red = 'red';
     case Orange = 'orange';
     case Gray = 'gray';
+    case Purple = 'purple';
+    case Indigo = 'indigo';
 }

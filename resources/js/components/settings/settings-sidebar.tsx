@@ -10,7 +10,7 @@ const settingsLinks = [
     { href: '/settings/profile', label: 'Profile' },
     { href: '/settings/password', label: 'Password' },
     { href: '/settings/notifications', label: 'Notifications' },
-    { href: '/settings/task-preferences', label: 'Task Preferences' },
+    { href: '/settings/categories', label: 'Categories' },
 ];
 
 export function SettingsSidebar({ currentPath }: SettingsSidebarProps) {
