@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\WeeklyRecommendations;
 use App\Models\Category;
 use App\Models\RecommendedTask;
 use App\Models\Task;
@@ -15,6 +16,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use JasonTame\LangGraphClient\Facades\LangGraphClient;
 use JasonTame\LangGraphClient\Exceptions\LangGraphException;
 
@@ -208,6 +210,28 @@ class GenerateTaskRecommendationsJob implements ShouldQueue
                     'week_start_date' => $weekStartDate,
                     'recommendations_count' => $count,
                 ]);
+
+                // Send weekly recommendations email
+                try {
+                    Log::info('GenerateTaskRecommendationsJob: Sending weekly recommendations email', [
+                        'user_id' => $this->userId,
+                        'week_start_date' => $weekStartDate,
+                    ]);
+
+                    Mail::to($user->email)->send(new WeeklyRecommendations($user, $weeklyRecommendation));
+
+                    Log::info('GenerateTaskRecommendationsJob: Weekly recommendations email sent successfully', [
+                        'user_id' => $this->userId,
+                        'email' => $user->email,
+                    ]);
+                } catch (\Exception $e) {
+                    // Log the error but don't fail the job if email sending fails
+                    Log::error('GenerateTaskRecommendationsJob: Failed to send weekly recommendations email', [
+                        'user_id' => $this->userId,
+                        'email' => $user->email,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
             } else {
                 Log::warning('GenerateTaskRecommendationsJob: No valid recommendations were created.', [
                     'user_id' => $this->userId,
