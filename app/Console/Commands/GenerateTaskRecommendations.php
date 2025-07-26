@@ -2,16 +2,17 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Category;
-use App\Models\RecommendedTask;
+use Carbon\Carbon;
 use App\Models\Task;
 use App\Models\User;
-use App\Models\WeeklyRecommendation;
+use App\Models\Category;
 use App\Services\TaskService;
-use Carbon\Carbon;
+use App\Models\RecommendedTask;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Models\WeeklyRecommendation;
+use JasonTame\LangGraphClient\Facades\LangGraphClient;
+use JasonTame\LangGraphClient\Exceptions\LangGraphException;
 
 class GenerateTaskRecommendations extends Command
 {
@@ -92,30 +93,30 @@ class GenerateTaskRecommendations extends Command
 
         $this->info('Generating AI recommendations via Remi AI (LangGraph)...');
         try {
-            $runPayload = [
+            $this->info('Creating thread for task recommendations...');
+            $thread = LangGraphClient::threads()->create([
+                'metadata' => ['purpose' => 'task_recommendations', 'user_id' => $userId]
+            ]);
+
+            $this->info('Creating and waiting for run completion with LangGraph SDK...');
+            $runResult = LangGraphClient::runs()->wait($thread['thread_id'], [
                 'assistant_id' => 'task_suggestion_agent',
                 'input' => [
                     'request' => $apiData
                 ],
                 'config' => [
                     'configurable' => (object)[]
-                ],
-                'stream_mode' => ['values']
+                ]
+            ]);
+
+            $this->info('Run completed successfully! Fetching AI response...');
+
+            $threadState = LangGraphClient::threads()->state($thread['thread_id']);
+
+            $apiResponse = [
+                'run_result' => $runResult,
+                'messages' => $threadState['values']['messages'] ?? []
             ];
-
-            $this->info('Creating synchronous run with /runs/wait endpoint...');
-            $response = Http::timeout(180)->post(  // Extended timeout for waiting
-                config('remi-ai.base_url') . '/runs/wait',
-                $runPayload
-            );
-
-            if (!$response->successful()) {
-                $this->error('API request failed: ' . $response->status() . ' - ' . $response->body());
-                return 1;
-            }
-
-            $apiResponse = $response->json();
-            $this->info('Run completed synchronously!');
 
             // Extract recommendations from the AI message content
             $recommendations = $this->extractRecommendationsFromMessages($apiResponse['messages'] ?? []);
@@ -160,9 +161,32 @@ class GenerateTaskRecommendations extends Command
             } else {
                 $this->warn('No valid recommendations were created.');
             }
-        } catch (\Exception $e) {
-            $this->error('Error calling Remi AI API: ' . $e->getMessage());
+
+            // Clean up the temporary thread
+            try {
+                LangGraphClient::threads()->delete($thread['thread_id']);
+                $this->info('Cleaned up temporary thread.');
+            } catch (\Exception $e) {
+                // Log but don't fail the command if cleanup fails
+                Log::warning('Failed to clean up temporary thread', [
+                    'thread_id' => $thread['thread_id'],
+                    'error' => $e->getMessage()
+                ]);
+            }
+        } catch (LangGraphException $e) {
+            $this->error('Error calling LangGraph API: ' . $e->getMessage());
             Log::error('GenerateTaskRecommendations API Error', [
+                'error' => $e->getMessage(),
+                'error_type' => $e->getErrorType(),
+                'response_data' => $e->getResponseData(),
+                'user_id' => $userId,
+                'week_start_date' => $weekStartDate,
+            ]);
+
+            return 1;
+        } catch (\Exception $e) {
+            $this->error('Unexpected error: ' . $e->getMessage());
+            Log::error('GenerateTaskRecommendations Unexpected Error', [
                 'error' => $e->getMessage(),
                 'user_id' => $userId,
                 'week_start_date' => $weekStartDate,
