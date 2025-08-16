@@ -36,6 +36,12 @@ class Kernel extends ConsoleKernel
             ->timezone('GMT')
             ->name('generate-weekly-task-recommendations')
             ->withoutOverlapping();
+
+        // Process scheduled notifications every hour
+        $schedule->command('notifications:process-scheduled')
+            ->hourly()
+            ->name('process-scheduled-notifications')
+            ->withoutOverlapping();
     }
 
     /**
@@ -43,7 +49,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
