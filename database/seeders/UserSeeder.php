@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Seeder;
 use App\Mail\WeeklyRecommendations;
 use App\Models\NotificationPreference;
+use App\Models\User;
 use Creativeorange\Gravatar\Facades\Gravatar;
+use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {

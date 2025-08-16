@@ -13,15 +13,15 @@ use Illuminate\Support\Facades\Mail;
 
 /**
  * Service responsible for processing scheduled notifications based on user preferences.
- * 
+ *
  * This service runs hourly via the Laravel scheduler and checks all enabled notification
  * preferences to determine if any notifications should be sent at the current time.
  * It uses cron expressions stored in the notification_preferences table to determine
  * when each user should receive their notifications.
- * 
+ *
  * The service currently supports:
  * - Weekly recommendation emails (WeeklyRecommendations::class)
- * 
+ *
  * Usage:
  * - Automatically runs via Laravel scheduler every hour
  * - Can be manually triggered via: php artisan notifications:process-scheduled
