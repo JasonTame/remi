@@ -1,7 +1,7 @@
 export const getPriorityLabel = (priority: number) => {
 	switch (priority) {
 		case 5:
-			return "Critical/Overdue";
+			return "Critical";
 		case 4:
 			return "Important";
 		case 3:
