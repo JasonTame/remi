@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Creativeorange\Gravatar\Facades\Gravatar;
 use Illuminate\Database\Seeder;
+use App\Mail\WeeklyRecommendations;
+use App\Models\NotificationPreference;
+use Creativeorange\Gravatar\Facades\Gravatar;
 
 class UserSeeder extends Seeder
 {
@@ -16,11 +18,19 @@ class UserSeeder extends Seeder
         $email = 'jason@useremi.app';
         $avatar = Gravatar::get($email);
 
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Jason Tame',
             'email' => $email,
             'avatar' => $avatar,
             'password' => bcrypt('password'),
+        ]);
+
+        // Create a default notification preference for the user
+        NotificationPreference::create([
+            'user_id' => $user->id,
+            'notification_class' => WeeklyRecommendations::class,
+            'is_enabled' => true,
+            'cron_expression' => '0 8 * * 1', // Monday 8am GMT
         ]);
     }
 }

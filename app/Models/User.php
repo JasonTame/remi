@@ -68,4 +68,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(WeeklyRecommendation::class);
     }
+
+    /**
+     * Get all of the user's notification preferences.
+     */
+    public function notificationPreferences(): HasMany
+    {
+        return $this->hasMany(NotificationPreference::class);
+    }
 }
