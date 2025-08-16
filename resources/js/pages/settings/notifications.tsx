@@ -4,6 +4,7 @@ import { FormEventHandler } from 'react';
 import AppLayout from '@/layouts/main-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 
+import InputError from '@/components/form/input-error';
 import HeadingSmall from '@/components/shared/heading-small';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -20,26 +21,33 @@ type NotificationForm = {
     push_notifications: boolean;
 };
 
-export default function Notifications() {
+type NotificationPreferences = {
+    weekly_digest: boolean;
+    digest_day: string;
+    digest_time: string;
+    push_notifications: boolean;
+};
+
+type Props = {
+    preferences: NotificationPreferences;
+};
+
+export default function Notifications({ preferences }: Props) {
     useFlashMessages();
 
-    const { data, setData, processing } = useForm<Required<NotificationForm>>({
-        weekly_digest: true,
-        digest_day: 'monday',
-        digest_time: 'morning',
-        push_notifications: true,
+    const { data, setData, patch, processing, errors } = useForm<Required<NotificationForm>>({
+        weekly_digest: preferences.weekly_digest,
+        digest_day: preferences.digest_day,
+        digest_time: preferences.digest_time,
+        push_notifications: preferences.push_notifications,
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        // TODO: This will be wired up to a backend endpoint later
-        console.log('Notification preferences:', data);
-
-        // For now, just simulate a successful submission
-        // post(route('notifications.update'), {
-        //     preserveScroll: true,
-        // });
+        patch(route('notifications.update'), {
+            preserveScroll: true,
+        });
     };
 
     return (
@@ -69,6 +77,7 @@ export default function Notifications() {
                                         onCheckedChange={(checked: boolean) => setData('weekly_digest', checked)}
                                     />
                                 </div>
+                                <InputError message={errors.weekly_digest} />
                             </div>
 
                             <div className="space-y-4 pt-6 border-t">
@@ -91,6 +100,7 @@ export default function Notifications() {
                                                 <SelectItem value="saturday">Saturday</SelectItem>
                                             </SelectContent>
                                         </Select>
+                                        <InputError message={errors.digest_day} />
                                     </div>
 
                                     <div className="space-y-2">
@@ -105,6 +115,7 @@ export default function Notifications() {
                                                 <SelectItem value="evening">Evening (6:00 PM)</SelectItem>
                                             </SelectContent>
                                         </Select>
+                                        <InputError message={errors.digest_time} />
                                     </div>
                                 </div>
                             </div>
@@ -125,6 +136,7 @@ export default function Notifications() {
                                         onCheckedChange={(checked: boolean) => setData('push_notifications', checked)}
                                     />
                                 </div>
+                                <InputError message={errors.push_notifications} />
                             </div>
 
                             <Button type="submit" disabled={processing}>
