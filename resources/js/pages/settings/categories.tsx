@@ -1,9 +1,10 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 
 import AppLayout from '@/layouts/main-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 
+import InputError from '@/components/form/input-error';
 import HeadingSmall from '@/components/shared/heading-small';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -37,17 +38,14 @@ const colorOptions = [
     { value: 'indigo', label: 'Indigo' },
 ];
 
-export default function Categories() {
+type Props = {
+    categories: Category[];
+};
+
+export default function Categories({ categories: initialCategories }: Props) {
     useFlashMessages();
 
-    // Mock categories data - in real app this would come from props
-    const [categories, setCategories] = useState<Category[]>([
-        { id: 1, name: 'Health', color: 'blue' },
-        { id: 2, name: 'Home', color: 'green' },
-        { id: 3, name: 'Personal', color: 'purple' },
-        { id: 4, name: 'Auto', color: 'orange' },
-        { id: 5, name: 'Documents', color: 'gray' },
-    ]);
+    const [categories, setCategories] = useState<Category[]>(initialCategories);
 
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -57,6 +55,7 @@ export default function Categories() {
         data: editData,
         setData: setEditData,
         processing: editProcessing,
+        errors: editErrors,
         reset: resetEdit,
     } = useForm<CategoryForm>({
         name: '',
@@ -67,6 +66,7 @@ export default function Categories() {
         data: addData,
         setData: setAddData,
         processing: addProcessing,
+        errors: addErrors,
         reset: resetAdd,
     } = useForm<CategoryForm>({
         name: '',
@@ -86,39 +86,47 @@ export default function Categories() {
         e.preventDefault();
 
         if (editingCategory) {
-            // Update the category in state (in real app this would be an API call)
-            setCategories((prev) =>
-                prev.map((cat) => (cat.id === editingCategory.id ? { ...cat, name: editData.name, color: editData.color } : cat)),
-            );
-
-            setIsEditModalOpen(false);
-            setEditingCategory(null);
-            resetEdit();
-
-            console.log('Updated category:', { id: editingCategory.id, ...editData });
+            router.patch(route('categories.update', editingCategory.id), editData, {
+                onSuccess: () => {
+                    // Update local state to reflect changes immediately
+                    setCategories((prev) =>
+                        prev.map((cat) => (cat.id === editingCategory.id ? { ...cat, name: editData.name, color: editData.color } : cat)),
+                    );
+                    setIsEditModalOpen(false);
+                    setEditingCategory(null);
+                    resetEdit();
+                },
+                preserveScroll: true,
+            });
         }
     };
 
     const handleAddCategory: FormEventHandler = (e) => {
         e.preventDefault();
 
-        // Add new category to state (in real app this would be an API call)
-        const newCategory: Category = {
-            id: Math.max(...categories.map((c) => c.id)) + 1,
-            name: addData.name,
-            color: addData.color,
-        };
-
-        setCategories((prev) => [...prev, newCategory]);
-        setIsAddModalOpen(false);
-        resetAdd();
-
-        console.log('Added category:', newCategory);
+        router.post(route('categories.store'), addData, {
+            onSuccess: (page) => {
+                // Refresh the categories from the server response
+                if (page.props.categories) {
+                    setCategories(page.props.categories as Category[]);
+                }
+                setIsAddModalOpen(false);
+                resetAdd();
+            },
+            preserveScroll: true,
+        });
     };
 
-    const handleSaveAll = () => {
-        // TODO: This will be wired up to a backend endpoint later
-        console.log('Saving all categories:', categories);
+    const handleDeleteCategory = (category: Category) => {
+        if (confirm(`Are you sure you want to delete the "${category.name}" category?`)) {
+            router.delete(route('categories.destroy', category.id), {
+                onSuccess: () => {
+                    // Remove from local state
+                    setCategories((prev) => prev.filter((cat) => cat.id !== category.id));
+                },
+                preserveScroll: true,
+            });
+        }
     };
 
     return (
@@ -138,9 +146,14 @@ export default function Categories() {
                                         <div className={`w-4 h-4 rounded-full ${getCategoryColor(category.color).split(' ')[0]}`} />
                                         <span className="font-medium">{category.name}</span>
                                     </div>
-                                    <Button variant="outline" size="sm" onClick={() => handleEditCategory(category)}>
-                                        Edit
-                                    </Button>
+                                    <div className="flex items-center gap-2">
+                                        <Button variant="outline" size="sm" onClick={() => handleEditCategory(category)}>
+                                            Edit
+                                        </Button>
+                                        <Button variant="outline" size="sm" onClick={() => handleDeleteCategory(category)}>
+                                            Delete
+                                        </Button>
+                                    </div>
                                 </div>
                             ))}
 
@@ -163,6 +176,7 @@ export default function Categories() {
                                                     placeholder="Category name"
                                                     required
                                                 />
+                                                <InputError message={addErrors.name} />
                                             </div>
 
                                             <div className="space-y-2">
@@ -186,6 +200,7 @@ export default function Categories() {
                                                         ))}
                                                     </SelectContent>
                                                 </Select>
+                                                <InputError message={addErrors.color} />
                                             </div>
 
                                             <div className="flex justify-end gap-2">
@@ -199,10 +214,6 @@ export default function Categories() {
                                         </form>
                                     </DialogContent>
                                 </Dialog>
-                            </div>
-
-                            <div className="pt-6 border-t">
-                                <Button onClick={handleSaveAll}>Save</Button>
                             </div>
                         </div>
                     </CardContent>
@@ -224,6 +235,7 @@ export default function Categories() {
                                     placeholder="Category name"
                                     required
                                 />
+                                <InputError message={editErrors.name} />
                             </div>
 
                             <div className="space-y-2">
@@ -245,6 +257,7 @@ export default function Categories() {
                                         ))}
                                     </SelectContent>
                                 </Select>
+                                <InputError message={editErrors.color} />
                             </div>
 
                             <div className="flex justify-end gap-2">

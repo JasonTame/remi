@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Settings\CategoryController;
 use App\Http\Controllers\Settings\NotificationController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::middleware('auth')->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -19,7 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::get('settings/notifications', [NotificationController::class, 'show'])->name('notifications.edit');
     Route::patch('settings/notifications', [NotificationController::class, 'update'])->name('notifications.update');
 
-    Route::get('settings/categories', function () {
-        return Inertia::render('settings/categories');
-    })->name('categories.edit');
+    Route::get('settings/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('settings/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::patch('settings/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('settings/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 });
