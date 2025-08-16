@@ -13,6 +13,11 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Onboarding route
+    Route::get('/onboarding', function () {
+        return Inertia::render('onboarding');
+    })->name('onboarding');
+
     // Task routes
     Route::resource('tasks', TaskController::class);
     Route::post('tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
