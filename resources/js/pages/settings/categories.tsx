@@ -170,9 +170,6 @@ export default function Categories() {
                                                 <Select value={addData.color} onValueChange={(value) => setAddData('color', value)}>
                                                     <SelectTrigger id="add-color">
                                                         <div className="flex items-center gap-2">
-                                                            <div
-                                                                className={`w-3 h-3 rounded-full ${getCategoryColor(addData.color).split(' ')[0]}`}
-                                                            />
                                                             <SelectValue />
                                                         </div>
                                                     </SelectTrigger>
@@ -214,7 +211,7 @@ export default function Categories() {
                 {/* Edit Category Modal */}
                 <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
                     <DialogContent>
-                        <DialogHeader>
+                        <DialogHeader> 
                             <DialogTitle>Edit Category</DialogTitle>
                         </DialogHeader>
                         <form onSubmit={handleSaveEdit} className="space-y-4">
@@ -234,7 +231,6 @@ export default function Categories() {
                                 <Select value={editData.color} onValueChange={(value) => setEditData('color', value)}>
                                     <SelectTrigger id="edit-color">
                                         <div className="flex items-center gap-2">
-                                            <div className={`w-3 h-3 rounded-full ${getCategoryColor(editData.color).split(' ')[0]}`} />
                                             <SelectValue />
                                         </div>
                                     </SelectTrigger>
