@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.4",
         "creativeorange/gravatar": "^1.0",
+        "dragonmantank/cron-expression": "^3.4",
         "inertiajs/inertia-laravel": "^2.0",
         "jasontame/langgraph-client-php": "^0.1.0",
         "laravel/framework": "^12.0",
