@@ -1,21 +1,32 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-import AppLayout from '@/layouts/app/layout';
+import AppLayout from "@/layouts/app/layout";
 
-import { type BreadcrumbItem } from '@/types';
+import type { BreadcrumbItem } from "@/types";
 
 interface AppLayoutProps {
-    children: ReactNode;
-    title: string;
-    showAddButton?: boolean;
-    onAddClick?: () => void;
-    breadcrumbs?: BreadcrumbItem[];
+	children: ReactNode;
+	title: string;
+	showAddButton?: boolean;
+	onAddClick?: () => void;
+	breadcrumbs?: BreadcrumbItem[];
 }
 
-export default function MainLayout({ children, title, showAddButton, onAddClick, ...props }: AppLayoutProps) {
-    return (
-        <AppLayout title={title} showAddButton={showAddButton} onAddClick={onAddClick} {...props}>
-            {children}
-        </AppLayout>
-    );
+export default function MainLayout({
+	children,
+	title,
+	showAddButton,
+	onAddClick,
+	...props
+}: AppLayoutProps) {
+	return (
+		<AppLayout
+			title={title}
+			showAddButton={showAddButton}
+			onAddClick={onAddClick}
+			{...props}
+		>
+			{children}
+		</AppLayout>
+	);
 }

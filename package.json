@@ -8,6 +8,8 @@
         "dev:email": "email dev --dir resources/js/emails",
         "build:email": "email build --dir resources/js/emails",
         "export:email": "email export",
+        "check": "biome check resources/",
+        "check:fix": "biome check resources/ --write",
         "format": "biome format resources/",
         "format:fix": "biome format resources/ --write",
         "lint": "biome lint resources/",
