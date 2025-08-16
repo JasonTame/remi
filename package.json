@@ -8,24 +8,17 @@
         "dev:email": "email dev --dir resources/js/emails",
         "build:email": "email build --dir resources/js/emails",
         "export:email": "email export",
-        "format": "prettier --write resources/",
-        "format:check": "prettier --check resources/",
-        "lint": "eslint . --fix",
+        "format": "biome format resources/",
+        "format:fix": "biome format resources/ --write",
+        "lint": "biome lint resources/",
+		"lint:fix": "biome lint resources/ --write",
         "types": "tsc --noEmit"
     },
     "devDependencies": {
-        "@eslint/js": "^9.19.0",
-        "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+        "@biomejs/biome": "2.2.0",
         "@types/node": "^22.13.5",
         "@types/react": "^19.0.1",
-        "@types/react-dom": "^19.0.1",
-        "eslint": "^9.17.0",
-        "eslint-config-prettier": "^10.0.1",
-        "eslint-plugin-react": "^7.37.3",
-        "eslint-plugin-react-hooks": "^5.1.0",
-        "prettier": "^3.4.2",
-        "prettier-plugin-tailwindcss": "^0.6.11",
-        "typescript-eslint": "^8.23.0"
+        "@types/react-dom": "^19.0.1"
     },
     "dependencies": {
         "@headlessui/react": "^2.2.0",
