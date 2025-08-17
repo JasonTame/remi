@@ -2,25 +2,10 @@ import { Badge } from "@/components/ui/badge";
 
 import { getCategoryColor } from "@/lib/utils/tasks/get-category-color";
 
-interface SummaryStepProps {
-	selectedTasks: Array<{
-		id: string;
-		title: string;
-		frequency: string;
-		category: string;
-	}>;
-	selectedCategories: Array<{
-		id: string;
-		name: string;
-		color: string;
-		icon?: string;
-	}>;
-}
+import { useOnboardingStore } from "@/stores/onboarding-store";
 
-export default function SummaryStep({
-	selectedTasks = [],
-	selectedCategories = [],
-}: SummaryStepProps) {
+export default function SummaryStep() {
+	const { selectedTasks, selectedCategories } = useOnboardingStore();
 	const getTaskCategoryColor = (category: string) => {
 		const colorMap: Record<string, string> = {
 			Health: "bg-blue-500",

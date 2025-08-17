@@ -15,6 +15,7 @@ interface OnboardingLayoutProps {
 	previousLabel?: string;
 	showPrevious?: boolean;
 	showNext?: boolean;
+	isLoading?: boolean;
 }
 
 export default function OnboardingLayout({
@@ -28,11 +29,12 @@ export default function OnboardingLayout({
 	previousLabel = "Previous",
 	showPrevious = true,
 	showNext = true,
+	isLoading = false,
 }: PropsWithChildren<OnboardingLayoutProps>) {
 	const progressPercentage = (currentStep / totalSteps) * 100;
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-gray-950 dark:to-gray-900 flex flex-col">
+		<div className="bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-gray-950 dark:to-gray-900 flex flex-col pb-2">
 			{/* Header */}
 			<div className="flex items-center justify-between p-6">
 				<Link href="/" className="flex items-center gap-3">
@@ -60,10 +62,10 @@ export default function OnboardingLayout({
 			</div>
 
 			{/* Main Content */}
-			<div className="flex-1 flex items-center justify-center px-6">
-				<div className="w-full max-w-4xl">
-					<div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border p-8 md:p-12">
-						<div className="text-center mb-8">
+			<div className="flex-1 px-6 py-8">
+				<div className="w-full max-w-4xl mx-auto">
+					<div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border p-8 md:p-12 mb-8">
+						<div className="text-center mb-4">
 							<h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
 								{title}
 							</h1>
@@ -100,9 +102,13 @@ export default function OnboardingLayout({
 							</div>
 							<div>
 								{showNext && (
-									<Button onClick={onNext} className="flex items-center gap-2">
-										{nextLabel}
-										{currentStep < totalSteps && (
+									<Button
+										onClick={onNext}
+										className="flex items-center gap-2"
+										disabled={isLoading}
+									>
+										{isLoading ? "Loading..." : nextLabel}
+										{!isLoading && currentStep < totalSteps && (
 											<svg
 												className="w-4 h-4"
 												fill="none"

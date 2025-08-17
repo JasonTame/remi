@@ -1,101 +1,41 @@
-import { useState } from "react";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 
-interface SuggestedTask {
-	id: string;
-	title: string;
-	frequency: string;
-	category: string;
-}
-
-const SUGGESTED_TASKS: SuggestedTask[] = [
-	{
-		id: "dental-checkup",
-		title: "Schedule dental checkup",
-		frequency: "Every 6 months",
-		category: "Health",
-	},
-	{
-		id: "change-air-filters",
-		title: "Change air filters",
-		frequency: "Every 3 months",
-		category: "Home",
-	},
-	{
-		id: "call-parents",
-		title: "Call parents",
-		frequency: "Weekly",
-		category: "Personal",
-	},
-	{
-		id: "car-maintenance",
-		title: "Car maintenance",
-		frequency: "Every 6 months",
-		category: "Auto",
-	},
-	{
-		id: "backup-computer",
-		title: "Backup computer files",
-		frequency: "Monthly",
-		category: "Tech",
-	},
-	{
-		id: "deep-clean-kitchen",
-		title: "Deep clean kitchen",
-		frequency: "Every 3 months",
-		category: "Home",
-	},
-];
-
-interface CustomTask {
-	id: string;
-	title: string;
-	frequency: string;
-	category: string;
-}
+import { useOnboardingStore } from "@/stores/onboarding-store";
 
 export default function TasksStep() {
-	const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
-	const [customTasks, setCustomTasks] = useState<CustomTask[]>([]);
-	const [newTaskTitle, setNewTaskTitle] = useState("");
-	const [newTaskFrequency, setNewTaskFrequency] = useState("");
+	const {
+		selectedCategories,
+		selectedTaskIds,
+		customTasks,
+		newTaskTitle,
+		newTaskFrequency,
+		newTaskCategory,
+		getAllTasks,
+		getFilteredSuggestedTasks,
+		toggleTask,
+		setNewTaskTitle,
+		setNewTaskFrequency,
+		setNewTaskCategory,
+		addCustomTask,
+		removeCustomTask,
+	} = useOnboardingStore();
 
-	const toggleTask = (taskId: string) => {
-		setSelectedTasks((prev) =>
-			prev.includes(taskId)
-				? prev.filter((id) => id !== taskId)
-				: [...prev, taskId],
-		);
-	};
-
-	const addCustomTask = () => {
-		if (newTaskTitle.trim() && newTaskFrequency.trim()) {
-			const newTask: CustomTask = {
-				id: `custom-${Date.now()}`,
-				title: newTaskTitle.trim(),
-				frequency: newTaskFrequency.trim(),
-				category: "Personal", // Default category
-			};
-			setCustomTasks((prev) => [...prev, newTask]);
-			setSelectedTasks((prev) => [...prev, newTask.id]);
-			setNewTaskTitle("");
-			setNewTaskFrequency("");
-		}
-	};
-
-	const removeCustomTask = (taskId: string) => {
-		setCustomTasks((prev) => prev.filter((task) => task.id !== taskId));
-		setSelectedTasks((prev) => prev.filter((id) => id !== taskId));
-	};
+	const filteredSuggestedTasks = getFilteredSuggestedTasks();
 
 	const getCategoryColor = (category: string) => {
 		const colorMap: Record<string, string> = {
-			Health: "bg-blue-500",
-			Home: "bg-green-500",
-			Personal: "bg-purple-500",
+			"Medical & Health": "bg-blue-500",
+			"Home Maintenance": "bg-green-500",
+			"Personal & Social": "bg-purple-500",
 			Auto: "bg-orange-500",
 			Tech: "bg-indigo-500",
 			Finance: "bg-emerald-500",
@@ -103,7 +43,7 @@ export default function TasksStep() {
 		return colorMap[category] || "bg-gray-500";
 	};
 
-	const allTasks = [...SUGGESTED_TASKS, ...customTasks];
+	const allTasks = getAllTasks();
 
 	return (
 		<div className="space-y-8">
@@ -136,8 +76,8 @@ export default function TasksStep() {
 				</div>
 
 				<div className="grid md:grid-cols-2 gap-4">
-					{SUGGESTED_TASKS.map((task) => {
-						const isSelected = selectedTasks.includes(task.id);
+					{filteredSuggestedTasks.map((task) => {
+						const isSelected = selectedTaskIds.includes(task.id);
 						return (
 							<button
 								type="button"
@@ -220,7 +160,7 @@ export default function TasksStep() {
 			{/* Add Custom Task */}
 			<div className="space-y-4">
 				<h3 className="text-lg font-semibold">Add Custom Task</h3>
-				<div className="grid md:grid-cols-2 gap-3">
+				<div className="grid md:grid-cols-3 gap-3">
 					<Input
 						placeholder="e.g., Schedule dental checkup"
 						value={newTaskTitle}
@@ -236,10 +176,26 @@ export default function TasksStep() {
 							}
 						}}
 					/>
+					<Select value={newTaskCategory} onValueChange={setNewTaskCategory}>
+						<SelectTrigger>
+							<SelectValue placeholder="Select category" />
+						</SelectTrigger>
+						<SelectContent>
+							{selectedCategories.map((category) => (
+								<SelectItem key={category.id} value={category.name}>
+									{category.name}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
 				</div>
 				<Button
 					onClick={addCustomTask}
-					disabled={!newTaskTitle.trim() || !newTaskFrequency.trim()}
+					disabled={
+						!newTaskTitle.trim() ||
+						!newTaskFrequency.trim() ||
+						!newTaskCategory.trim()
+					}
 					className="w-full flex items-center gap-2"
 				>
 					<svg
@@ -304,13 +260,13 @@ export default function TasksStep() {
 			</div>
 
 			{/* Your Tasks Summary */}
-			{selectedTasks.length > 0 && (
+			{selectedTaskIds.length > 0 && (
 				<div className="space-y-4">
 					<h3 className="text-lg font-semibold">
-						Your Tasks ({selectedTasks.length})
+						Your Tasks ({selectedTaskIds.length})
 					</h3>
 					<div className="space-y-3">
-						{selectedTasks.map((taskId) => {
+						{selectedTaskIds.map((taskId) => {
 							const task = allTasks.find((t) => t.id === taskId);
 							if (!task) return null;
 							return (

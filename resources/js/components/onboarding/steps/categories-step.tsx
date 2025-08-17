@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,110 +12,25 @@ import {
 
 import { getCategoryColor } from "@/lib/utils/tasks/get-category-color";
 
-interface Category {
-	id: string;
-	name: string;
-	description: string;
-	color: string;
-	icon: string;
-}
-
-const SUGGESTED_CATEGORIES: Category[] = [
-	{
-		id: "health",
-		name: "Medical & Health",
-		description: "Medical appointments, checkups, wellness",
-		color: "blue",
-		icon: "",
-	},
-	{
-		id: "home",
-		name: "Home Maintenance",
-		description: "Maintenance, cleaning, repairs",
-		color: "green",
-		icon: "",
-	},
-	{
-		id: "personal",
-		name: "Personal & Social",
-		description: "Relationships, self-care, hobbies",
-		color: "purple",
-		icon: "",
-	},
-	{
-		id: "auto",
-		name: "Auto",
-		description: "Car maintenance, registration, insurance",
-		color: "orange",
-		icon: "",
-	},
-	{
-		id: "documents",
-		name: "Documents",
-		description: "Renewals, filing, paperwork",
-		color: "gray",
-		icon: "",
-	},
-	{
-		id: "tech",
-		name: "Tech",
-		description: "Backups, updates, digital maintenance",
-		color: "indigo",
-		icon: "",
-	},
-	{
-		id: "finance",
-		name: "Administrative & Financial",
-		description: "Bills, investments, budgeting",
-		color: "red",
-		icon: "",
-	},
-];
-
-const colorOptions = [
-	{ value: "blue", label: "Blue" },
-	{ value: "green", label: "Green" },
-	{ value: "red", label: "Red" },
-	{ value: "orange", label: "Orange" },
-	{ value: "gray", label: "Gray" },
-	{ value: "purple", label: "Purple" },
-	{ value: "indigo", label: "Indigo" },
-];
+import {
+	COLOR_OPTIONS,
+	SUGGESTED_CATEGORIES,
+	useOnboardingStore,
+} from "@/stores/onboarding-store";
 
 export default function CategoriesStep() {
-	const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-	const [customCategories, setCustomCategories] = useState<Category[]>([]);
-	const [newCategoryName, setNewCategoryName] = useState("");
-	const [newCategoryColor, setNewCategoryColor] = useState("blue");
-
-	const toggleCategory = (categoryId: string) => {
-		setSelectedCategories((prev) =>
-			prev.includes(categoryId)
-				? prev.filter((id) => id !== categoryId)
-				: [...prev, categoryId],
-		);
-	};
-
-	const addCustomCategory = () => {
-		if (newCategoryName.trim()) {
-			const newCategory: Category = {
-				id: `custom-${Date.now()}`,
-				name: newCategoryName.trim(),
-				description: "Custom category",
-				color: newCategoryColor,
-				icon: "",
-			};
-			setCustomCategories((prev) => [...prev, newCategory]);
-			setSelectedCategories((prev) => [...prev, newCategory.id]);
-			setNewCategoryName("");
-			setNewCategoryColor("blue");
-		}
-	};
-
-	const removeCustomCategory = (categoryId: string) => {
-		setCustomCategories((prev) => prev.filter((cat) => cat.id !== categoryId));
-		setSelectedCategories((prev) => prev.filter((id) => id !== categoryId));
-	};
+	const {
+		selectedCategoryIds,
+		customCategories,
+		newCategoryName,
+		newCategoryColor,
+		getAllCategories,
+		toggleCategory,
+		setNewCategoryName,
+		setNewCategoryColor,
+		addCustomCategory,
+		removeCustomCategory,
+	} = useOnboardingStore();
 
 	const getColorClasses = (color: string, isSelected: boolean) => {
 		const baseClasses = "transition-all duration-200 cursor-pointer";
@@ -147,7 +60,7 @@ export default function CategoriesStep() {
 		return `${baseClasses} ${colorMap[color as keyof typeof colorMap] || colorMap.gray}`;
 	};
 
-	const allCategories = [...SUGGESTED_CATEGORIES, ...customCategories];
+	const allCategories = getAllCategories();
 
 	return (
 		<div className="space-y-8">
@@ -180,7 +93,7 @@ export default function CategoriesStep() {
 
 				<div className="grid md:grid-cols-2 gap-4">
 					{SUGGESTED_CATEGORIES.map((category) => {
-						const isSelected = selectedCategories.includes(category.id);
+						const isSelected = selectedCategoryIds.includes(category.id);
 						return (
 							<button
 								type="button"
@@ -283,7 +196,7 @@ export default function CategoriesStep() {
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>
-								{colorOptions.map((color) => (
+								{COLOR_OPTIONS.map((color) => (
 									<SelectItem key={color.value} value={color.value}>
 										<div className="flex items-center gap-2">
 											<div
@@ -362,13 +275,13 @@ export default function CategoriesStep() {
 			</div>
 
 			{/* Selected Categories Summary */}
-			{selectedCategories.length > 0 && (
+			{selectedCategoryIds.length > 0 && (
 				<div className="space-y-4">
 					<h3 className="text-lg font-semibold">
-						Selected Categories ({selectedCategories.length})
+						Selected Categories ({selectedCategoryIds.length})
 					</h3>
 					<div className="flex flex-wrap gap-2">
-						{selectedCategories.map((categoryId) => {
+						{selectedCategoryIds.map((categoryId) => {
 							const category = allCategories.find(
 								(cat) => cat.id === categoryId,
 							);
