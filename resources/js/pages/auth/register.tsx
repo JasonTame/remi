@@ -4,6 +4,7 @@ import type { FormEventHandler } from "react";
 
 import AuthLayout from "@/layouts/auth-layout";
 
+import GoogleIcon from "@/components/auth/google-icon";
 import InputError from "@/components/form/input-error";
 import TextLink from "@/components/shared/text-link";
 import { Button } from "@/components/ui/button";
@@ -42,6 +43,28 @@ export default function Register() {
 			<Head title="Register" />
 			<form className="flex flex-col gap-6" onSubmit={submit}>
 				<div className="grid gap-6">
+					<Button
+						type="button"
+						variant="outline"
+						className="w-full"
+						onClick={() => {
+							window.location.href = route("auth.google");
+						}}
+					>
+						<GoogleIcon />
+						Continue with Google
+					</Button>
+
+					<div className="relative">
+						<div className="absolute inset-0 flex items-center">
+							<span className="w-full border-t" />
+						</div>
+						<div className="relative flex justify-center text-xs uppercase">
+							<span className="bg-background px-2 text-muted-foreground">
+								Or continue with
+							</span>
+						</div>
+					</div>
 					<div className="grid gap-2">
 						<Label htmlFor="name">Name</Label>
 						<Input
