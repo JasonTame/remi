@@ -2,14 +2,19 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskHistoryController;
+use App\Http\Controllers\TermsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('landing');
 });
+
+Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy');
+Route::get('/terms', [TermsController::class, 'index'])->name('terms');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Onboarding route and API endpoints (no onboarding middleware needed here)
@@ -40,5 +45,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
-require __DIR__.'/settings.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/settings.php';
