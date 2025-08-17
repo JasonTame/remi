@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\CategoryColor;
-use App\Models\Category;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 

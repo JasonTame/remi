@@ -12,7 +12,7 @@ it('displays categories page with user categories', function () {
 
     $response->assertSuccessful();
     $response->assertInertia(
-        fn($page) => $page
+        fn ($page) => $page
             ->component('settings/categories')
             ->has('categories', 3)
             ->has('categories.0.id')
