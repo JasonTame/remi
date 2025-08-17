@@ -13,7 +13,7 @@
         "format": "biome format resources/",
         "format:fix": "biome format resources/ --write",
         "lint": "biome lint resources/",
-		"lint:fix": "biome lint resources/ --write",
+        "lint:fix": "biome lint resources/ --write",
         "types": "tsc --noEmit"
     },
     "devDependencies": {
@@ -60,7 +60,8 @@
         "tailwindcss": "^4.0.0",
         "tailwindcss-animate": "^1.0.7",
         "typescript": "^5.7.2",
-        "vite": "^6.0"
+        "vite": "^6.0",
+        "zustand": "^5.0.7"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "4.9.5",
