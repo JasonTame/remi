@@ -57,7 +57,6 @@ export function LandingCTA() {
 							Ready to remember better?
 						</h2>
 						<p className="text-lg leading-8 text-white/90 mb-8">
-							Join thousands of people who never forget important tasks anymore.
 							Start your free account today and let Remi help you stay on top of
 							life's irregular but important commitments.
 						</p>

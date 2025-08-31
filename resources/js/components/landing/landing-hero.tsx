@@ -46,7 +46,7 @@ export function LandingHero() {
 						>
 							<Link href="/register">
 								{" "}
-								Start remembering better
+								Get Started
 								<ArrowRight className="ml-2 h-5 w-5" />
 							</Link>
 						</Button>
