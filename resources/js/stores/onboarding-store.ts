@@ -262,10 +262,10 @@ export const useOnboardingStore = create<OnboardingState>((set, get) => ({
 	},
 
 	getFilteredSuggestedTasks: () => {
-		const { getAllCategories } = get();
-		const availableCategoryNames = getAllCategories().map((cat) => cat.name);
+		const { selectedCategories } = get();
+		const selectedCategoryNames = selectedCategories.map((cat) => cat.name);
 		return SUGGESTED_TASKS.filter((task) =>
-			availableCategoryNames.includes(task.category),
+			selectedCategoryNames.includes(task.category),
 		);
 	},
 
