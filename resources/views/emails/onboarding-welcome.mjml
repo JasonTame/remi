@@ -51,7 +51,7 @@
                     Welcome to Remi! 🎉
                 </mj-text>
                 <mj-text align="center" font-size="16px" color="#4b5563" line-height="1.6">
-                    We're thrilled you've joined thousands of people who never forget important tasks anymore. Remi is here to help you stay on top of
+                    Remi is here to help you stay on top of
                     life's irregular but important commitments – from dental checkups to catching up with old friends.
                 </mj-text>
             </mj-column>
@@ -87,7 +87,7 @@
                             </div>
                         </td>
                         <td style="padding-left: 16px">
-                            <h3 style="font-size: 18px; font-weight: bold; color: #1f2937; margin: 0 0 8px 0">Add your first tasks</h3>
+                            <h3 style="font-size: 18px; font-weight: bold; color: #1f2937; margin: 0 0 8px 0">Add some initial tasks</h3>
                             <p style="font-size: 14px; color: #4b5563; line-height: 1.5; margin: 0 0 8px 0">
                                 Start by adding 3-5 recurring tasks using natural language. Try phrases like:
                             </p>
@@ -178,14 +178,14 @@
         <mj-section background-color="#ffffff" border-radius="12px" padding="32px" >
             <mj-column>
                 <mj-button
-                    href="https://remi.app/dashboard"
+                    href="{{ config('app.url') }}/dashboard"
                     background-color="#607D8B"
                     color="#ffffff"
                     font-weight="600"
                     border-radius="8px"
                     padding="14px 28px"
                 >
-                    Add Your First Task
+                    Get Started
                 </mj-button>
                 <mj-text align="center" font-size="14px" color="#6b7280">
                     It takes less than 30 seconds to add a task and start building better habits.
