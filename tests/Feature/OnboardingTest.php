@@ -65,3 +65,12 @@ test('user can complete onboarding', function () {
     $response->assertRedirect();
     expect($user->fresh()->onboarding_completed)->toBeTrue();
 });
+
+test('user can skip onboarding', function () {
+    $user = User::factory()->create(['onboarding_completed' => false]);
+
+    $response = $this->actingAs($user)->post('/onboarding/complete');
+
+    $response->assertRedirect();
+    expect($user->fresh()->onboarding_completed)->toBeTrue();
+});

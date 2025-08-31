@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import type { PropsWithChildren } from "react";
 
 import { AppLogo } from "@/components/app/logo";
@@ -33,6 +33,18 @@ export default function OnboardingLayout({
 }: PropsWithChildren<OnboardingLayoutProps>) {
 	const progressPercentage = (currentStep / totalSteps) * 100;
 
+	const handleSkipOnboarding = () => {
+		router.post(
+			"/onboarding/complete",
+			{},
+			{
+				onSuccess: () => {
+					router.visit("/dashboard");
+				},
+			},
+		);
+	};
+
 	return (
 		<div className="bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-gray-950 dark:to-gray-900 flex flex-col pb-2">
 			{/* Header */}
@@ -44,6 +56,14 @@ export default function OnboardingLayout({
 					</span>
 				</Link>
 				<div className="flex items-center gap-4">
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={handleSkipOnboarding}
+						className="text-muted-foreground hover:text-foreground"
+					>
+						Skip onboarding
+					</Button>
 					<span className="text-sm text-muted-foreground">
 						Step {currentStep} of {totalSteps}
 					</span>
