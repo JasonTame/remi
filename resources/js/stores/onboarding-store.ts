@@ -15,6 +15,7 @@ export interface Task {
 	title: string;
 	frequency: string;
 	category: string;
+	description?: string;
 }
 
 export interface CustomTask extends Task {}
@@ -90,72 +91,96 @@ export const SUGGESTED_TASKS: Task[] = [
 		title: "Schedule dental checkup",
 		frequency: "Every 6 months",
 		category: "Medical & Health",
+		description:
+			"Regular dental cleanings and checkups to maintain oral health, prevent cavities, and catch dental issues early. Most dentists recommend visits every 6 months.",
 	},
 	{
 		id: "eye-exam",
 		title: "Annual eye exam",
 		frequency: "Every year",
 		category: "Medical & Health",
+		description:
+			"Comprehensive eye examination to check vision, screen for eye diseases like glaucoma or macular degeneration, and update prescriptions for glasses or contacts.",
 	},
 	{
 		id: "clean-refrigerator",
 		title: "Clean refrigerator",
 		frequency: "Every 3 months",
 		category: "Home Maintenance",
+		description:
+			"Deep clean refrigerator interior, check expiration dates, wipe down shelves and drawers, and clean coils for optimal efficiency and food safety.",
 	},
 	{
 		id: "deep-clean-kitchen",
 		title: "Deep clean kitchen",
 		frequency: "Every 3 months",
 		category: "Home Maintenance",
+		description:
+			"Thorough kitchen cleaning including oven, stovetop, cabinets, backsplash, and appliances. Goes beyond daily cleaning to maintain hygiene and appliance longevity.",
 	},
 	{
 		id: "call-parents",
 		title: "Call parents",
 		frequency: "Weekly",
 		category: "Personal & Social",
+		description:
+			"Regular check-in calls with parents to maintain family relationships, stay connected, and ensure their wellbeing. Frequency can be adjusted based on family dynamics.",
 	},
 	{
 		id: "plan-vacation",
 		title: "Plan vacation",
 		frequency: "Every 6 months",
 		category: "Personal & Social",
+		description:
+			"Research and plan upcoming vacations or time off to ensure work-life balance, mental health, and quality time with family or friends. Includes booking and itinerary planning.",
 	},
 	{
 		id: "car-maintenance",
 		title: "Car maintenance",
 		frequency: "Every 6 months",
 		category: "Auto",
+		description:
+			"Regular vehicle maintenance including oil changes, tire rotation, fluid checks, and general inspection to ensure safety, reliability, and extend vehicle lifespan.",
 	},
 	{
 		id: "renew-registration",
 		title: "Renew car registration",
 		frequency: "Every year",
 		category: "Auto",
+		description:
+			"Annual vehicle registration renewal with DMV/local authorities. Important for legal compliance and avoiding fines. Timing varies by state and registration date.",
 	},
 	{
 		id: "backup-computer",
 		title: "Backup computer files",
 		frequency: "Monthly",
 		category: "Tech",
+		description:
+			"Regular backup of important files, documents, photos, and data to external drive or cloud storage to prevent data loss from hardware failure or accidents.",
 	},
 	{
 		id: "update-passwords",
 		title: "Update passwords",
 		frequency: "Every 3 months",
 		category: "Tech",
+		description:
+			"Regular password updates for important accounts, especially financial and work-related. Helps maintain security and reduce risk of unauthorized access.",
 	},
 	{
 		id: "review-budget",
 		title: "Review monthly budget",
 		frequency: "Monthly",
 		category: "Administrative & Financial",
+		description:
+			"Monthly review of income, expenses, and spending patterns to stay on track with financial goals, identify areas for improvement, and adjust budget as needed.",
 	},
 	{
 		id: "review-investments",
 		title: "Review investments",
 		frequency: "Quarterly",
 		category: "Administrative & Financial",
+		description:
+			"Quarterly review of investment portfolio performance, rebalancing if needed, and ensuring alignment with long-term financial goals and risk tolerance.",
 	},
 ];
 
@@ -553,6 +578,7 @@ export const useOnboardingStore = create<OnboardingState>((set, get) => ({
 						title: task.title,
 						frequency: task.frequency,
 						category: task.category,
+						description: task.description || "",
 					})),
 				},
 				{
