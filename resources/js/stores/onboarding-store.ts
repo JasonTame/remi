@@ -214,6 +214,7 @@ interface OnboardingState {
 	newTaskTitle: string;
 	newTaskFrequency: string;
 	newTaskCategory: string;
+	newTaskDescription: string;
 
 	// Computed getters
 	getAllCategories: () => Category[];
@@ -239,6 +240,7 @@ interface OnboardingState {
 	setNewTaskTitle: (title: string) => void;
 	setNewTaskFrequency: (frequency: string) => void;
 	setNewTaskCategory: (category: string) => void;
+	setNewTaskDescription: (description: string) => void;
 	addCustomTask: () => void;
 	removeCustomTask: (taskId: string) => void;
 
@@ -270,6 +272,7 @@ export const useOnboardingStore = create<OnboardingState>((set, get) => ({
 	newTaskTitle: "",
 	newTaskFrequency: "",
 	newTaskCategory: "",
+	newTaskDescription: "",
 
 	// Computed getters
 	getAllCategories: () => {
@@ -483,12 +486,15 @@ export const useOnboardingStore = create<OnboardingState>((set, get) => ({
 	setNewTaskTitle: (title) => set({ newTaskTitle: title }),
 	setNewTaskFrequency: (frequency) => set({ newTaskFrequency: frequency }),
 	setNewTaskCategory: (category) => set({ newTaskCategory: category }),
+	setNewTaskDescription: (description) =>
+		set({ newTaskDescription: description }),
 
 	addCustomTask: () => {
 		const {
 			newTaskTitle,
 			newTaskFrequency,
 			newTaskCategory,
+			newTaskDescription,
 			customTasks,
 			selectedTaskIds,
 			getAllTasks,
@@ -504,6 +510,7 @@ export const useOnboardingStore = create<OnboardingState>((set, get) => ({
 				title: newTaskTitle.trim(),
 				frequency: newTaskFrequency.trim(),
 				category: newTaskCategory,
+				description: newTaskDescription.trim() || undefined,
 			};
 
 			const newCustomTasks = [...customTasks, newTask];
@@ -515,6 +522,7 @@ export const useOnboardingStore = create<OnboardingState>((set, get) => ({
 				newTaskTitle: "",
 				newTaskFrequency: "",
 				newTaskCategory: "",
+				newTaskDescription: "",
 			});
 
 			// Update selected tasks
@@ -634,6 +642,7 @@ export const useOnboardingStore = create<OnboardingState>((set, get) => ({
 			newTaskTitle: "",
 			newTaskFrequency: "",
 			newTaskCategory: "",
+			newTaskDescription: "",
 		});
 	},
 }));

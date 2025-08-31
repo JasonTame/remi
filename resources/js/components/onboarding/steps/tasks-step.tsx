@@ -1,6 +1,15 @@
+import { useState } from "react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -8,10 +17,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 import { useOnboardingStore } from "@/stores/onboarding-store";
 
 export default function TasksStep() {
+	const [isCustomTaskModalOpen, setIsCustomTaskModalOpen] = useState(false);
 	const {
 		selectedCategories,
 		selectedTaskIds,
@@ -19,12 +30,14 @@ export default function TasksStep() {
 		newTaskTitle,
 		newTaskFrequency,
 		newTaskCategory,
+		newTaskDescription,
 		getAllTasks,
 		getFilteredSuggestedTasks,
 		toggleTask,
 		setNewTaskTitle,
 		setNewTaskFrequency,
 		setNewTaskCategory,
+		setNewTaskDescription,
 		addCustomTask,
 		removeCustomTask,
 	} = useOnboardingStore();
@@ -44,6 +57,20 @@ export default function TasksStep() {
 	};
 
 	const allTasks = getAllTasks();
+
+	const handleAddCustomTask = () => {
+		addCustomTask();
+		setIsCustomTaskModalOpen(false);
+	};
+
+	const handleCancelCustomTask = () => {
+		setIsCustomTaskModalOpen(false);
+		// Reset form fields
+		setNewTaskTitle("");
+		setNewTaskFrequency("");
+		setNewTaskCategory("");
+		setNewTaskDescription("");
+	};
 
 	return (
 		<div className="space-y-8">
@@ -160,43 +187,10 @@ export default function TasksStep() {
 			{/* Add Custom Task */}
 			<div className="space-y-4">
 				<h3 className="text-lg font-semibold">Add Custom Task</h3>
-				<div className="grid md:grid-cols-3 gap-3">
-					<Input
-						placeholder="e.g., Schedule dental checkup"
-						value={newTaskTitle}
-						onChange={(e) => setNewTaskTitle(e.target.value)}
-					/>
-					<Input
-						placeholder="e.g., Every 6 months"
-						value={newTaskFrequency}
-						onChange={(e) => setNewTaskFrequency(e.target.value)}
-						onKeyDown={(e) => {
-							if (e.key === "Enter") {
-								addCustomTask();
-							}
-						}}
-					/>
-					<Select value={newTaskCategory} onValueChange={setNewTaskCategory}>
-						<SelectTrigger>
-							<SelectValue placeholder="Select category" />
-						</SelectTrigger>
-						<SelectContent>
-							{selectedCategories.map((category) => (
-								<SelectItem key={category.id} value={category.name}>
-									{category.name}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
-				</div>
 				<Button
-					onClick={addCustomTask}
-					disabled={
-						!newTaskTitle.trim() ||
-						!newTaskFrequency.trim() ||
-						!newTaskCategory.trim()
-					}
+					onClick={() => setIsCustomTaskModalOpen(true)}
 					className="w-full flex items-center gap-2"
+					variant="outline"
 				>
 					<svg
 						className="w-4 h-4"
@@ -212,7 +206,7 @@ export default function TasksStep() {
 							d="M12 6v6m0 0v6m0-6h6m-6 0H6"
 						/>
 					</svg>
-					Add Task
+					Add Custom Task
 				</Button>
 
 				{/* Custom Tasks */}
@@ -342,6 +336,108 @@ export default function TasksStep() {
 					</div>
 				</div>
 			</div>
+
+			{/* Custom Task Modal */}
+			<Dialog
+				open={isCustomTaskModalOpen}
+				onOpenChange={setIsCustomTaskModalOpen}
+			>
+				<DialogContent className="sm:max-w-[425px]">
+					<DialogHeader>
+						<DialogTitle>Add Custom Task</DialogTitle>
+					</DialogHeader>
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							handleAddCustomTask();
+						}}
+						className="space-y-4"
+					>
+						<div className="space-y-2">
+							<Label htmlFor="custom-task-title">
+								Task Title <span className="text-red-500">*</span>
+							</Label>
+							<Input
+								id="custom-task-title"
+								value={newTaskTitle}
+								onChange={(e) => setNewTaskTitle(e.target.value)}
+								placeholder="e.g., Schedule dental checkup"
+								required
+							/>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="custom-task-category">
+								Category <span className="text-red-500">*</span>
+							</Label>
+							<Select
+								value={newTaskCategory}
+								onValueChange={setNewTaskCategory}
+							>
+								<SelectTrigger>
+									<SelectValue placeholder="Select a category" />
+								</SelectTrigger>
+								<SelectContent>
+									{selectedCategories.map((category) => (
+										<SelectItem key={category.id} value={category.name}>
+											{category.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="custom-task-frequency">
+								Timing Description <span className="text-red-500">*</span>
+							</Label>
+							<Textarea
+								id="custom-task-frequency"
+								value={newTaskFrequency}
+								onChange={(e) => setNewTaskFrequency(e.target.value)}
+								placeholder="Describe how often this task should be done (e.g., 'Every month', 'Once a year in spring', etc.)"
+								required
+							/>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="custom-task-description">
+								Description (optional)
+							</Label>
+							<Textarea
+								id="custom-task-description"
+								value={newTaskDescription}
+								onChange={(e) => setNewTaskDescription(e.target.value)}
+								placeholder="Describe the task in more detail."
+							/>
+							<p className="text-sm text-muted-foreground">
+								This description helps the AI understand when and how to suggest
+								similar tasks.
+							</p>
+						</div>
+
+						<div className="flex justify-end space-x-2 pt-4">
+							<Button
+								type="button"
+								variant="outline"
+								onClick={handleCancelCustomTask}
+							>
+								Cancel
+							</Button>
+							<Button
+								type="submit"
+								disabled={
+									!newTaskTitle.trim() ||
+									!newTaskFrequency.trim() ||
+									!newTaskCategory.trim()
+								}
+							>
+								Add Task
+							</Button>
+						</div>
+					</form>
+				</DialogContent>
+			</Dialog>
 		</div>
 	);
 }
