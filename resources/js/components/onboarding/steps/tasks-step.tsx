@@ -99,7 +99,9 @@ export default function TasksStep() {
 							d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
 						/>
 					</svg>
-					<h3 className="text-lg font-semibold">Quick Start Suggestions</h3>
+					<h3 className="text-lg font-semibold text-foreground">
+						Quick Start Suggestions
+					</h3>
 				</div>
 
 				<div className="grid md:grid-cols-2 gap-4">
@@ -186,7 +188,9 @@ export default function TasksStep() {
 
 			{/* Add Custom Task */}
 			<div className="space-y-4">
-				<h3 className="text-lg font-semibold">Add Custom Task</h3>
+				<h3 className="text-lg font-semibold text-foreground">
+					Add Custom Task
+				</h3>
 				<Button
 					onClick={() => setIsCustomTaskModalOpen(true)}
 					className="w-full flex items-center gap-2"
@@ -256,7 +260,7 @@ export default function TasksStep() {
 			{/* Your Tasks Summary */}
 			{selectedTaskIds.length > 0 && (
 				<div className="space-y-4">
-					<h3 className="text-lg font-semibold">
+					<h3 className="text-lg font-semibold text-foreground">
 						Your Tasks ({selectedTaskIds.length})
 					</h3>
 					<div className="space-y-3">
@@ -270,7 +274,9 @@ export default function TasksStep() {
 								>
 									<div>
 										<div className="flex items-center gap-2 mb-1">
-											<h4 className="font-medium">{task.title}</h4>
+											<h4 className="font-medium text-foreground">
+												{task.title}
+											</h4>
 											<Badge
 												variant="secondary"
 												className={`text-white text-xs ${getCategoryColor(task.category)}`}
@@ -304,38 +310,6 @@ export default function TasksStep() {
 					</div>
 				</div>
 			)}
-
-			{/* Frequency Examples */}
-			<div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-				<div className="flex items-start gap-3">
-					<svg
-						className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<title>Frequency Examples</title>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-						/>
-					</svg>
-					<div>
-						<h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">
-							Frequency Examples
-						</h4>
-						<ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
-							<li>• "Every 6 months" or "Twice a year"</li>
-							<li>• "Monthly" or "Once a month"</li>
-							<li>• "Every few weeks" or "About monthly"</li>
-							<li>• "Quarterly" or "Every 3 months"</li>
-							<li>• "Weekly" or "Once a week"</li>
-						</ul>
-					</div>
-				</div>
-			</div>
 
 			{/* Custom Task Modal */}
 			<Dialog

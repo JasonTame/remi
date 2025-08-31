@@ -27,7 +27,7 @@ export function AppHeader({
 }: HeaderProps) {
 	return (
 		<header className="flex items-center justify-between border-b bg-white p-4 lg:p-6 dark:bg-gray-900">
-			<h1 className="text-2xl font-bold">{title}</h1>
+			<h1 className="text-2xl font-bold text-foreground">{title}</h1>
 			<div className="flex items-center gap-2">
 				{showAddButton && (
 					<Button onClick={onAddClick} className="gap-1">

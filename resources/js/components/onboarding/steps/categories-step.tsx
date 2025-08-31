@@ -88,7 +88,9 @@ export default function CategoriesStep() {
 							d="M19 11H5m14-7H3a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2z"
 						/>
 					</svg>
-					<h3 className="text-lg font-semibold">Available Categories</h3>
+					<h3 className="text-lg font-semibold text-foreground">
+						Available Categories
+					</h3>
 				</div>
 
 				<div className="grid md:grid-cols-2 gap-4">
@@ -170,7 +172,9 @@ export default function CategoriesStep() {
 
 			{/* Add Custom Category */}
 			<div className="space-y-4">
-				<h3 className="text-lg font-semibold">Add Custom Category</h3>
+				<h3 className="text-lg font-semibold text-foreground">
+					Add Custom Category
+				</h3>
 				<div className="space-y-3">
 					<div>
 						<Label htmlFor="category-name">Category Name</Label>
@@ -198,7 +202,7 @@ export default function CategoriesStep() {
 							<SelectContent>
 								{COLOR_OPTIONS.map((color) => (
 									<SelectItem key={color.value} value={color.value}>
-										<div className="flex items-center gap-2">
+										<div className="flex items-center gap-2 text-foreground">
 											<div
 												className={`w-3 h-3 rounded-full ${getCategoryColor(color.value).split(" ")[0]}`}
 											/>
@@ -277,7 +281,7 @@ export default function CategoriesStep() {
 			{/* Selected Categories Summary */}
 			{selectedCategoryIds.length > 0 && (
 				<div className="space-y-4">
-					<h3 className="text-lg font-semibold">
+					<h3 className="text-lg font-semibold text-foreground">
 						Selected Categories ({selectedCategoryIds.length})
 					</h3>
 					<div className="flex flex-wrap gap-2">
@@ -294,7 +298,9 @@ export default function CategoriesStep() {
 									<div
 										className={`w-3 h-3 rounded-full ${getCategoryColor(category.color).split(" ")[0]}`}
 									/>
-									<span className="text-sm font-medium">{category.name}</span>
+									<span className="text-sm font-medium text-foreground">
+										{category.name}
+									</span>
 								</div>
 							);
 						})}

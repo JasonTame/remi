@@ -71,7 +71,7 @@ export function Calendar({
 				{(isMobile ? mobileWeekdays : weekdays).map((day) => (
 					<div
 						key={day}
-						className="bg-muted-foreground/5 p-2 text-center text-sm font-medium"
+						className="bg-muted-foreground/5 text-foreground p-2 text-center text-sm font-medium"
 					>
 						{day}
 					</div>
@@ -98,7 +98,7 @@ export function Calendar({
 							<div className="flex justify-between">
 								<span
 									className={cn(
-										"text-sm font-medium",
+										"text-sm font-medium text-foreground",
 										isTodayDate &&
 											"bg-primary text-primary-foreground rounded-full h-6 w-6 flex items-center justify-center",
 									)}

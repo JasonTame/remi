@@ -37,7 +37,7 @@ export default function Dashboard({
 			<div className="h-full space-y-8 p-6">
 				<div className="space-y-2">
 					<h2 className="text-muted-foreground text-lg">{weekRange}</h2>
-					<h3 className="text-2xl font-semibold">
+					<h3 className="text-2xl font-semibold text-foreground">
 						Remi suggests these tasks this week:
 					</h3>
 				</div>

@@ -45,7 +45,7 @@ export default function SummaryStep() {
 				</div>
 
 				<div className="space-y-2">
-					<h2 className="text-3xl font-bold">
+					<h2 className="text-3xl font-bold text-foreground">
 						You're All Set! <span className="text-2xl">🎉</span>
 					</h2>
 					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -74,7 +74,7 @@ export default function SummaryStep() {
 								d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
 							/>
 						</svg>
-						<h3 className="text-lg font-semibold">
+						<h3 className="text-lg font-semibold text-foreground">
 							Tasks Added ({selectedTasks.length})
 						</h3>
 					</div>
@@ -127,7 +127,7 @@ export default function SummaryStep() {
 								d="M19 11H5m14-7H3a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2z"
 							/>
 						</svg>
-						<h3 className="text-lg font-semibold">
+						<h3 className="text-lg font-semibold text-foreground">
 							Categories Selected ({selectedCategories.length})
 						</h3>
 					</div>
@@ -142,7 +142,9 @@ export default function SummaryStep() {
 									<div
 										className={`w-4 h-4 rounded-full ${getCategoryColor(category.color).split(" ")[0]}`}
 									/>
-									<span className="font-medium text-sm">{category.name}</span>
+									<span className="font-medium text-sm text-foreground">
+										{category.name}
+									</span>
 								</div>
 							))}
 						</div>
@@ -157,7 +159,7 @@ export default function SummaryStep() {
 
 			{/* What Happens Next */}
 			<div className="space-y-6">
-				<h3 className="text-xl font-semibold text-center">
+				<h3 className="text-xl font-semibold text-center text-foreground">
 					What Happens Next?
 				</h3>
 
@@ -181,7 +183,7 @@ export default function SummaryStep() {
 								</svg>
 							</div>
 						</div>
-						<h4 className="font-semibold">Weekly Emails</h4>
+						<h4 className="font-semibold text-foreground">Weekly Emails</h4>
 						<p className="text-sm text-muted-foreground">
 							Every Monday, you'll get a friendly email with task suggestions
 							for the week
@@ -207,7 +209,7 @@ export default function SummaryStep() {
 								</svg>
 							</div>
 						</div>
-						<h4 className="font-semibold">AI Learning</h4>
+						<h4 className="font-semibold text-foreground">AI Learning</h4>
 						<p className="text-sm text-muted-foreground">
 							As you complete tasks, Remi learns your patterns and improves its
 							suggestions
@@ -233,7 +235,7 @@ export default function SummaryStep() {
 								</svg>
 							</div>
 						</div>
-						<h4 className="font-semibold">Track Progress</h4>
+						<h4 className="font-semibold text-foreground">Track Progress</h4>
 						<p className="text-sm text-muted-foreground">
 							View your completion history and see your habits improve over time
 						</p>
@@ -244,7 +246,7 @@ export default function SummaryStep() {
 			{/* Ready to Start */}
 			<div className="bg-primary/5 border border-primary/20 rounded-xl p-6">
 				<div className="text-center space-y-4">
-					<h4 className="text-lg font-semibold">
+					<h4 className="text-lg font-semibold text-foreground">
 						Ready to start remembering better?
 					</h4>
 					<p className="text-muted-foreground">

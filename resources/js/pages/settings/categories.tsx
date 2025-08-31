@@ -229,7 +229,7 @@ export default function Categories({ categories: initialCategories }: Props) {
 													<SelectContent>
 														{colorOptions.map((color) => (
 															<SelectItem key={color.value} value={color.value}>
-																<div className="flex items-center gap-2">
+																<div className="flex items-center gap-2 text-foreground">
 																	<div
 																		className={`w-3 h-3 rounded-full ${getCategoryColor(color.value).split(" ")[0]}`}
 																	/>
@@ -288,14 +288,14 @@ export default function Categories({ categories: initialCategories }: Props) {
 									onValueChange={(value) => setEditData("color", value)}
 								>
 									<SelectTrigger id="edit-color">
-										<div className="flex items-center gap-2">
+										<div className="flex items-center gap-2 text-foreground">
 											<SelectValue />
 										</div>
 									</SelectTrigger>
 									<SelectContent>
 										{colorOptions.map((color) => (
 											<SelectItem key={color.value} value={color.value}>
-												<div className="flex items-center gap-2">
+												<div className="flex items-center gap-2 text-foreground">
 													<div
 														className={`w-3 h-3 rounded-full ${getCategoryColor(color.value).split(" ")[0]}`}
 													/>

@@ -15,7 +15,7 @@ export default function IntroStep() {
 				</div>
 
 				<div className="space-y-4">
-					<h2 className="text-4xl font-bold">
+					<h2 className="text-4xl font-bold text-foreground">
 						Welcome to
 						<br />
 						<span className="text-primary font-comfortaa">Remi</span>

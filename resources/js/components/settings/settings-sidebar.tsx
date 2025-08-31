@@ -17,7 +17,7 @@ export function SettingsSidebar({ currentPath }: SettingsSidebarProps) {
 	return (
 		<aside className="bg-white dark:bg-gray-900 rounded-lg border shadow-sm">
 			<div className="p-4 border-b">
-				<h2 className="font-semibold">Settings</h2>
+				<h2 className="font-semibold text-foreground">Settings</h2>
 				<p className="text-sm text-muted-foreground">
 					Manage your profile and account settings
 				</p>
@@ -34,7 +34,7 @@ export function SettingsSidebar({ currentPath }: SettingsSidebarProps) {
 										"block px-3 py-2 rounded-md text-sm transition-colors",
 										isActive
 											? "bg-primary text-primary-foreground"
-											: "hover:bg-muted",
+											: "hover:bg-muted text-foreground",
 									)}
 								>
 									{link.label}
