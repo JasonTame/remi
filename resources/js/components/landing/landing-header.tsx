@@ -68,6 +68,7 @@ export function LandingHeader({ auth }: LandingHeaderProps) {
 								</Link>
 							</>
 						)}
+						<ModeToggle />
 					</div>
 
 					{/* Mobile menu button */}
