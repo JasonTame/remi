@@ -75,7 +75,7 @@ export function AddBirthdayDialog({
 		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle className="flex items-center gap-2">
+					<DialogTitle className="flex items-center gap-2 text-foreground">
 						<Calendar className="h-5 w-5" />
 						Add Birthday
 					</DialogTitle>

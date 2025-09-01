@@ -16,7 +16,7 @@ export function CompletedTasksSection({ tasks }: CompletedTasksSectionProps) {
 		<div className="space-y-4">
 			<div className="flex items-center gap-2">
 				<CheckCircle className="h-5 w-5 text-green-600" />
-				<h4 className="text-lg font-medium">Completed Tasks</h4>
+				<h4 className="text-lg font-medium text-foreground">Completed Tasks</h4>
 				<span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
 					{tasks.length}
 				</span>

@@ -65,7 +65,7 @@ export const RecommendedTaskCard = ({ task }: Props) => {
 							</div>
 						)}
 						{isSkipped && (
-							<div className="text-orange-600 text-sm space-y-1">
+							<div className="text-orange-600 dark:text-orange-400 text-sm space-y-1">
 								<div>
 									<X className="mr-1 inline-block h-3 w-3" />
 									Skipped:{" "}
@@ -107,7 +107,7 @@ export const RecommendedTaskCard = ({ task }: Props) => {
 						) : (
 							<Button
 								variant="outline"
-								className="flex-1 text-orange-600 border-orange-200"
+								className="flex-1 text-orange-600 dark:text-white dark:bg-orange-400 border-orange-200"
 								disabled
 							>
 								Skipped
