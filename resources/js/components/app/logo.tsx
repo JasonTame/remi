@@ -19,8 +19,8 @@ export function AppLogo(props: React.SVGProps<SVGSVGElement>) {
 				transform="translate(8.348171-18.355151)"
 				fill="#607d8b"
 				stroke="#607d8b"
-				stroke-width="3"
-				stroke-linecap="round"
+				strokeWidth="3"
+				strokeLinecap="round"
 			/>
 			<circle r="3.5" transform="translate(135 55)" fill="#fff" />
 		</svg>
