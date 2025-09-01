@@ -9,8 +9,9 @@ use App\Models\Category;
 use App\Models\NotificationPreference;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class RegisteredListener
+class RegisteredListener implements ShouldQueue
 {
     /**
      * Create the event listener.

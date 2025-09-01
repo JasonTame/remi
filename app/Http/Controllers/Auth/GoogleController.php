@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
@@ -54,6 +55,8 @@ class GoogleController extends Controller
                 'email_verified_at' => now(),
                 'onboarding_completed' => false,
             ]);
+
+            event(new Registered($newUser));
 
             Auth::login($newUser);
 
