@@ -118,13 +118,8 @@ export default function Notifications({ preferences }: Props) {
 												<SelectValue placeholder="Select day" />
 											</SelectTrigger>
 											<SelectContent>
-												<SelectItem value="sunday">Sunday</SelectItem>
 												<SelectItem value="monday">Monday</SelectItem>
 												<SelectItem value="tuesday">Tuesday</SelectItem>
-												<SelectItem value="wednesday">Wednesday</SelectItem>
-												<SelectItem value="thursday">Thursday</SelectItem>
-												<SelectItem value="friday">Friday</SelectItem>
-												<SelectItem value="saturday">Saturday</SelectItem>
 											</SelectContent>
 										</Select>
 										<InputError message={errors.digest_day} />
@@ -194,13 +189,11 @@ export default function Notifications({ preferences }: Props) {
 												<SelectValue placeholder="Select day" />
 											</SelectTrigger>
 											<SelectContent>
-												<SelectItem value="sunday">Sunday</SelectItem>
-												<SelectItem value="monday">Monday</SelectItem>
-												<SelectItem value="tuesday">Tuesday</SelectItem>
 												<SelectItem value="wednesday">Wednesday</SelectItem>
 												<SelectItem value="thursday">Thursday</SelectItem>
 												<SelectItem value="friday">Friday</SelectItem>
 												<SelectItem value="saturday">Saturday</SelectItem>
+												<SelectItem value="sunday">Sunday</SelectItem>
 											</SelectContent>
 										</Select>
 										<InputError message={errors.reminder_day} />
