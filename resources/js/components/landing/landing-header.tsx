@@ -95,21 +95,21 @@ export function LandingHeader({ auth }: LandingHeaderProps) {
 						<nav className="flex flex-col gap-4">
 							<Link
 								href="#features"
-								className="text-sm font-medium hover:text-primary transition-colors"
+								className="text-sm font-medium text-foreground hover:text-primary transition-colors"
 								onClick={() => setIsMenuOpen(false)}
 							>
 								Features
 							</Link>
 							<Link
 								href="#how-it-works"
-								className="text-sm font-medium hover:text-primary transition-colors"
+								className="text-sm font-medium text-foreground hover:text-primary transition-colors"
 								onClick={() => setIsMenuOpen(false)}
 							>
 								How it works
 							</Link>
 							<Link
 								href="#testimonials"
-								className="text-sm font-medium hover:text-primary transition-colors"
+								className="text-sm font-medium text-foreground hover:text-primary transition-colors"
 								onClick={() => setIsMenuOpen(false)}
 							>
 								Reviews
