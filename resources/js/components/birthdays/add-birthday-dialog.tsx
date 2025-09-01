@@ -35,14 +35,6 @@ const relationshipOptions = [
 	"Other",
 ];
 
-const remindOptions = [
-	{ value: "0", label: "On the day" },
-	{ value: "1", label: "1 day before" },
-	{ value: "3", label: "3 days before" },
-	{ value: "7", label: "1 week before" },
-	{ value: "14", label: "2 weeks before" },
-];
-
 export function AddBirthdayDialog({
 	open,
 	onOpenChange,
