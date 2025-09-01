@@ -7,6 +7,8 @@ use App\Mail\WeeklyRecommendations;
 use App\Models\NotificationPreference;
 use App\Models\User;
 use App\Models\WeeklyRecommendation;
+use App\Notifications\TaskReminderNotification;
+use App\Notifications\WeeklyRecommendationsNotification;
 use Carbon\Carbon;
 use Cron\CronExpression;
 use Illuminate\Support\Facades\Log;
@@ -139,7 +141,10 @@ class NotificationSchedulerService
             // Send the email
             Mail::to($user->email)->send(new WeeklyRecommendations($user, $weeklyRecommendation));
 
-            Log::info("Weekly recommendations email sent to user {$user->id} ({$user->email})");
+            // Send database notification
+            $user->notify(new WeeklyRecommendationsNotification($weeklyRecommendation));
+
+            Log::info("Weekly recommendations email and database notification sent to user {$user->id} ({$user->email})");
         } catch (\Exception $e) {
             Log::error("Failed to send weekly recommendations to user {$user->id}", [
                 'error' => $e->getMessage(),
@@ -181,7 +186,10 @@ class NotificationSchedulerService
             // Send the email
             Mail::to($user->email)->send(new RecommendedTaskReminder($user, $weeklyRecommendation));
 
-            Log::info("Task reminder email sent to user {$user->id} ({$user->email})");
+            // Send database notification
+            $user->notify(new TaskReminderNotification($weeklyRecommendation));
+
+            Log::info("Task reminder email and database notification sent to user {$user->id} ({$user->email})");
         } catch (\Exception $e) {
             Log::error("Failed to send task reminder to user {$user->id}", [
                 'error' => $e->getMessage(),
