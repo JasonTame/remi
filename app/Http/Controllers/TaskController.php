@@ -19,16 +19,23 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Auth::user()->tasks()
+        $user = Auth::user();
+        $tasks = $user->tasks()
             ->with('category')
             ->orderBy('last_completed_at', 'desc')
             ->paginate(10);
 
-        $categories = Auth::user()->categories()->get();
+        $categories = $user->categories()->get();
 
         return Inertia::render('tasks/index', [
             'tasks' => $tasks,
             'categories' => $categories,
+            'taskLimit' => [
+                'current' => $user->getTasksCount(),
+                'limit' => $user->task_limit,
+                'remaining' => $user->getRemainingTasksCount(),
+                'hasReachedLimit' => $user->hasReachedTaskLimit(),
+            ],
         ]);
     }
 

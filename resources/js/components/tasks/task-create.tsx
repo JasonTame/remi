@@ -147,6 +147,12 @@ export function TaskCreate({
 						</p>
 					</div>
 
+					{errors.task_limit && (
+						<div className="rounded-md bg-destructive/15 p-3">
+							<p className="text-sm text-destructive">{errors.task_limit}</p>
+						</div>
+					)}
+
 					<div className="flex justify-end space-x-2 pt-4">
 						<Button type="button" variant="outline" onClick={handleCancel}>
 							Cancel

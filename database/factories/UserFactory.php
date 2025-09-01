@@ -30,6 +30,8 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'avatar' => 'https://robohash.org/'.fake()->uuid(),
+            'task_limit' => 15,
+            'onboarding_completed' => true,
         ];
     }
 

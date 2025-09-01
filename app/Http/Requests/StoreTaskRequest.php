@@ -29,4 +29,16 @@ class StoreTaskRequest extends FormRequest
             'last_completed_at' => ['nullable', 'date'],
         ];
     }
+
+    /**
+     * Configure the validator instance.
+     */
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+            if ($this->user()->hasReachedTaskLimit()) {
+                $validator->errors()->add('task_limit', 'You have reached your task limit of '.$this->user()->task_limit.' tasks. Upgrade to premium to create unlimited tasks.');
+            }
+        });
+    }
 }

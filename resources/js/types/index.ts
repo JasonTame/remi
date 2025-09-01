@@ -79,6 +79,13 @@ export interface User {
 	[key: string]: unknown;
 }
 
+export interface TaskLimit {
+	current: number;
+	limit: number;
+	remaining: number;
+	hasReachedLimit: boolean;
+}
+
 export interface Paginator<T> {
 	data: T[];
 	current_page: number;

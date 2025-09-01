@@ -17,14 +17,15 @@ import {
 
 import { useFlashMessages } from "@/hooks/use-flash-messages";
 
-import type { Category, Paginator, Task } from "@/types";
+import type { Category, Paginator, Task, TaskLimit } from "@/types";
 
 interface PageProps {
 	tasks: Paginator<Task>;
 	categories: Category[];
+	taskLimit: TaskLimit;
 }
 
-export default function Index({ tasks, categories }: PageProps) {
+export default function Index({ tasks, categories, taskLimit }: PageProps) {
 	useFlashMessages();
 
 	const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -45,11 +46,52 @@ export default function Index({ tasks, categories }: PageProps) {
 		<AppLayout
 			title="Tasks"
 			breadcrumbs={[{ title: "Tasks", href: route("tasks.index") }]}
-			showAddButton={true}
+			showAddButton={!taskLimit.hasReachedLimit}
 			onAddClick={() => setIsCreateDialogOpen(true)}
 		>
 			<div className="py-6">
 				<div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+					{/* Task Limit Display */}
+					<div className="mb-6 rounded-lg border bg-card p-4">
+						<div className="flex items-center justify-between">
+							<div>
+								<h3 className="text-sm font-medium">Task Usage</h3>
+								<p className="text-sm text-muted-foreground">
+									{taskLimit.current} of {taskLimit.limit} tasks used
+								</p>
+							</div>
+							<div className="text-right">
+								<div className="text-sm font-medium">
+									{taskLimit.remaining} remaining
+								</div>
+								{taskLimit.hasReachedLimit && (
+									<div className="text-xs text-destructive">
+										Limit reached - upgrade to create more tasks
+									</div>
+								)}
+							</div>
+						</div>
+						<div className="mt-2">
+							<div className="h-2 w-full rounded-full bg-muted">
+								<div
+									className={`h-2 rounded-full transition-all ${
+										taskLimit.hasReachedLimit
+											? "bg-destructive"
+											: taskLimit.current / taskLimit.limit > 0.8
+												? "bg-warning"
+												: "bg-primary"
+									}`}
+									style={{
+										width: `${Math.min(
+											(taskLimit.current / taskLimit.limit) * 100,
+											100,
+										)}%`,
+									}}
+								/>
+							</div>
+						</div>
+					</div>
+
 					<CategoryFilter
 						selectedCategory={selectedCategory}
 						setSelectedCategory={setSelectedCategory}

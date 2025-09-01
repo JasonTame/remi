@@ -26,6 +26,7 @@ class User extends Authenticatable
         'onboarding_completed',
         'google_id',
         'email_verified_at',
+        'task_limit',
     ];
 
     /**
@@ -47,6 +48,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'onboarding_completed' => 'boolean',
+        'task_limit' => 'integer',
     ];
 
     /**
@@ -87,5 +89,29 @@ class User extends Authenticatable
     public function birthdays(): HasMany
     {
         return $this->hasMany(Birthday::class);
+    }
+
+    /**
+     * Check if the user has reached their task limit.
+     */
+    public function hasReachedTaskLimit(): bool
+    {
+        return $this->tasks()->count() >= $this->task_limit;
+    }
+
+    /**
+     * Get the number of remaining tasks the user can create.
+     */
+    public function getRemainingTasksCount(): int
+    {
+        return max(0, $this->task_limit - $this->tasks()->count());
+    }
+
+    /**
+     * Get the current task count for the user.
+     */
+    public function getTasksCount(): int
+    {
+        return $this->tasks()->count();
     }
 }
