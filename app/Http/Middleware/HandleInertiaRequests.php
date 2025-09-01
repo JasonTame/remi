@@ -46,15 +46,35 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'ziggy' => fn (): array => [
+            'ziggy' => fn(): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'flash' => [
-                'message' => fn () => $request->session()->get('message'),
-                'type' => fn () => $request->session()->get('type'),
+                'message' => fn() => $request->session()->get('message'),
+                'type' => fn() => $request->session()->get('type'),
             ],
+            'notifications' => fn() => $request->user() ? [
+                'data' => $request->user()->notifications()
+                    ->orderBy('created_at', 'desc')
+                    ->limit(50)
+                    ->get()
+                    ->map(function ($notification) {
+                        return [
+                            'id' => $notification->id,
+                            'type' => $notification->data['type'] ?? 'unknown',
+                            'title' => $notification->data['title'] ?? '',
+                            'message' => $notification->data['message'] ?? '',
+                            'icon' => $notification->data['icon'] ?? '🔔',
+                            'action_url' => $notification->data['action_url'] ?? null,
+                            'read_at' => $notification->read_at,
+                            'created_at' => $notification->created_at,
+                            'data' => $notification->data,
+                        ];
+                    }),
+                'unread_count' => $request->user()->unreadNotifications()->count(),
+            ] : ['data' => [], 'unread_count' => 0],
         ];
     }
 }
