@@ -18,38 +18,27 @@ it('can view birthdays index page', function () {
 
     $response->assertSuccessful();
     $response->assertInertia(
-        fn ($page) => $page
+        fn($page) => $page
             ->component('birthdays/index')
             ->has('birthdays', 3)
     );
 });
 
-it('can create multiple birthdays', function () {
-    $birthdaysData = [
-        [
-            'name' => 'John Doe',
-            'birthday' => '1990-05-15',
-            'birth_year' => 1990,
-            'relationship' => 'Friend',
-            'notes' => 'Loves chocolate cake',
-        ],
-        [
-            'name' => 'Jane Smith',
-            'birthday' => '1985-12-25',
-            'birth_year' => 1985,
-            'relationship' => 'Family',
-            'notes' => null,
-        ],
+it('can create a birthday', function () {
+    $birthdayData = [
+        'name' => 'John Doe',
+        'birthday' => '1990-05-15',
+        'birth_year' => 1990,
+        'relationship' => 'Friend',
+        'notes' => 'Loves chocolate cake',
     ];
 
-    $response = $this->post(route('birthdays.store'), [
-        'birthdays' => $birthdaysData,
-    ]);
+    $response = $this->post(route('birthdays.store'), $birthdayData);
 
     $response->assertRedirect();
-    $response->assertSessionHas('success', '2 birthdays added successfully!');
+    $response->assertSessionHas('success', 'Birthday added successfully!');
 
-    $this->assertDatabaseCount('birthdays', 2);
+    $this->assertDatabaseCount('birthdays', 1);
 
     $this->assertDatabaseHas('birthdays', [
         'user_id' => $this->user->id,
@@ -59,89 +48,66 @@ it('can create multiple birthdays', function () {
         'relationship' => 'Friend',
         'notes' => 'Loves chocolate cake',
     ]);
-
-    $this->assertDatabaseHas('birthdays', [
-        'user_id' => $this->user->id,
-        'name' => 'Jane Smith',
-        'birthday' => '1985-12-25',
-        'birth_year' => 1985,
-        'relationship' => 'Family',
-        'notes' => null,
-    ]);
 });
 
-it('can create single birthday', function () {
+it('can create birthday with minimal data', function () {
     $response = $this->post(route('birthdays.store'), [
-        'birthdays' => [
-            [
-                'name' => 'John Doe',
-                'birthday' => '1990-05-15',
-                'birth_year' => 1990,
-                'relationship' => 'Friend',
-                'notes' => 'Loves chocolate cake',
-            ],
-        ],
+        'name' => 'Jane Smith',
+        'birthday' => '1985-12-25',
     ]);
 
     $response->assertRedirect();
     $response->assertSessionHas('success', 'Birthday added successfully!');
 
     $this->assertDatabaseCount('birthdays', 1);
+
+    $this->assertDatabaseHas('birthdays', [
+        'user_id' => $this->user->id,
+        'name' => 'Jane Smith',
+        'birthday' => '1985-12-25',
+        'birth_year' => null,
+        'relationship' => null,
+        'notes' => null,
+    ]);
 });
 
 it('validates required fields when creating birthdays', function () {
     $response = $this->post(route('birthdays.store'), [
-        'birthdays' => [
-            [
-                'name' => '',
-                'birthday' => '',
-            ],
-        ],
+        'name' => '',
+        'birthday' => '',
     ]);
 
     $response->assertSessionHasErrors([
-        'birthdays.0.name',
-        'birthdays.0.birthday',
+        'name',
+        'birthday',
     ]);
 });
 
 it('validates birthday date format', function () {
     $response = $this->post(route('birthdays.store'), [
-        'birthdays' => [
-            [
-                'name' => 'John Doe',
-                'birthday' => 'invalid-date',
-            ],
-        ],
+        'name' => 'John Doe',
+        'birthday' => 'invalid-date',
     ]);
 
-    $response->assertSessionHasErrors(['birthdays.0.birthday']);
+    $response->assertSessionHasErrors(['birthday']);
 });
 
 it('validates birth year range', function () {
     $response = $this->post(route('birthdays.store'), [
-        'birthdays' => [
-            [
-                'name' => 'John Doe',
-                'birthday' => '1990-05-15',
-                'birth_year' => 1800, // Too old
-            ],
-        ],
+        'name' => 'John Doe',
+        'birthday' => '1990-05-15',
+        'birth_year' => 1800, // Too old
     ]);
 
-    $response->assertSessionHasErrors(['birthdays.0.birth_year']);
+    $response->assertSessionHasErrors(['birth_year']);
 
     $response = $this->post(route('birthdays.store'), [
-        'birthdays' => [
-            [
-                'name' => 'John Doe',
-                'birthday' => '1990-05-15',
-                'birth_year' => date('Y') + 1, // Future year
-            ],
-        ],
+        'name' => 'John Doe',
+        'birthday' => '1990-05-15',
+        'birth_year' => date('Y') + 1, // Future year
     ]);
 
-    $response->assertSessionHasErrors(['birthdays.0.birth_year']);
+    $response->assertSessionHasErrors(['birth_year']);
 });
 
 it('can update a birthday', function () {
@@ -219,7 +185,7 @@ it('shows upcoming birthdays on dashboard', function () {
 
     $response->assertSuccessful();
     $response->assertInertia(
-        fn ($page) => $page
+        fn($page) => $page
             ->component('dashboard')
             ->has('upcomingBirthdays', 1)
             ->where('upcomingBirthdays.0.name', 'Upcoming Birthday')
