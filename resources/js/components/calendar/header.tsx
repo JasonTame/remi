@@ -10,6 +10,7 @@ interface CalendarHeaderProps {
 	onPreviousMonth: () => void;
 	onNextMonth: () => void;
 	onToday: () => void;
+	restrictFutureNavigation?: boolean;
 }
 
 export function CalendarHeader({
@@ -17,13 +18,16 @@ export function CalendarHeader({
 	onPreviousMonth,
 	onNextMonth,
 	onToday,
+	restrictFutureNavigation = false,
 }: CalendarHeaderProps) {
 	const today = new Date();
 	const currentWeekStart = startOfWeek(today, { weekStartsOn: 1 });
 	const selectedWeekStart = startOfWeek(currentDate, { weekStartsOn: 1 });
 
-	// Disable next button if the current date would go beyond the current week
-	const canGoNext = !isAfter(selectedWeekStart, currentWeekStart);
+	// Disable next button if the current date would go beyond the current week (only for historical views)
+	const canGoNext = restrictFutureNavigation
+		? !isAfter(selectedWeekStart, currentWeekStart)
+		: true;
 
 	return (
 		<div className="flex items-center justify-between mb-6">

@@ -5,6 +5,14 @@ export interface Auth {
 	user: User;
 }
 
+export interface Birthday {
+	name: string;
+	birthday: string;
+	birth_year: string;
+	relationship: string;
+	notes: string;
+}
+
 export interface BreadcrumbItem {
 	title: string;
 	href: string;

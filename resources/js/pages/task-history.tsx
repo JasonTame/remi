@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import { addMonths, isAfter, startOfWeek, subMonths } from "date-fns";
+import { addMonths, subMonths } from "date-fns";
 import { useState } from "react";
 
 import MainLayout from "@/layouts/main-layout";
@@ -37,15 +37,7 @@ export default function TaskHistory({ taskHistory }: TaskHistoryProps) {
 	};
 
 	const handleNextMonth = () => {
-		const nextMonth = addMonths(currentDate, 1);
-		const today = new Date();
-		const currentWeekStart = startOfWeek(today, { weekStartsOn: 1 });
-		const nextMonthWeekStart = startOfWeek(nextMonth, { weekStartsOn: 1 });
-
-		// Only allow navigation if it doesn't go beyond the current week
-		if (!isAfter(nextMonthWeekStart, currentWeekStart)) {
-			setCurrentDate(nextMonth);
-		}
+		setCurrentDate(addMonths(currentDate, 1));
 	};
 
 	const handleToday = () => {
@@ -68,6 +60,7 @@ export default function TaskHistory({ taskHistory }: TaskHistoryProps) {
 						onPreviousMonth={handlePreviousMonth}
 						onNextMonth={handleNextMonth}
 						onToday={handleToday}
+						restrictFutureNavigation={true}
 					/>
 
 					<div className="border border-input rounded shadow">

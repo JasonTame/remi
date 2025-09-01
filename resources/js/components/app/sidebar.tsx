@@ -1,5 +1,5 @@
 import { Link, usePage } from "@inertiajs/react";
-import { Calendar, Clock, Home, Settings } from "lucide-react";
+import { Cake, Calendar, Clock, Home, Settings } from "lucide-react";
 
 import { AppLogo } from "@/components/app/logo";
 import { Button } from "@/components/ui/button";
@@ -43,6 +43,15 @@ export function AppSidebar() {
 					>
 						<Clock className="mr-2 h-4 w-4" />
 						All Tasks
+					</Link>
+				</Button>
+				<Button variant="ghost" className="w-full justify-start" asChild>
+					<Link
+						href="/birthdays"
+						className={isActive("/birthdays") ? isActiveClass : ""}
+					>
+						<Cake className="mr-2 h-4 w-4" />
+						Birthdays
 					</Link>
 				</Button>
 				<Button variant="ghost" className="w-full justify-start" asChild>

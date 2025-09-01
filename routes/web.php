@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OnboardingController;
@@ -43,6 +44,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Task History route
         Route::get('/task-history', [TaskHistoryController::class, 'index'])->name('task-history');
+
+        // Birthday routes
+        Route::resource('birthdays', BirthdayController::class)->except(['create', 'edit', 'show']);
 
         // Notification routes
         Route::patch('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');

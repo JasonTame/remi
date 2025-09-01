@@ -80,4 +80,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(NotificationPreference::class);
     }
+
+    /**
+     * Get all of the user's birthdays.
+     */
+    public function birthdays(): HasMany
+    {
+        return $this->hasMany(Birthday::class);
+    }
 }

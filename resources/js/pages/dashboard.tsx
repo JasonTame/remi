@@ -1,11 +1,14 @@
 import { Head } from "@inertiajs/react";
 import { Ban, Trophy } from "lucide-react";
+import { useState } from "react";
 
 import MainLayout from "@/layouts/main-layout";
 
+import { AddBirthdayDialog } from "@/components/birthdays/add-birthday-dialog";
 import { CompletedTasksSection } from "@/components/dashboard/completed-tasks-section";
 import { PendingTasksSection } from "@/components/dashboard/pending-tasks-section";
 import { SkippedTasksSection } from "@/components/dashboard/skipped-tasks-section";
+import { UpcomingBirthdaysSection } from "@/components/dashboard/upcoming-birthdays-section";
 
 import { getWeekRange } from "@/lib/utils/tasks/get-week-range";
 
@@ -13,12 +16,24 @@ import { useFlashMessages } from "@/hooks/use-flash-messages";
 
 import type { RecommendedTask } from "@/types";
 
+interface Birthday {
+	id: number;
+	name: string;
+	birthday: string;
+	birth_year?: number;
+	relationship?: string;
+	age?: number;
+	next_birthday: string;
+	days_until_birthday: number;
+}
+
 interface PageProps {
 	pendingTasks: RecommendedTask[];
 	completedTasks: RecommendedTask[];
 	skippedTasks: RecommendedTask[];
 	weekStartDate: string;
 	hasRecommendations: boolean;
+	upcomingBirthdays: Birthday[];
 }
 
 export default function Dashboard({
@@ -27,9 +42,11 @@ export default function Dashboard({
 	skippedTasks,
 	weekStartDate,
 	hasRecommendations,
+	upcomingBirthdays,
 }: PageProps) {
 	useFlashMessages();
 	const weekRange = getWeekRange(weekStartDate);
+	const [showAddBirthdays, setShowAddBirthdays] = useState(false);
 
 	return (
 		<MainLayout title="Dashboard">
@@ -70,6 +87,16 @@ export default function Dashboard({
 				<CompletedTasksSection tasks={completedTasks} />
 
 				<SkippedTasksSection tasks={skippedTasks} />
+
+				<UpcomingBirthdaysSection
+					birthdays={upcomingBirthdays}
+					onAddBirthdays={() => setShowAddBirthdays(true)}
+				/>
+
+				<AddBirthdayDialog
+					open={showAddBirthdays}
+					onOpenChange={setShowAddBirthdays}
+				/>
 			</div>
 		</MainLayout>
 	);
