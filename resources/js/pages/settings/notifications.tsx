@@ -24,6 +24,9 @@ type NotificationForm = {
 	weekly_digest: boolean;
 	digest_day: string;
 	digest_time: string;
+	task_reminder: boolean;
+	reminder_day: string;
+	reminder_time: string;
 	push_notifications: boolean;
 };
 
@@ -31,6 +34,9 @@ type NotificationPreferences = {
 	weekly_digest: boolean;
 	digest_day: string;
 	digest_time: string;
+	task_reminder: boolean;
+	reminder_day: string;
+	reminder_time: string;
 	push_notifications: boolean;
 };
 
@@ -47,6 +53,9 @@ export default function Notifications({ preferences }: Props) {
 		weekly_digest: preferences.weekly_digest,
 		digest_day: preferences.digest_day,
 		digest_time: preferences.digest_time,
+		task_reminder: preferences.task_reminder,
+		reminder_day: preferences.reminder_day,
+		reminder_time: preferences.reminder_time,
 		push_notifications: preferences.push_notifications,
 	});
 
@@ -143,6 +152,82 @@ export default function Notifications({ preferences }: Props) {
 											</SelectContent>
 										</Select>
 										<InputError message={errors.digest_time} />
+									</div>
+								</div>
+							</div>
+
+							<div className="space-y-4 pt-6 border-t">
+								<h3 className="text-lg font-semibold">Task reminders</h3>
+
+								<div className="flex items-center justify-between">
+									<div className="space-y-0.5">
+										<Label htmlFor="task-reminder" className="font-medium">
+											Weekly task reminder
+										</Label>
+										<p className="text-sm text-muted-foreground">
+											Get a gentle nudge about incomplete tasks from your weekly
+											recommendations
+										</p>
+									</div>
+									<Switch
+										id="task-reminder"
+										checked={data.task_reminder}
+										onCheckedChange={(checked: boolean) =>
+											setData("task_reminder", checked)
+										}
+									/>
+								</div>
+								<InputError message={errors.task_reminder} />
+							</div>
+
+							<div className="space-y-4 pt-6 border-t">
+								<h3 className="text-lg font-semibold">Task reminder timing</h3>
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+									<div className="space-y-2">
+										<Label htmlFor="reminder-day">Day of week</Label>
+										<Select
+											value={data.reminder_day}
+											onValueChange={(value) => setData("reminder_day", value)}
+										>
+											<SelectTrigger id="reminder-day">
+												<SelectValue placeholder="Select day" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem value="sunday">Sunday</SelectItem>
+												<SelectItem value="monday">Monday</SelectItem>
+												<SelectItem value="tuesday">Tuesday</SelectItem>
+												<SelectItem value="wednesday">Wednesday</SelectItem>
+												<SelectItem value="thursday">Thursday</SelectItem>
+												<SelectItem value="friday">Friday</SelectItem>
+												<SelectItem value="saturday">Saturday</SelectItem>
+											</SelectContent>
+										</Select>
+										<InputError message={errors.reminder_day} />
+									</div>
+
+									<div className="space-y-2">
+										<Label htmlFor="reminder-time">Time of day</Label>
+										<Select
+											value={data.reminder_time}
+											onValueChange={(value) => setData("reminder_time", value)}
+										>
+											<SelectTrigger id="reminder-time">
+												<SelectValue placeholder="Select time" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem value="morning">
+													Morning (8:00 AM)
+												</SelectItem>
+												<SelectItem value="afternoon">
+													Afternoon (1:00 PM)
+												</SelectItem>
+												<SelectItem value="evening">
+													Evening (6:00 PM)
+												</SelectItem>
+											</SelectContent>
+										</Select>
+										<InputError message={errors.reminder_time} />
 									</div>
 								</div>
 							</div>

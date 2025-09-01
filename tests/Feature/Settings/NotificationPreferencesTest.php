@@ -11,12 +11,15 @@ test('authenticated user can view notification preferences page', function () {
 
     $response->assertSuccessful();
     $response->assertInertia(
-        fn ($page) => $page
+        fn($page) => $page
             ->component('settings/notifications')
             ->has('preferences')
             ->where('preferences.weekly_digest', true)
             ->where('preferences.digest_day', 'monday')
             ->where('preferences.digest_time', 'morning')
+            ->where('preferences.task_reminder', true)
+            ->where('preferences.reminder_day', 'friday')
+            ->where('preferences.reminder_time', 'morning')
             ->where('preferences.push_notifications', false)
     );
 });
@@ -34,6 +37,9 @@ test('user can update notification preferences', function () {
         'weekly_digest' => false,
         'digest_day' => 'friday',
         'digest_time' => 'evening',
+        'task_reminder' => true,
+        'reminder_day' => 'wednesday',
+        'reminder_time' => 'morning',
         'push_notifications' => true,
     ]);
 
@@ -57,6 +63,9 @@ test('user can enable weekly digest', function () {
         'weekly_digest' => true,
         'digest_day' => 'wednesday',
         'digest_time' => 'afternoon',
+        'task_reminder' => false,
+        'reminder_day' => 'friday',
+        'reminder_time' => 'morning',
         'push_notifications' => false,
     ]);
 
@@ -85,6 +94,9 @@ test('existing preferences are updated not duplicated', function () {
         'weekly_digest' => false,
         'digest_day' => 'sunday',
         'digest_time' => 'morning',
+        'task_reminder' => true,
+        'reminder_day' => 'tuesday',
+        'reminder_time' => 'evening',
         'push_notifications' => false,
     ]);
 
@@ -107,6 +119,9 @@ test('validation fails with invalid data', function () {
         'weekly_digest' => 'invalid',
         'digest_day' => 'invalid_day',
         'digest_time' => 'invalid_time',
+        'task_reminder' => 'invalid',
+        'reminder_day' => 'invalid_day',
+        'reminder_time' => 'invalid_time',
         'push_notifications' => 'invalid',
     ]);
 
@@ -114,6 +129,9 @@ test('validation fails with invalid data', function () {
         'weekly_digest',
         'digest_day',
         'digest_time',
+        'task_reminder',
+        'reminder_day',
+        'reminder_time',
         'push_notifications',
     ]);
 });
@@ -127,6 +145,9 @@ test('validation fails with missing required fields', function () {
         'weekly_digest',
         'digest_day',
         'digest_time',
+        'task_reminder',
+        'reminder_day',
+        'reminder_time',
         'push_notifications',
     ]);
 });
@@ -149,6 +170,9 @@ test('cron expression is built correctly for different day and time combinations
             'weekly_digest' => true,
             'digest_day' => $day,
             'digest_time' => $time,
+            'task_reminder' => false,
+            'reminder_day' => 'friday',
+            'reminder_time' => 'morning',
             'push_notifications' => false,
         ]);
 

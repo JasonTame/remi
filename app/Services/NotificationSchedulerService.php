@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Mail\RecommendedTaskReminder;
 use App\Mail\WeeklyRecommendations;
 use App\Models\NotificationPreference;
 use App\Models\User;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
  *
  * The service currently supports:
  * - Weekly recommendation emails (WeeklyRecommendations::class)
+ * - Task reminder emails (RecommendedTaskReminder::class)
  *
  * Usage:
  * - Automatically runs via Laravel scheduler every hour
@@ -99,6 +101,10 @@ class NotificationSchedulerService
                 $this->sendWeeklyRecommendations($user);
                 break;
 
+            case RecommendedTaskReminder::class:
+                $this->sendTaskReminder($user);
+                break;
+
             default:
                 Log::warning("Unknown notification class: {$preference->notification_class}");
         }
@@ -136,6 +142,48 @@ class NotificationSchedulerService
             Log::info("Weekly recommendations email sent to user {$user->id} ({$user->email})");
         } catch (\Exception $e) {
             Log::error("Failed to send weekly recommendations to user {$user->id}", [
+                'error' => $e->getMessage(),
+                'user_email' => $user->email,
+            ]);
+        }
+    }
+
+    /**
+     * Send task reminder to a user.
+     */
+    private function sendTaskReminder(User $user): void
+    {
+        try {
+            // Get the most recent weekly recommendation for this user
+            $weeklyRecommendation = WeeklyRecommendation::query()
+                ->where('user_id', $user->id)
+                ->with(['recommendedTasks.task.category'])
+                ->latest('week_start_date')
+                ->first();
+
+            if (! $weeklyRecommendation) {
+                Log::info("No weekly recommendations found for user {$user->id}. Skipping task reminder email.");
+
+                return;
+            }
+
+            // Check if this recommendation has any incomplete tasks
+            $incompleteTasks = $weeklyRecommendation->recommendedTasks()
+                ->where('completed', false)
+                ->count();
+
+            if ($incompleteTasks === 0) {
+                Log::info("All tasks completed for user {$user->id}. Skipping task reminder email.");
+
+                return;
+            }
+
+            // Send the email
+            Mail::to($user->email)->send(new RecommendedTaskReminder($user, $weeklyRecommendation));
+
+            Log::info("Task reminder email sent to user {$user->id} ({$user->email})");
+        } catch (\Exception $e) {
+            Log::error("Failed to send task reminder to user {$user->id}", [
                 'error' => $e->getMessage(),
                 'user_email' => $user->email,
             ]);
