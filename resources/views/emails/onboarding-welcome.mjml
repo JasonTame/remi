@@ -26,9 +26,9 @@
             <mj-column>
                 <mj-text align="center" css-class="logo-container">
                     <div class="logo-background">
-                        <img src="{{ asset('favicon.png') }}" width="48" height="48" alt="Remi logo" style="display: block" />
+                        <img src="https://useremi.app/favicon.png" width="48" height="48" alt="Remi logo" style="display: block; margin: 0 auto;" />
                     </div>
-                    <div style="font-size: 28px; font-weight: bold; color: #607d8b; margin: 0; font-family: Georgia, serif; display: inline-block">
+                    <div style="font-size: 28px; font-weight: bold; color: #607d8b; margin: 0; font-family: Georgia, serif; text-align: center;">
                         Remi
                     </div>
                 </mj-text>
