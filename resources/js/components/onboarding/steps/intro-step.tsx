@@ -56,9 +56,7 @@ export default function IntroStep() {
 								</svg>
 							</div>
 						</div>
-						<h3 className="font-semibold text-gray-900 dark:text-gray-100">
-							AI-Powered
-						</h3>
+						<h3 className="font-semibold text-foreground">AI-Powered</h3>
 						<p className="text-sm text-muted-foreground">
 							Understands "every 6 months" naturally
 						</p>

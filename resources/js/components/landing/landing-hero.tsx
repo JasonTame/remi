@@ -68,7 +68,9 @@ export function LandingHero() {
 								<div className="mb-4 p-3 bg-gradient-to-br from-primary to-primary/80 rounded-full">
 									<Brain className="h-6 w-6 text-white" />
 								</div>
-								<h3 className="font-semibold mb-2">AI-Powered</h3>
+								<h3 className="font-semibold mb-2 text-foreground">
+									AI-Powered
+								</h3>
 								<p className="text-sm text-muted-foreground">
 									Understands "every 6 months" or "about once a quarter"
 								</p>
@@ -80,7 +82,9 @@ export function LandingHero() {
 								<div className="mb-4 p-3 bg-gradient-to-br from-secondary to-secondary/80 rounded-full">
 									<Calendar className="h-6 w-6 text-white" />
 								</div>
-								<h3 className="font-semibold mb-2">Weekly Digest</h3>
+								<h3 className="font-semibold mb-2 text-foreground">
+									Weekly Digest
+								</h3>
 								<p className="text-sm text-muted-foreground">
 									Get gentle suggestions, not rigid deadlines
 								</p>
@@ -92,7 +96,9 @@ export function LandingHero() {
 								<div className="mb-4 p-3 bg-gradient-to-br from-accent to-accent/80 rounded-full">
 									<Clock className="h-6 w-6 text-white" />
 								</div>
-								<h3 className="font-semibold mb-2">Flexible Timing</h3>
+								<h3 className="font-semibold mb-2 text-foreground">
+									Flexible Timing
+								</h3>
 								<p className="text-sm text-muted-foreground">
 									Perfect for irregular but important tasks
 								</p>
