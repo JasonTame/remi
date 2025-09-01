@@ -1,7 +1,8 @@
 import { Link } from "@inertiajs/react";
-import { Bell, PlusCircle } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 
 import { ModeToggle } from "@/components/app/mode-toggle";
+import { NotificationsDropdown } from "@/components/app/notifications-dropdown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -35,10 +36,7 @@ export function AppHeader({
 						Add Task
 					</Button>
 				)}
-				<Button variant="ghost" size="icon" className="relative">
-					<Bell className="h-5 w-5" />
-					<span className="bg-secondary absolute top-1 right-1 h-2 w-2 rounded-full"></span>
-				</Button>
+				<NotificationsDropdown />
 				<ModeToggle />
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
