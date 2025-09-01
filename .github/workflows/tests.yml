@@ -25,11 +25,15 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
-      - name: Setup Node
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: 22
           cache: "pnpm"
+          registry-url: https://npm.pkg.github.com
 
       - name: Install Node Dependencies
         run: pnpm ci
