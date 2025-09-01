@@ -11,7 +11,7 @@ test('authenticated user can view notification preferences page', function () {
 
     $response->assertSuccessful();
     $response->assertInertia(
-        fn($page) => $page
+        fn ($page) => $page
             ->component('settings/notifications')
             ->has('preferences')
             ->where('preferences.weekly_digest', true)

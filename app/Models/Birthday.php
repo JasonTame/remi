@@ -36,7 +36,7 @@ class Birthday extends Model
 
     public function getAgeAttribute(): ?int
     {
-        if (!$this->birth_year) {
+        if (! $this->birth_year) {
             return null;
         }
 

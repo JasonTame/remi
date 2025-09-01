@@ -32,7 +32,7 @@ class BirthdayFactory extends Factory
                 'Child',
                 'Cousin',
                 'Neighbor',
-                'Other'
+                'Other',
             ]),
             'notes' => fake()->boolean(30) ? fake()->sentence() : null,
         ];
@@ -40,21 +40,21 @@ class BirthdayFactory extends Factory
 
     public function withoutBirthYear(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'birth_year' => null,
         ]);
     }
 
     public function family(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'relationship' => fake()->randomElement(['Parent', 'Sibling', 'Child', 'Cousin']),
         ]);
     }
 
     public function friend(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'relationship' => 'Friend',
         ]);
     }

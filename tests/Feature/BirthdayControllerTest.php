@@ -18,7 +18,7 @@ it('can view birthdays index page', function () {
 
     $response->assertSuccessful();
     $response->assertInertia(
-        fn($page) => $page
+        fn ($page) => $page
             ->component('birthdays/index')
             ->has('birthdays', 3)
     );
@@ -144,10 +144,6 @@ it('validates birth year range', function () {
     $response->assertSessionHasErrors(['birthdays.0.birth_year']);
 });
 
-
-
-
-
 it('can update a birthday', function () {
     $birthday = Birthday::factory()->create(['user_id' => $this->user->id]);
 
@@ -223,7 +219,7 @@ it('shows upcoming birthdays on dashboard', function () {
 
     $response->assertSuccessful();
     $response->assertInertia(
-        fn($page) => $page
+        fn ($page) => $page
             ->component('dashboard')
             ->has('upcomingBirthdays', 1)
             ->where('upcomingBirthdays.0.name', 'Upcoming Birthday')

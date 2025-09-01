@@ -5,7 +5,6 @@ namespace App\Notifications;
 use App\Models\WeeklyRecommendation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class TaskReminderNotification extends Notification implements ShouldQueue
@@ -49,7 +48,7 @@ class TaskReminderNotification extends Notification implements ShouldQueue
         if ($incompleteTasks === 0) {
             $message = "🎉 Amazing! You've completed all {$totalTasks} recommended tasks this week!";
         } else {
-            $message = "You have {$incompleteTasks} task" . ($incompleteTasks > 1 ? 's' : '') . " remaining this week ({$completedTasks}/{$totalTasks} completed).";
+            $message = "You have {$incompleteTasks} task".($incompleteTasks > 1 ? 's' : '')." remaining this week ({$completedTasks}/{$totalTasks} completed).";
         }
 
         return [

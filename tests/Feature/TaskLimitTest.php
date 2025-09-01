@@ -86,12 +86,13 @@ test('tasks index page includes task limit information', function () {
     $response = $this->get(route('tasks.index'));
 
     $response->assertSuccessful();
-    $response->assertInertia(fn ($page) => $page
-        ->has('taskLimit')
-        ->where('taskLimit.current', 2)
-        ->where('taskLimit.limit', 3)
-        ->where('taskLimit.remaining', 1)
-        ->where('taskLimit.hasReachedLimit', false)
+    $response->assertInertia(
+        fn ($page) => $page
+            ->has('taskLimit')
+            ->where('taskLimit.current', 2)
+            ->where('taskLimit.limit', 3)
+            ->where('taskLimit.remaining', 1)
+            ->where('taskLimit.hasReachedLimit', false)
     );
 });
 
@@ -101,12 +102,13 @@ test('tasks index shows limit reached when at limit', function () {
     $response = $this->get(route('tasks.index'));
 
     $response->assertSuccessful();
-    $response->assertInertia(fn ($page) => $page
-        ->has('taskLimit')
-        ->where('taskLimit.current', 3)
-        ->where('taskLimit.limit', 3)
-        ->where('taskLimit.remaining', 0)
-        ->where('taskLimit.hasReachedLimit', true)
+    $response->assertInertia(
+        fn ($page) => $page
+            ->has('taskLimit')
+            ->where('taskLimit.current', 3)
+            ->where('taskLimit.limit', 3)
+            ->where('taskLimit.remaining', 0)
+            ->where('taskLimit.hasReachedLimit', true)
     );
 });
 

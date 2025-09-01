@@ -24,7 +24,7 @@ class StoreBirthdayRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'birthday' => ['required', 'date_format:Y-m-d'],
-            'birth_year' => ['nullable', 'integer', 'min:1900', 'max:' . date('Y')],
+            'birth_year' => ['nullable', 'integer', 'min:1900', 'max:'.date('Y')],
             'relationship' => ['nullable', 'string', 'max:255'],
             'notes' => ['nullable', 'string', 'max:1000'],
         ];

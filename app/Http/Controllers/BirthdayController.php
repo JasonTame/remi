@@ -14,6 +14,7 @@ use Inertia\Response;
 class BirthdayController extends Controller
 {
     use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
@@ -64,8 +65,6 @@ class BirthdayController extends Controller
         );
     }
 
-
-
     /**
      * Update the specified resource in storage.
      */
@@ -76,7 +75,7 @@ class BirthdayController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'birthday' => ['required', 'date_format:Y-m-d'],
-            'birth_year' => ['nullable', 'integer', 'min:1900', 'max:' . date('Y')],
+            'birth_year' => ['nullable', 'integer', 'min:1900', 'max:'.date('Y')],
             'relationship' => ['nullable', 'string', 'max:255'],
             'notes' => ['nullable', 'string', 'max:1000'],
         ]);

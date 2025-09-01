@@ -27,7 +27,7 @@ it('displays task reminder preferences on notification settings page', function 
 
     $response->assertOk();
     $response->assertInertia(
-        fn($page) => $page
+        fn ($page) => $page
             ->component('settings/notifications')
             ->has('preferences')
             ->where('preferences.weekly_digest', true)
@@ -46,7 +46,7 @@ it('uses default values when no task reminder preference exists', function () {
 
     $response->assertOk();
     $response->assertInertia(
-        fn($page) => $page
+        fn ($page) => $page
             ->component('settings/notifications')
             ->where('preferences.task_reminder', true)
             ->where('preferences.reminder_day', 'friday')
