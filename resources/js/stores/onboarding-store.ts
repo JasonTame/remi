@@ -305,7 +305,7 @@ export const useOnboardingStore = create<OnboardingState>((set, get) => ({
 			case 4:
 				return isLoading ? "Generating recommendations..." : "Next";
 			case 5:
-				return "Complete Onboarding";
+				return "Get Started";
 			default:
 				return "Next";
 		}

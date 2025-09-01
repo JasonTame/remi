@@ -75,7 +75,7 @@ export default function TasksStep() {
 	return (
 		<div className="space-y-8">
 			<div className="text-center space-y-4">
-				<p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+				<p className="md:text-lg text-muted-foreground max-w-3xl mx-auto">
 					Add 3-5 tasks to get started. Use natural language to describe how
 					often you want to do them – phrases like "every 6 months", "monthly",
 					"about once a quarter", or "twice a year" work perfectly.
@@ -125,9 +125,9 @@ export default function TasksStep() {
 										: "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-primary/50"
 								}`}
 							>
-								<div className="flex items-start justify-between">
+								<div className="flex items-start justify-between text-left">
 									<div className="flex-1">
-										<div className="flex items-center gap-2 mb-2">
+										<div className="flex flex-col md:flex-row md:items-center gap-2 mb-2">
 											<h4 className="font-medium text-gray-900 dark:text-gray-100">
 												{task.title}
 											</h4>

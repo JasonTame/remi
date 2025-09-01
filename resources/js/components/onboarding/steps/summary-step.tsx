@@ -48,7 +48,7 @@ export default function SummaryStep() {
 					<h2 className="text-3xl font-bold text-foreground">
 						You're All Set! <span className="text-2xl">🎉</span>
 					</h2>
-					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+					<p className="md:text-lg text-muted-foreground max-w-2xl mx-auto">
 						Remi is now ready to help you remember your important tasks. Here's
 						what you've set up.
 					</p>
@@ -74,7 +74,7 @@ export default function SummaryStep() {
 								d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
 							/>
 						</svg>
-						<h3 className="text-lg font-semibold text-foreground">
+						<h3 className="md:text-lg font-semibold text-foreground">
 							Tasks Added ({selectedTasks.length})
 						</h3>
 					</div>
@@ -127,7 +127,7 @@ export default function SummaryStep() {
 								d="M19 11H5m14-7H3a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2z"
 							/>
 						</svg>
-						<h3 className="text-lg font-semibold text-foreground">
+						<h3 className="md:text-lg font-semibold text-foreground">
 							Categories Selected ({selectedCategories.length})
 						</h3>
 					</div>
@@ -246,7 +246,7 @@ export default function SummaryStep() {
 			{/* Ready to Start */}
 			<div className="bg-primary/5 border border-primary/20 rounded-xl p-6">
 				<div className="text-center space-y-4">
-					<h4 className="text-lg font-semibold text-foreground">
+					<h4 className="md:text-lg font-semibold text-foreground">
 						Ready to start remembering better?
 					</h4>
 					<p className="text-muted-foreground">
