@@ -65,8 +65,8 @@ class OnboardingWelcome extends Mailable
      */
     private function processTemplateVariables(string $mjml): string
     {
-        // Replace {{ asset('favicon.svg') }} with the actual asset URL
-        $mjml = str_replace("{{ asset('favicon.svg') }}", asset('favicon.svg'), $mjml);
+        // Replace {{ asset('favicon.png') }} with the actual asset URL
+        $mjml = str_replace("{{ asset('favicon.png') }}", asset('favicon.png'), $mjml);
 
         return $mjml;
     }
