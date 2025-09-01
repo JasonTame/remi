@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import { PlusCircle } from "lucide-react";
+import { Menu, PlusCircle } from "lucide-react";
 
 import { ModeToggle } from "@/components/app/mode-toggle";
 import { NotificationsDropdown } from "@/components/app/notifications-dropdown";
@@ -18,6 +18,7 @@ interface HeaderProps {
 	showAddButton?: boolean;
 	avatar?: string;
 	onAddClick?: () => void;
+	onMenuClick?: () => void;
 }
 
 export function AppHeader({
@@ -25,15 +26,29 @@ export function AppHeader({
 	showAddButton = false,
 	onAddClick,
 	avatar,
+	onMenuClick,
 }: HeaderProps) {
 	return (
 		<header className="flex items-center justify-between border-b bg-white p-4 lg:p-6 dark:bg-gray-900">
-			<h1 className="text-2xl font-bold text-foreground">{title}</h1>
+			<div className="flex items-center gap-3">
+				{/* Mobile hamburger menu */}
+				<Button
+					variant="ghost"
+					size="sm"
+					className="lg:hidden"
+					onClick={onMenuClick}
+				>
+					<Menu className="h-5 w-5" />
+				</Button>
+				<h1 className="text-xl lg:text-2xl font-bold text-foreground truncate">
+					{title}
+				</h1>
+			</div>
 			<div className="flex items-center gap-2">
 				{showAddButton && (
-					<Button onClick={onAddClick} className="gap-1">
+					<Button onClick={onAddClick} className="gap-1" size="sm">
 						<PlusCircle className="h-4 w-4" />
-						Add Task
+						<span className="hidden sm:inline">Add Task</span>
 					</Button>
 				)}
 				<NotificationsDropdown />

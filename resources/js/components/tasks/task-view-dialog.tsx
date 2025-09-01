@@ -16,7 +16,7 @@ type Props = {
 export const TaskViewDialog = ({ task, open, onOpenChange }: Props) => {
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="sm:max-w-[550px]">
+			<DialogContent className="sm:max-w-[550px] text-foreground">
 				<DialogHeader>
 					<DialogTitle>Task Details</DialogTitle>
 				</DialogHeader>

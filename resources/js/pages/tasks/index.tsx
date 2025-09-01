@@ -49,13 +49,15 @@ export default function Index({ tasks, categories, taskLimit }: PageProps) {
 			showAddButton={!taskLimit.hasReachedLimit}
 			onAddClick={() => setIsCreateDialogOpen(true)}
 		>
-			<div className="py-6">
+			<div className="p-6">
 				<div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
 					{/* Task Limit Display */}
 					<div className="mb-6 rounded-lg border bg-card p-4">
 						<div className="flex items-center justify-between">
 							<div>
-								<h3 className="text-sm font-medium">Task Usage</h3>
+								<h3 className="text-sm font-medium text-foreground">
+									Task Usage
+								</h3>
 								<p className="text-sm text-muted-foreground">
 									{taskLimit.current} of {taskLimit.limit} tasks used
 								</p>

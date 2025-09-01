@@ -68,8 +68,8 @@ export default function Notifications({ preferences }: Props) {
 	};
 
 	return (
-		<AppLayout title="Notification preferences">
-			<Head title="Notification preferences" />
+		<AppLayout title="Notifications">
+			<Head title="Notifications" />
 
 			<SettingsLayout>
 				<Card>

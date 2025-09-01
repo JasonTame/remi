@@ -21,7 +21,7 @@ const CategoryFilter = ({
 	categories,
 }: CategoryFilterProps) => {
 	return (
-		<div className="mb-4 max-w-md">
+		<div className="mb-4 max-w-md flex flex-col space-y-2">
 			<Label htmlFor="category_filter">Filter by Category</Label>
 			<Select
 				name="category_filter"

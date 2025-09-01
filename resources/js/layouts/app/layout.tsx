@@ -1,5 +1,6 @@
 import { usePage } from "@inertiajs/react";
 import type { PropsWithChildren } from "react";
+import { useState } from "react";
 
 import { AppContent } from "@/components/app/content";
 import { AppHeader } from "@/components/app/header";
@@ -22,16 +23,18 @@ export default function AppLayout({
 	onAddClick,
 }: AppLayoutProps) {
 	const { auth } = usePage<SharedData>().props;
+	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	return (
 		<div className="flex h-screen w-full overflow-hidden">
-			<AppSidebar />
-			<div className="flex flex-1 flex-col">
+			<AppSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+			<div className="flex flex-1 flex-col min-w-0">
 				<AppHeader
 					title={title}
 					showAddButton={showAddButton}
 					onAddClick={onAddClick}
 					avatar={auth.user.avatar}
+					onMenuClick={() => setSidebarOpen(true)}
 				/>
 				<div className="flex-1 overflow-y-auto bg-neutral-50 dark:bg-gray-950">
 					<AppContent>{children}</AppContent>
