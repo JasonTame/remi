@@ -285,30 +285,45 @@ class GenerateTaskRecommendations extends Command
         }
 
         if (! $aiMessage || ! isset($aiMessage['content'])) {
+            $this->info('No AI message found or content missing');
             return [];
         }
 
         $content = $aiMessage['content'];
+        $this->info('AI content: ' . substr($content, 0, 200) . '...');
 
         // First, try to extract JSON from markdown code block
         if (preg_match('/```json\s*(\[.*?\])\s*```/s', $content, $matches)) {
+            $this->info('Found markdown JSON block');
             $jsonString = $matches[1];
             $recommendations = json_decode($jsonString, true);
 
             if (is_array($recommendations)) {
+                $this->info('Successfully decoded markdown JSON: ' . count($recommendations) . ' recommendations');
                 return $recommendations;
+            } else {
+                $this->error('Failed to decode markdown JSON: ' . json_last_error_msg());
             }
         }
 
         // If no markdown code block found, try to extract plain JSON array
         // This pattern handles both single-line and multi-line JSON arrays
         if (preg_match('/(\[.*?\])/s', $content, $matches)) {
+            $this->info('Found plain JSON array');
             $jsonString = $matches[1];
+            $this->info('JSON string: ' . substr($jsonString, 0, 200) . '...');
+
             $recommendations = json_decode($jsonString, true);
 
             if (is_array($recommendations)) {
+                $this->info('Successfully decoded plain JSON: ' . count($recommendations) . ' recommendations');
                 return $recommendations;
+            } else {
+                $this->error('Failed to decode plain JSON: ' . json_last_error_msg());
+                $this->error('JSON string was: ' . $jsonString);
             }
+        } else {
+            $this->error('No JSON array pattern found in content');
         }
 
         return [];
