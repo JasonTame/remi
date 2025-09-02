@@ -115,20 +115,20 @@ class WeeklyRecommendations extends Mailable
 
             $taskHtml .= '<div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 12px; background-color: #ffffff;">';
             $taskHtml .= '<div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">';
-            $taskHtml .= '<h3 style="font-size: 16px; font-weight: 600; color: #1f2937; margin: 0; flex: 1;">' . htmlspecialchars($task->title) . '</h3>';
-            $taskHtml .= '<span style="background-color: #f3f4f6; color: #374151; font-size: 12px; padding: 4px 8px; border-radius: 4px; font-weight: 500; margin-left: 8px;">' . $priorityText . '</span>';
+            $taskHtml .= '<h3 style="font-size: 16px; font-weight: 600; color: #1f2937; margin: 0; flex: 1;">'.htmlspecialchars($task->title).'</h3>';
+            $taskHtml .= '<span style="background-color: #f3f4f6; color: #374151; font-size: 12px; padding: 4px 8px; border-radius: 4px; font-weight: 500; margin-left: 8px;">'.$priorityText.'</span>';
             $taskHtml .= '</div>';
 
             if ($category) {
-                $taskHtml .= '<p style="font-size: 12px; color: #6b7280; margin: 0 0 8px 0;">📂 ' . htmlspecialchars($category->name) . '</p>';
+                $taskHtml .= '<p style="font-size: 12px; color: #6b7280; margin: 0 0 8px 0;">📂 '.htmlspecialchars($category->name).'</p>';
             }
 
             if ($task->timing_description) {
-                $taskHtml .= '<p style="font-size: 13px; color: #4b5563; margin: 0 0 8px 0;"><strong>Timing:</strong> ' . htmlspecialchars($task->timing_description) . '</p>';
+                $taskHtml .= '<p style="font-size: 13px; color: #4b5563; margin: 0 0 8px 0;"><strong>Timing:</strong> '.htmlspecialchars($task->timing_description).'</p>';
             }
 
             if ($recommendedTask->reason) {
-                $taskHtml .= '<p style="font-size: 13px; color: #059669; margin: 0; padding: 8px; background-color: #ecfdf5; border-radius: 4px; border-left: 4px solid #10b981;"><strong>Why now:</strong> ' . htmlspecialchars($recommendedTask->reason) . '</p>';
+                $taskHtml .= '<p style="font-size: 13px; color: #059669; margin: 0; padding: 8px; background-color: #ecfdf5; border-radius: 4px; border-left: 4px solid #10b981;"><strong>Why now:</strong> '.htmlspecialchars($recommendedTask->reason).'</p>';
             }
 
             $taskHtml .= '</div>';
@@ -146,7 +146,7 @@ class WeeklyRecommendations extends Mailable
             1 => 'High Priority',
             2 => 'Medium Priority',
             3 => 'Low Priority',
-            default => 'Priority ' . $priority,
+            default => 'Priority '.$priority,
         };
     }
 

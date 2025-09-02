@@ -6,6 +6,7 @@ import "../css/app.css";
 
 import { PostHogProvider } from "posthog-js/react";
 
+import { PostHogIdentificationWrapper } from "./components/posthog-provider";
 import { initializeTheme } from "./hooks/use-appearance";
 import { initializeFonts } from "./hooks/use-fonts";
 
@@ -30,7 +31,9 @@ createInertiaApp({
 				apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
 				options={posthogOptions}
 			>
-				<App {...props} />
+				<PostHogIdentificationWrapper>
+					<App {...props} />
+				</PostHogIdentificationWrapper>
 			</PostHogProvider>,
 		);
 	},

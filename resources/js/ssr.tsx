@@ -5,6 +5,8 @@ import { PostHogProvider } from "posthog-js/react";
 import ReactDOMServer from "react-dom/server";
 import { route } from "ziggy-js";
 
+import { PostHogIdentificationWrapper } from "./components/posthog-provider";
+
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
 const posthogOptions = {
@@ -38,7 +40,9 @@ createServer((page) =>
 					apiKey={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
 					options={posthogOptions}
 				>
-					<App {...props} />
+					<PostHogIdentificationWrapper>
+						<App {...props} />
+					</PostHogIdentificationWrapper>
 				</PostHogProvider>
 			);
 		},

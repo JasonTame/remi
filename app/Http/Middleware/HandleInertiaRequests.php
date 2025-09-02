@@ -46,6 +46,11 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'posthog' => [
+                'user_id' => $request->user()?->id,
+                'user_email' => $request->user()?->email,
+                'user_name' => $request->user()?->name,
+            ],
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
