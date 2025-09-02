@@ -172,7 +172,7 @@ class GenerateTaskRecommendationsJob implements ShouldQueue
                 return;
             }
 
-            Log::info('GenerateTaskRecommendationsJob: Successfully extracted '.count($recommendations).' recommendations!', [
+            Log::info('GenerateTaskRecommendationsJob: Successfully extracted ' . count($recommendations) . ' recommendations!', [
                 'user_id' => $this->userId,
                 'recommendations_count' => count($recommendations),
             ]);
@@ -357,19 +357,45 @@ class GenerateTaskRecommendationsJob implements ShouldQueue
         }
 
         if (! $aiMessage || ! isset($aiMessage['content'])) {
+            Log::info('GenerateTaskRecommendationsJob: No AI message found or content missing');
             return [];
         }
 
         $content = $aiMessage['content'];
+        Log::info('GenerateTaskRecommendationsJob: AI content: ' . substr($content, 0, 200) . '...');
 
-        // Extract JSON from markdown code block
+        // First, try to extract JSON from markdown code block
         if (preg_match('/```json\s*(\[.*?\])\s*```/s', $content, $matches)) {
+            Log::info('GenerateTaskRecommendationsJob: Found markdown JSON block');
             $jsonString = $matches[1];
             $recommendations = json_decode($jsonString, true);
 
             if (is_array($recommendations)) {
+                Log::info('GenerateTaskRecommendationsJob: Successfully decoded markdown JSON: ' . count($recommendations) . ' recommendations');
                 return $recommendations;
+            } else {
+                Log::error('GenerateTaskRecommendationsJob: Failed to decode markdown JSON: ' . json_last_error_msg());
             }
+        }
+
+        // If no markdown code block found, try to extract plain JSON array
+        // This pattern handles both single-line and multi-line JSON arrays
+        if (preg_match('/(\[.*?\])/s', $content, $matches)) {
+            Log::info('GenerateTaskRecommendationsJob: Found plain JSON array');
+            $jsonString = $matches[1];
+            Log::info('GenerateTaskRecommendationsJob: JSON string: ' . substr($jsonString, 0, 200) . '...');
+
+            $recommendations = json_decode($jsonString, true);
+
+            if (is_array($recommendations)) {
+                Log::info('GenerateTaskRecommendationsJob: Successfully decoded plain JSON: ' . count($recommendations) . ' recommendations');
+                return $recommendations;
+            } else {
+                Log::error('GenerateTaskRecommendationsJob: Failed to decode plain JSON: ' . json_last_error_msg());
+                Log::error('GenerateTaskRecommendationsJob: JSON string was: ' . $jsonString);
+            }
+        } else {
+            Log::error('GenerateTaskRecommendationsJob: No JSON array pattern found in content');
         }
 
         return [];
