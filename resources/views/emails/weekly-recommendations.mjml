@@ -84,7 +84,7 @@
         <mj-section background-color="#ffffff" border-radius="12px" padding="32px">
             <mj-column>
                 <mj-button
-                    href="{{ dashboard_url }}"
+                    href="https://useremi.app/dashboard"
                     background-color="#607D8B"
                     color="#ffffff"
                     font-weight="600"
