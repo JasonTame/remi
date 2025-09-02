@@ -19,7 +19,10 @@ beforeEach(function () {
 it('processes pending notifications correctly', function () {
     Mail::fake();
 
-    // Create a user with a weekly recommendation
+    // Mock the current time to be Monday at 8am first
+    Carbon::setTestNow(Carbon::parse('2024-01-01 08:00:00')); // This is a Monday
+
+    // Create a user with a weekly recommendation for the test week
     $user = User::factory()->create();
     $weeklyRecommendation = WeeklyRecommendation::factory()
         ->for($user)
@@ -37,9 +40,6 @@ it('processes pending notifications correctly', function () {
             'is_enabled' => true,
             'cron_expression' => '0 8 * * 1', // Every Monday at 8am
         ]);
-
-    // Mock the current time to be Monday at 8am
-    Carbon::setTestNow(Carbon::parse('2024-01-01 08:00:00')); // This is a Monday
 
     $this->service->processPendingNotifications();
 
@@ -217,10 +217,13 @@ it('counts pending notifications correctly', function () {
 it('handles notifications due within the previous hour', function () {
     Mail::fake();
 
+    // Set current time to 8:30am (30 minutes after the scheduled time) first
+    Carbon::setTestNow(Carbon::parse('2024-01-01 08:30:00')); // Monday at 8:30am
+
     $user = User::factory()->create();
     $weeklyRecommendation = WeeklyRecommendation::factory()
         ->for($user)
-        ->create();
+        ->create(['week_start_date' => Carbon::now()->startOfWeek()]);
 
     RecommendedTask::factory()
         ->for($weeklyRecommendation)
@@ -234,9 +237,6 @@ it('handles notifications due within the previous hour', function () {
             'is_enabled' => true,
             'cron_expression' => '0 8 * * 1', // Monday at 8am
         ]);
-
-    // Set current time to 8:30am (30 minutes after the scheduled time)
-    Carbon::setTestNow(Carbon::parse('2024-01-01 08:30:00')); // Monday at 8:30am
 
     $this->service->processPendingNotifications();
 

@@ -20,6 +20,7 @@ class WeeklyRecommendation extends Model
         'user_id',
         'week_start_date',
         'generated_at',
+        'email_sent_at',
     ];
 
     /**
@@ -30,6 +31,7 @@ class WeeklyRecommendation extends Model
     protected $casts = [
         'week_start_date' => 'date',
         'generated_at' => 'datetime',
+        'email_sent_at' => 'datetime',
     ];
 
     /**

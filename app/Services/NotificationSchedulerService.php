@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\GenerateTaskRecommendationsJob;
 use App\Mail\RecommendedTaskReminder;
 use App\Mail\WeeklyRecommendations;
 use App\Models\NotificationPreference;
@@ -118,15 +119,39 @@ class NotificationSchedulerService
     private function sendWeeklyRecommendations(User $user): void
     {
         try {
-            // Get the most recent weekly recommendation for this user
+            $currentWeekStart = Carbon::now()->startOfWeek();
+
+            // Get or create weekly recommendation for this week
             $weeklyRecommendation = WeeklyRecommendation::query()
                 ->where('user_id', $user->id)
+                ->where('week_start_date', $currentWeekStart)
                 ->with(['recommendedTasks.task.category'])
-                ->latest('week_start_date')
                 ->first();
 
+            // If no recommendation exists for this week, generate one
             if (! $weeklyRecommendation) {
-                Log::info("No weekly recommendations found for user {$user->id}. Skipping email.");
+                Log::info("No weekly recommendation found for user {$user->id} for week {$currentWeekStart->toDateString()}. Generating new recommendations.");
+
+                // Dispatch job to generate recommendations and wait for it to complete
+                GenerateTaskRecommendationsJob::dispatchSync($user->id);
+
+                // Reload the recommendation after generation
+                $weeklyRecommendation = WeeklyRecommendation::query()
+                    ->where('user_id', $user->id)
+                    ->where('week_start_date', $currentWeekStart)
+                    ->with(['recommendedTasks.task.category'])
+                    ->first();
+
+                if (! $weeklyRecommendation) {
+                    Log::warning("Failed to generate weekly recommendations for user {$user->id}");
+
+                    return;
+                }
+            }
+
+            // Check if email has already been sent for this recommendation
+            if ($weeklyRecommendation->email_sent_at) {
+                Log::info("Email already sent for weekly recommendation {$weeklyRecommendation->id} for user {$user->id}. Skipping.");
 
                 return;
             }
@@ -144,6 +169,9 @@ class NotificationSchedulerService
             // Send database notification
             $user->notify(new WeeklyRecommendationsNotification($weeklyRecommendation));
 
+            // Mark email as sent
+            $weeklyRecommendation->update(['email_sent_at' => Carbon::now()]);
+
             Log::info("Weekly recommendations email and database notification sent to user {$user->id} ({$user->email})");
         } catch (\Exception $e) {
             Log::error("Failed to send weekly recommendations to user {$user->id}", [
@@ -159,15 +187,17 @@ class NotificationSchedulerService
     private function sendTaskReminder(User $user): void
     {
         try {
-            // Get the most recent weekly recommendation for this user
+            $currentWeekStart = Carbon::now()->startOfWeek();
+
+            // Get the weekly recommendation for this week
             $weeklyRecommendation = WeeklyRecommendation::query()
                 ->where('user_id', $user->id)
+                ->where('week_start_date', $currentWeekStart)
                 ->with(['recommendedTasks.task.category'])
-                ->latest('week_start_date')
                 ->first();
 
             if (! $weeklyRecommendation) {
-                Log::info("No weekly recommendations found for user {$user->id}. Skipping task reminder email.");
+                Log::info("No weekly recommendations found for user {$user->id} for current week. Skipping task reminder email.");
 
                 return;
             }
@@ -209,14 +239,56 @@ class NotificationSchedulerService
         $notificationPreferences = NotificationPreference::query()
             ->where('is_enabled', true)
             ->whereNotNull('cron_expression')
+            ->with('user')
             ->get();
 
         foreach ($notificationPreferences as $preference) {
             if ($this->shouldSendNotification($preference, $now)) {
-                $count++;
+                // Check if this notification would actually be sent (not a duplicate)
+                if ($this->wouldActuallySendNotification($preference)) {
+                    $count++;
+                }
             }
         }
 
         return $count;
+    }
+
+    /**
+     * Check if a notification would actually be sent (not skipped due to duplicates).
+     */
+    private function wouldActuallySendNotification(NotificationPreference $preference): bool
+    {
+        $user = $preference->user;
+
+        if (! $user) {
+            return false;
+        }
+
+        // Only handle weekly recommendations for now (can extend for other types)
+        if ($preference->notification_class === WeeklyRecommendations::class) {
+            $currentWeekStart = Carbon::now()->startOfWeek();
+
+            $weeklyRecommendation = WeeklyRecommendation::query()
+                ->where('user_id', $user->id)
+                ->where('week_start_date', $currentWeekStart)
+                ->first();
+
+            // If no recommendation exists for this week, it would be sent (after generating)
+            if (! $weeklyRecommendation) {
+                return true;
+            }
+
+            // If email already sent, would be skipped
+            if ($weeklyRecommendation->email_sent_at) {
+                return false;
+            }
+
+            // If recommendation exists but email not sent, would be sent
+            return true;
+        }
+
+        // For other notification types, assume they would be sent
+        return true;
     }
 }

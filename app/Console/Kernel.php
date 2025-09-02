@@ -2,11 +2,9 @@
 
 namespace App\Console;
 
-use App\Jobs\GenerateTaskRecommendationsJob;
 use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -15,29 +13,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // Generate task recommendations for all users every Monday at 6am GMT
-        $schedule->call(function () {
-            Log::info('Starting weekly task recommendations generation for all users');
-
-            $userCount = 0;
-
-            User::chunk(100, function ($users) use (&$userCount) {
-                foreach ($users as $user) {
-                    GenerateTaskRecommendationsJob::dispatch($user->id);
-                    $userCount++;
-                }
-            });
-
-            Log::info("Queued task recommendation jobs for {$userCount} users");
-        })
-            ->weekly()
-            ->mondays()
-            ->at('06:00')
-            ->timezone('GMT')
-            ->name('generate-weekly-task-recommendations')
-            ->withoutOverlapping();
-
         // Process scheduled notifications every hour
+        // This will now handle both generating recommendations AND sending notifications
+        // based on each user's individual notification preferences
         $schedule->command('notifications:process-scheduled')
             ->hourly()
             ->name('process-scheduled-notifications')
