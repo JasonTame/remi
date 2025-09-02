@@ -301,7 +301,8 @@ class GenerateTaskRecommendations extends Command
         }
 
         // If no markdown code block found, try to extract plain JSON array
-        if (preg_match('/(\[[\s\S]*?\])/s', $content, $matches)) {
+        // This pattern handles both single-line and multi-line JSON arrays
+        if (preg_match('/(\[.*?\])/s', $content, $matches)) {
             $jsonString = $matches[1];
             $recommendations = json_decode($jsonString, true);
 
