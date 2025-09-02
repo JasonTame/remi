@@ -129,7 +129,7 @@ class GenerateTaskRecommendations extends Command
                 return 0;
             }
 
-            $this->info('Successfully extracted '.count($recommendations).' recommendations!');
+            $this->info('Successfully extracted ' . count($recommendations) . ' recommendations!');
 
             // Create a new weekly recommendation
             $weeklyRecommendation = WeeklyRecommendation::create([
@@ -142,7 +142,7 @@ class GenerateTaskRecommendations extends Command
             $count = 0;
             foreach ($recommendations as $recommendedTask) {
                 if (! isset($recommendedTask['task_id'], $recommendedTask['priority'], $recommendedTask['reason'])) {
-                    $this->warn('Skipping recommendation with missing required fields: '.json_encode($recommendedTask));
+                    $this->warn('Skipping recommendation with missing required fields: ' . json_encode($recommendedTask));
 
                     continue;
                 }
@@ -174,7 +174,7 @@ class GenerateTaskRecommendations extends Command
                 ]);
             }
         } catch (LangGraphException $e) {
-            $this->error('Error calling LangGraph API: '.$e->getMessage());
+            $this->error('Error calling LangGraph API: ' . $e->getMessage());
             Log::error('GenerateTaskRecommendations API Error', [
                 'error' => $e->getMessage(),
                 'error_type' => $e->getErrorType(),
@@ -185,7 +185,7 @@ class GenerateTaskRecommendations extends Command
 
             return 1;
         } catch (\Exception $e) {
-            $this->error('Unexpected error: '.$e->getMessage());
+            $this->error('Unexpected error: ' . $e->getMessage());
             Log::error('GenerateTaskRecommendations Unexpected Error', [
                 'error' => $e->getMessage(),
                 'user_id' => $userId,
@@ -290,8 +290,18 @@ class GenerateTaskRecommendations extends Command
 
         $content = $aiMessage['content'];
 
-        // Extract JSON from markdown code block
+        // First, try to extract JSON from markdown code block
         if (preg_match('/```json\s*(\[.*?\])\s*```/s', $content, $matches)) {
+            $jsonString = $matches[1];
+            $recommendations = json_decode($jsonString, true);
+
+            if (is_array($recommendations)) {
+                return $recommendations;
+            }
+        }
+
+        // If no markdown code block found, try to extract plain JSON array
+        if (preg_match('/(\[[\s\S]*?\])/s', $content, $matches)) {
             $jsonString = $matches[1];
             $recommendations = json_decode($jsonString, true);
 
