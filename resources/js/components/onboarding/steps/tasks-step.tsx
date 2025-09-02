@@ -223,7 +223,9 @@ export default function TasksStep() {
 							>
 								<div className="flex-1">
 									<div className="flex items-center gap-2 mb-1">
-										<h4 className="font-medium">{task.title}</h4>
+										<h4 className="font-medium text-foreground">
+											{task.title}
+										</h4>
 										<Badge variant="outline">Custom</Badge>
 									</div>
 									<p className="text-sm text-muted-foreground">
