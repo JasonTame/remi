@@ -27,7 +27,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 	return (
 		<AuthLayout
 			title="Forgot password"
-			description="Enter your email to receive a password reset link"
+			subtitle="Enter your email to receive a password reset link"
 		>
 			<Head title="Forgot password" />
 

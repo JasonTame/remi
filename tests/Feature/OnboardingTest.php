@@ -3,7 +3,10 @@
 use App\Models\User;
 
 test('user is redirected to onboarding when not completed', function () {
-    $user = User::factory()->create(['onboarding_completed' => false]);
+    $user = User::factory()->create([
+        'onboarding_completed' => false,
+        'email_verified_at' => now(), // Ensure user is verified to test onboarding flow
+    ]);
 
     $response = $this->actingAs($user)->get('/dashboard');
 
@@ -19,7 +22,10 @@ test('user can access dashboard when onboarding is completed', function () {
 });
 
 test('user can store categories during onboarding', function () {
-    $user = User::factory()->create(['onboarding_completed' => false]);
+    $user = User::factory()->create([
+        'onboarding_completed' => false,
+        'email_verified_at' => now(), // Ensure user is verified to test onboarding flow
+    ]);
 
     $categories = [
         ['id' => 'health', 'name' => 'Health', 'color' => 'blue', 'icon' => ''],
@@ -36,7 +42,10 @@ test('user can store categories during onboarding', function () {
 });
 
 test('user can store tasks during onboarding', function () {
-    $user = User::factory()->create(['onboarding_completed' => false]);
+    $user = User::factory()->create([
+        'onboarding_completed' => false,
+        'email_verified_at' => now(), // Ensure user is verified to test onboarding flow
+    ]);
 
     // Create a category first
     $category = $user->categories()->create([
@@ -58,7 +67,10 @@ test('user can store tasks during onboarding', function () {
 });
 
 test('user can complete onboarding', function () {
-    $user = User::factory()->create(['onboarding_completed' => false]);
+    $user = User::factory()->create([
+        'onboarding_completed' => false,
+        'email_verified_at' => now(), // Ensure user is verified to test onboarding flow
+    ]);
 
     $response = $this->actingAs($user)->post('/onboarding/complete');
 
@@ -67,7 +79,10 @@ test('user can complete onboarding', function () {
 });
 
 test('user can skip onboarding', function () {
-    $user = User::factory()->create(['onboarding_completed' => false]);
+    $user = User::factory()->create([
+        'onboarding_completed' => false,
+        'email_verified_at' => now(), // Ensure user is verified to test onboarding flow
+    ]);
 
     $response = $this->actingAs($user)->post('/onboarding/complete');
 

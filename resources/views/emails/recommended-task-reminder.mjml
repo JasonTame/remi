@@ -145,13 +145,11 @@
                     The Remi Team 🐘
                 </mj-text>
                 <mj-text align="center" font-size="12px" color="#9ca3af">
-                    <a href="https://remi.app" style="color: #607d8b; text-decoration: none; margin: 0 4px">Visit Remi</a>
+                    <a href="https://useremi.app" style="color: #607d8b; text-decoration: none; margin: 0 4px">Visit Remi</a>
                     •
-                    <a href="https://remi.app/help" style="color: #607d8b; text-decoration: none; margin: 0 4px">Help Center</a>
+                    <a href="https://useremi.app" style="color: #607d8b; text-decoration: none; margin: 0 4px">Help Center</a>
                     •
-                    <a href="https://remi.app/settings/notifications" style="color: #607d8b; text-decoration: none; margin: 0 4px"
-                        >Email Preferences</a
-                    >
+                    <a href="https://useremi.app/settings/notifications" style="color: #607d8b; text-decoration: none; margin: 0 4px">Email Preferences</a>
                 </mj-text>
             </mj-column>
         </mj-section>
