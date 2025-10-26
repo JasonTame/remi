@@ -114,8 +114,14 @@ it('notification scheduler sends task reminder for enabled preferences', functio
         'completed' => false,
     ]);
 
-    // Mock the current time to be Friday 8am
-    Carbon::setTestNow(Carbon::parse('Friday 8:00'));
+    // Mock the current time to be Friday 8am (this week)
+    $testTime = Carbon::now()->next(Carbon::FRIDAY)->setTime(8, 0, 0);
+    Carbon::setTestNow($testTime);
+
+    // Update the weekly recommendation to match the current week
+    $weeklyRecommendation->update([
+        'week_start_date' => $testTime->copy()->startOfWeek(),
+    ]);
 
     $service = new NotificationSchedulerService;
     $service->processPendingNotifications();
