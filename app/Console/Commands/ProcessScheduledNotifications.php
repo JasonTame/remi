@@ -37,12 +37,14 @@ class ProcessScheduledNotifications extends Command
         }
 
         try {
+            // For manual testing, we can still process directly
+            // In production, this is handled by ProcessScheduledNotificationsJob
             $notificationService->processPendingNotifications();
             $this->info('Scheduled notifications processed successfully.');
 
             return self::SUCCESS;
         } catch (\Exception $e) {
-            $this->error('Failed to process scheduled notifications: '.$e->getMessage());
+            $this->error('Failed to process scheduled notifications: ' . $e->getMessage());
 
             return self::FAILURE;
         }

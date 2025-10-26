@@ -130,23 +130,15 @@ class NotificationSchedulerService
 
             // If no recommendation exists for this week, generate one
             if (! $weeklyRecommendation) {
-                Log::info("No weekly recommendation found for user {$user->id} for week {$currentWeekStart->toDateString()}. Generating new recommendations.");
+                Log::info("No weekly recommendation found for user {$user->id} for week {$currentWeekStart->toDateString()}. Dispatching job to generate new recommendations.");
 
-                // Dispatch job to generate recommendations and wait for it to complete
-                GenerateTaskRecommendationsJob::dispatchSync($user->id);
+                // Dispatch job to generate recommendations asynchronously
+                // The job will handle sending the email when recommendations are ready
+                GenerateTaskRecommendationsJob::dispatch($user->id);
 
-                // Reload the recommendation after generation
-                $weeklyRecommendation = WeeklyRecommendation::query()
-                    ->where('user_id', $user->id)
-                    ->where('week_start_date', $currentWeekStart)
-                    ->with(['recommendedTasks.task.category'])
-                    ->first();
+                Log::info("Weekly recommendations generation job dispatched for user {$user->id}. Email will be sent when recommendations are ready.");
 
-                if (! $weeklyRecommendation) {
-                    Log::warning("Failed to generate weekly recommendations for user {$user->id}");
-
-                    return;
-                }
+                return;
             }
 
             // Check if email has already been sent for this recommendation

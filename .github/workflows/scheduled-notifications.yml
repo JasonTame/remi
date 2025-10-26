@@ -1,0 +1,50 @@
+name: Scheduled Notifications
+
+on:
+  schedule:
+    # Run every hour at the top of the hour
+    - cron: '0 * * * *'
+  workflow_dispatch:
+    # Allow manual triggering for testing
+
+jobs:
+  trigger-notifications:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Trigger Scheduled Notifications
+        run: |
+          echo "Triggering scheduled notifications at $(date)"
+          
+          response=$(curl -s -w "\n%{http_code}" -X POST \
+            -H "X-Trigger-Token: ${{ secrets.TRIGGER_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            https://useremi.app/api/trigger/scheduled-notifications)
+          
+          # Extract response body and status code
+          http_code=$(echo "$response" | tail -n1)
+          response_body=$(echo "$response" | head -n -1)
+          
+          echo "HTTP Status Code: $http_code"
+          echo "Response Body: $response_body"
+          
+          # Check if the request was successful
+          if [ "$http_code" -eq 200 ]; then
+            echo "✅ Successfully triggered scheduled notifications"
+            echo "Response: $response_body"
+          else
+            echo "❌ Failed to trigger scheduled notifications"
+            echo "HTTP Status: $http_code"
+            echo "Response: $response_body"
+            exit 1
+          fi
+      
+      - name: Log Completion
+        if: success()
+        run: |
+          echo "🎉 Scheduled notifications workflow completed successfully at $(date)"
+      
+      - name: Log Failure
+        if: failure()
+        run: |
+          echo "💥 Scheduled notifications workflow failed at $(date)"
