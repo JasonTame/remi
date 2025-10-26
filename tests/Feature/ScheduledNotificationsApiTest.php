@@ -8,7 +8,7 @@ beforeEach(function () {
 });
 
 it('can trigger scheduled notifications with valid token', function () {
-    config(['app.trigger_token' => 'test-token-123']);
+    config(['schedule.trigger_token' => 'test-token-123']);
 
     $response = $this->postJson('/api/trigger/scheduled-notifications', [], [
         'X-Trigger-Token' => 'test-token-123',
@@ -29,7 +29,7 @@ it('can trigger scheduled notifications with valid token', function () {
 });
 
 it('rejects requests without valid token', function () {
-    config(['app.trigger_token' => 'test-token-123']);
+    config(['schedule.trigger_token' => 'test-token-123']);
 
     $response = $this->postJson('/api/trigger/scheduled-notifications', [], [
         'X-Trigger-Token' => 'wrong-token',
@@ -45,7 +45,7 @@ it('rejects requests without valid token', function () {
 });
 
 it('rejects requests without token header', function () {
-    config(['app.trigger_token' => 'test-token-123']);
+    config(['schedule.trigger_token' => 'test-token-123']);
 
     $response = $this->postJson('/api/trigger/scheduled-notifications');
 
@@ -59,7 +59,7 @@ it('rejects requests without token header', function () {
 });
 
 it('handles job dispatch exceptions gracefully', function () {
-    config(['app.trigger_token' => 'test-token-123']);
+    config(['schedule.trigger_token' => 'test-token-123']);
 
     // Mock Queue to throw an exception
     Queue::shouldReceive('push')
