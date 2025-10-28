@@ -106,7 +106,7 @@ export default function Notifications({ preferences }: Props) {
 
 							<div className="space-y-4 pt-6 border-t">
 								<h3 className="text-lg font-semibold">Weekly digest timing</h3>
-
+								{/* NOTE: If these values change the scheduled notification github workflow needs to be adjusted as well */}
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div className="space-y-2">
 										<Label htmlFor="digest-day">Day of week</Label>

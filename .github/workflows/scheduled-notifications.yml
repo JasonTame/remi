@@ -2,8 +2,18 @@ name: Scheduled Notifications
 
 on:
   schedule:
-    # Run every hour at the top of the hour
-    - cron: '0 * * * *'
+    # Monday 8am UTC
+    - cron: '0 8 * * 1'
+    # Monday 1pm UTC
+    - cron: '0 13 * * 1'
+    # Monday 6pm UTC
+    - cron: '0 18 * * 1'
+    # Tuesday 8am UTC
+    - cron: '0 8 * * 2'
+    # Tuesday 1pm UTC
+    - cron: '0 13 * * 2'
+    # Tuesday 6pm UTC
+    - cron: '0 18 * * 2'
   workflow_dispatch:
     # Allow manual triggering for testing
 
