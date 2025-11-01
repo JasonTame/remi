@@ -33,8 +33,17 @@
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="icon" href="/icon-96.png" sizes="96x96" type="image/png">
+        <link rel="apple-touch-icon" href="/icon-180.png">
+        <link rel="manifest" href="/manifest.json">
+
+        {{-- PWA Meta Tags --}}
+        <meta name="theme-color" content="#607d8b" media="(prefers-color-scheme: light)">
+        <meta name="theme-color" content="#252525" media="(prefers-color-scheme: dark)">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="{{ config('app.name', 'Remi') }}">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

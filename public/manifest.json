@@ -1,0 +1,74 @@
+{
+	"name": "Remi",
+	"short_name": "Remi",
+	"description": "Your personal task management and reminder application",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#607d8b",
+	"orientation": "portrait-primary",
+	"icons": [
+		{
+			"src": "/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/icon-180.png",
+			"sizes": "180x180",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/icon-96.png",
+			"sizes": "96x96",
+			"type": "image/png",
+			"purpose": "any"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "/screenshot-desktop.png",
+			"sizes": "2400x1456",
+			"type": "image/png",
+			"form_factor": "wide",
+			"label": "Remi homepage on desktop"
+		},
+		{
+			"src": "/screenshot-mobile.png",
+			"sizes": "390x844",
+			"type": "image/png",
+			"label": "Remi homepage on mobile"
+		}
+	],
+	"categories": ["productivity", "lifestyle"],
+	"shortcuts": [
+		{
+			"name": "Dashboard",
+			"short_name": "Dashboard",
+			"description": "View your dashboard",
+			"url": "/dashboard",
+			"icons": [
+				{
+					"src": "/icon-96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"short_name": "Tasks",
+			"description": "View your tasks",
+			"url": "/tasks",
+			"icons": [
+				{
+					"src": "/icon-96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			]
+		}
+	]
+}
