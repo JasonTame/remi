@@ -31,8 +31,8 @@ export function LandingCTA() {
 							id="eiMnLj69ETB1"
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 200 200"
-							shape-rendering="geometricPrecision"
-							text-rendering="geometricPrecision"
+							shapeRendering="geometricPrecision"
+							textRendering="geometricPrecision"
 							className="absolute bottom-8 left-12 w-24 h-24 text-white/10"
 						>
 							<title>Remi Logo</title>
