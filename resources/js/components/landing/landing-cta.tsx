@@ -8,7 +8,7 @@ export function LandingCTA() {
 	return (
 		<section className="py-20 relative overflow-hidden">
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-primary/90 to-secondary px-8 py-16 sm:px-16">
+				<div className="relative overflow-hidden rounded-3xl bg-linear-to-r from-primary via-primary/90 to-secondary px-8 py-16 sm:px-16">
 					<div className="absolute inset-0">
 						<div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
 						<div className="absolute bottom-0 left-0 w-48 h-48 bg-secondary/20 rounded-full blur-2xl"></div>

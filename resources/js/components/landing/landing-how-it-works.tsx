@@ -47,7 +47,7 @@ export function LandingHowItWorks() {
 			{/* Background decorative elements */}
 			<div className="absolute inset-0 -z-10">
 				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-linear-to-br from-accent/10 to-secondary/5 rounded-full blur-3xl"></div>
-				<div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tl from-primary/10 to-accent/5 rounded-full blur-3xl"></div>
+				<div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-linear-to-tl from-primary/10 to-accent/5 rounded-full blur-3xl"></div>
 
 				{/* Flowing curves */}
 				<svg
@@ -81,7 +81,7 @@ export function LandingHowItWorks() {
 				<div className="text-center mb-16">
 					<h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl mb-4">
 						How{" "}
-						<span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+						<span className="bg-linear-to-r from-secondary to-accent bg-clip-text text-transparent">
 							Remi works
 						</span>
 					</h2>
@@ -104,7 +104,7 @@ export function LandingHowItWorks() {
 											<step.icon className="h-8 w-8 text-white" />
 										</div>
 									</div>
-									<div className="mb-4 text-sm font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+									<div className="mb-4 text-sm font-semibold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
 										Step {index + 1}
 									</div>
 									<h3 className="text-xl font-semibold mb-3">{step.title}</h3>
@@ -115,7 +115,7 @@ export function LandingHowItWorks() {
 							</Card>
 
 							{index < steps.length - 1 && (
-								<div className="hidden lg:block absolute top-1/2 -right-8 w-8 h-0.5 bg-gradient-to-r from-primary/30 to-secondary/20 transform -translate-y-1/2"></div>
+								<div className="hidden lg:block absolute top-1/2 -right-8 w-8 h-0.5 bg-linear-to-r from-primary/30 to-secondary/20 transform -translate-y-1/2"></div>
 							)}
 						</div>
 					))}

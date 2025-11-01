@@ -74,7 +74,7 @@ export function LandingFeatures() {
 		>
 			<div className="absolute inset-0 -z-10">
 				<div className="absolute top-20 right-10 w-72 h-72 bg-linear-to-br from-secondary/15 to-accent/10 rounded-full blur-3xl"></div>
-				<div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-tr from-primary/15 to-secondary/10 rounded-full blur-3xl"></div>
+				<div className="absolute bottom-20 left-10 w-64 h-64 bg-linear-to-tr from-primary/15 to-secondary/10 rounded-full blur-3xl"></div>
 
 				<svg
 					className="absolute top-1/3 right-1/4 w-40 h-40 text-primary/5"
@@ -94,7 +94,7 @@ export function LandingFeatures() {
 				<div className="text-center mb-16">
 					<h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl mb-4">
 						Everything you need to{" "}
-						<span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+						<span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
 							remember better
 						</span>
 					</h2>

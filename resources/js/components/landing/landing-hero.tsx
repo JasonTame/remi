@@ -10,14 +10,14 @@ export function LandingHero() {
 			<div className="absolute inset-0 z-10">
 				<div className="absolute -top-40 -right-40 w-80 h-80 bg-linear-to-br from-secondary/20 to-secondary/10 rounded-full blur-3xl"></div>
 
-				<div className="absolute top-40 -left-20 w-60 h-60 bg-gradient-to-tr from-primary/20 to-primary/5 rounded-full blur-2xl"></div>
+				<div className="absolute top-40 -left-20 w-60 h-60 bg-linear-to-tr from-primary/20 to-primary/5 rounded-full blur-2xl"></div>
 			</div>
 
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
 				<div className="mx-auto max-w-4xl text-center">
 					<div className="mb-8 flex justify-center">
 						<div className="relative">
-							<div className="absolute inset-0 bg-gradient-to-r from-secondary/30 to-primary/20 rounded-full blur-2xl"></div>
+							<div className="absolute inset-0 bg-linear-to-r from-secondary/30 to-primary/20 rounded-full blur-2xl"></div>
 							<div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-full p-6 border border-white/20">
 								<AppLogo className="h-24 w-24 text-primary" />
 							</div>
@@ -26,7 +26,7 @@ export function LandingHero() {
 
 					<h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-6xl mb-6">
 						<span className="block">Flexible Reminders</span>
-						<span className="block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+						<span className="block bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
 							for Real Life
 						</span>
 					</h1>
@@ -42,7 +42,7 @@ export function LandingHero() {
 						<Button
 							asChild
 							size="lg"
-							className="text-lg px-8 py-3 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg"
+							className="text-lg px-8 py-3 bg-linear-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg"
 						>
 							<Link href="/register">
 								{" "}
