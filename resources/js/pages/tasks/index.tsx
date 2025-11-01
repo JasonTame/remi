@@ -1,4 +1,4 @@
-import { Inertia } from "@inertiajs/inertia";
+import { router } from "@inertiajs/react";
 import { useState } from "react";
 
 import AppLayout from "@/layouts/main-layout";
@@ -38,7 +38,7 @@ export default function Index({ tasks, categories, taskLimit }: PageProps) {
 	// Handle pagination
 	const handlePageChange = (url: string | null) => {
 		if (url) {
-			Inertia.visit(url, { preserveScroll: true, preserveState: true });
+			router.visit(url, { preserveScroll: true, preserveState: true });
 		}
 	};
 
