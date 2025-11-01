@@ -26,7 +26,7 @@ export default function AppLayout({
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	return (
-		<div className="flex h-screen w-full overflow-hidden">
+		<div className="flex h-screen-safe w-full overflow-hidden">
 			<AppSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 			<div className="flex flex-1 flex-col min-w-0">
 				<AppHeader

@@ -60,14 +60,14 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
 				/>
 			)}
 
-			{/* Sidebar */}
-			<div
-				className={`
-					fixed inset-y-0 left-0 z-50 flex h-screen w-64 flex-col border-r bg-white dark:bg-gray-900 flex-shrink-0 transform transition-transform duration-300 ease-in-out
-					lg:relative lg:translate-x-0 lg:z-auto
-					${isOpen ? "translate-x-0" : "-translate-x-full"}
-				`}
-			>
+		{/* Sidebar */}
+		<div
+			className={`
+				fixed inset-y-0 left-0 z-50 flex h-screen-safe w-64 flex-col border-r bg-white dark:bg-gray-900 flex-shrink-0 transform transition-transform duration-300 ease-in-out
+				lg:relative lg:translate-x-0 lg:z-auto
+				${isOpen ? "translate-x-0" : "-translate-x-full"}
+			`}
+		>
 				{/* Mobile close button */}
 				<div className="flex items-center justify-between border-b p-4 lg:justify-start">
 					<Link

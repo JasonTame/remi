@@ -181,6 +181,40 @@
 		@apply font-bold;
 		font-family: var(--font-nunito);
 	}
+
+	/* Safari mobile viewport fix */
+	/* This ensures proper height calculation even with Safari's dynamic toolbar */
+	:root {
+		--app-height: 100vh;
+	}
+
+	@supports (height: 100dvh) {
+		:root {
+			/* Dynamic viewport height - adjusts as Safari toolbar shows/hides */
+			--app-height: 100dvh;
+		}
+	}
+}
+
+/* Mobile-safe screen height class for Safari */
+@layer utilities {
+	.h-screen-safe {
+		height: 100vh;
+	}
+
+	.min-h-screen-safe {
+		min-height: 100vh;
+	}
+
+	@supports (height: 100dvh) {
+		.h-screen-safe {
+			height: 100dvh;
+		}
+
+		.min-h-screen-safe {
+			min-height: 100dvh;
+		}
+	}
 }
 
 /* Custom font styling can be added here if needed */
