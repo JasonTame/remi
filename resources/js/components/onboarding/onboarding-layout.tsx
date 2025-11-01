@@ -46,7 +46,7 @@ export default function OnboardingLayout({
 	};
 
 	return (
-		<div className="bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-gray-950 dark:to-gray-900 flex flex-col pb-2">
+		<div className="bg-linear-to-br from-neutral-50 to-neutral-100 dark:from-gray-950 dark:to-gray-900 flex flex-col pb-2">
 			{/* Header */}
 			<div className="flex items-center justify-between p-6">
 				<Link href="/" className="flex items-center gap-3">

@@ -16,7 +16,7 @@ export default function AuthLayout({
 	subtitle,
 }: PropsWithChildren<AuthLayoutProps>) {
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-gray-950 dark:to-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+		<div className="min-h-screen bg-linear-to-br from-neutral-50 to-neutral-100 dark:from-gray-950 dark:to-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 			<div className="absolute top-4 right-4">
 				<ModeToggle />
 			</div>

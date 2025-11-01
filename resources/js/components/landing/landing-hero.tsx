@@ -8,7 +8,7 @@ export function LandingHero() {
 	return (
 		<section className="relative py-20 overflow-hidden">
 			<div className="absolute inset-0 z-10">
-				<div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full blur-3xl"></div>
+				<div className="absolute -top-40 -right-40 w-80 h-80 bg-linear-to-br from-secondary/20 to-secondary/10 rounded-full blur-3xl"></div>
 
 				<div className="absolute top-40 -left-20 w-60 h-60 bg-gradient-to-tr from-primary/20 to-primary/5 rounded-full blur-2xl"></div>
 			</div>
@@ -63,9 +63,9 @@ export function LandingHero() {
 
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
 						<div className="relative shadow-lg">
-							<div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/5 rounded-2xl blur-xl"></div>
+							<div className="absolute inset-0 bg-linear-to-br from-primary/30 to-primary/5 rounded-2xl blur-xl"></div>
 							<div className="relative bg-white/60 dark:bg-gray-900/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 flex flex-col items-center text-center h-full">
-								<div className="mb-4 p-3 bg-gradient-to-br from-primary to-primary/80 rounded-full">
+								<div className="mb-4 p-3 bg-linear-to-br from-primary to-primary/80 rounded-full">
 									<Brain className="h-6 w-6 text-white" />
 								</div>
 								<h3 className="font-semibold mb-2 text-foreground">
@@ -77,9 +77,9 @@ export function LandingHero() {
 							</div>
 						</div>
 						<div className="relative shadow-lg">
-							<div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-secondary/5 rounded-2xl blur-xl"></div>
+							<div className="absolute inset-0 bg-linear-to-br from-secondary/30 to-secondary/5 rounded-2xl blur-xl"></div>
 							<div className="relative bg-white/60 dark:bg-gray-900/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 flex flex-col items-center text-center h-full">
-								<div className="mb-4 p-3 bg-gradient-to-br from-secondary to-secondary/80 rounded-full">
+								<div className="mb-4 p-3 bg-linear-to-br from-secondary to-secondary/80 rounded-full">
 									<Calendar className="h-6 w-6 text-white" />
 								</div>
 								<h3 className="font-semibold mb-2 text-foreground">
@@ -91,9 +91,9 @@ export function LandingHero() {
 							</div>
 						</div>
 						<div className="relative shadow-lg">
-							<div className="absolute inset-0 bg-gradient-to-br from-accent/50 to-accent/5 rounded-2xl blur-xl"></div>
+							<div className="absolute inset-0 bg-linear-to-br from-accent/50 to-accent/5 rounded-2xl blur-xl"></div>
 							<div className="relative bg-white/60 dark:bg-gray-900/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 flex flex-col items-center text-center h-full">
-								<div className="mb-4 p-3 bg-gradient-to-br from-accent to-accent/80 rounded-full">
+								<div className="mb-4 p-3 bg-linear-to-br from-accent to-accent/80 rounded-full">
 									<Clock className="h-6 w-6 text-white" />
 								</div>
 								<h3 className="font-semibold mb-2 text-foreground">

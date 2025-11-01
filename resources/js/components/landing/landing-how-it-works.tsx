@@ -10,7 +10,7 @@ export function LandingHowItWorks() {
 			title: "Add Your Tasks",
 			description:
 				"Simply describe your recurring tasks in natural language. 'Dental checkup every 6 months' or 'Call mom weekly' - Remi gets it.",
-			color: "bg-gradient-to-br from-blue-500 to-blue-600",
+			color: "bg-linear-to-br from-blue-500 to-blue-600",
 			bgGradient: "from-blue-500/15 to-blue-600/10",
 		},
 		{
@@ -19,7 +19,7 @@ export function LandingHowItWorks() {
 			title: "AI Learns Your Patterns",
 			description:
 				"Remi's AI understands your timing preferences and learns from your completion patterns to make better suggestions.",
-			color: "bg-gradient-to-br from-purple-500 to-purple-600",
+			color: "bg-linear-to-br from-purple-500 to-purple-600",
 			bgGradient: "from-purple-500/15 to-purple-600/10",
 		},
 		{
@@ -28,7 +28,7 @@ export function LandingHowItWorks() {
 			title: "Get Weekly Suggestions",
 			description:
 				"Every week, receive a friendly email with tasks Remi thinks you might want to tackle. No pressure, just gentle reminders.",
-			color: "bg-gradient-to-br from-secondary to-secondary/80",
+			color: "bg-linear-to-br from-secondary to-secondary/80",
 			bgGradient: "from-secondary/15 to-secondary/10",
 		},
 		{
@@ -37,7 +37,7 @@ export function LandingHowItWorks() {
 			title: "Complete & Track",
 			description:
 				"Mark tasks complete when you do them. Remi tracks your patterns and adjusts future suggestions accordingly.",
-			color: "bg-gradient-to-br from-accent to-accent/80",
+			color: "bg-linear-to-br from-accent to-accent/80",
 			bgGradient: "from-accent/15 to-accent/10",
 		},
 	];
@@ -46,7 +46,7 @@ export function LandingHowItWorks() {
 		<section id="how-it-works" className="py-20 relative overflow-hidden">
 			{/* Background decorative elements */}
 			<div className="absolute inset-0 -z-10">
-				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-accent/10 to-secondary/5 rounded-full blur-3xl"></div>
+				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-linear-to-br from-accent/10 to-secondary/5 rounded-full blur-3xl"></div>
 				<div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tl from-primary/10 to-accent/5 rounded-full blur-3xl"></div>
 
 				{/* Flowing curves */}
@@ -94,7 +94,7 @@ export function LandingHowItWorks() {
 					{steps.map((step, index) => (
 						<div key={step.id} className="relative group">
 							<div
-								className={`absolute inset-0 bg-gradient-to-br ${step.bgGradient} rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300`}
+								className={`absolute inset-0 bg-linear-to-br ${step.bgGradient} rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300`}
 							></div>
 
 							<Card className="z-20 relative shadow-lg hover:shadow-xl transition-all duration-300 h-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-white/20 group-hover:scale-105">

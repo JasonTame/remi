@@ -13,7 +13,7 @@ export default function LandingPage() {
 	const { auth } = usePage<SharedData>().props;
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-gray-950 dark:to-gray-900">
+		<div className="min-h-screen bg-linear-to-br from-neutral-50 to-neutral-100 dark:from-gray-950 dark:to-gray-900">
 			<LandingHeader auth={auth} />
 			<main>
 				<LandingHero />

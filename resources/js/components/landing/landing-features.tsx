@@ -70,10 +70,10 @@ export function LandingFeatures() {
 	return (
 		<section
 			id="features"
-			className="py-20 bg-gradient-to-br from-neutral-50/50 to-neutral-100/50 dark:from-gray-950/50 dark:to-gray-900/50 relative overflow-hidden"
+			className="py-20 bg-linear-to-br from-neutral-50/50 to-neutral-100/50 dark:from-gray-950/50 dark:to-gray-900/50 relative overflow-hidden"
 		>
 			<div className="absolute inset-0 -z-10">
-				<div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-secondary/15 to-accent/10 rounded-full blur-3xl"></div>
+				<div className="absolute top-20 right-10 w-72 h-72 bg-linear-to-br from-secondary/15 to-accent/10 rounded-full blur-3xl"></div>
 				<div className="absolute bottom-20 left-10 w-64 h-64 bg-gradient-to-tr from-primary/15 to-secondary/10 rounded-full blur-3xl"></div>
 
 				<svg
@@ -108,12 +108,12 @@ export function LandingFeatures() {
 					{features.map((feature) => (
 						<div key={feature.id} className="relative group">
 							<div
-								className={`absolute inset-0 bg-gradient-to-br ${feature.bgGradient} rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300`}
+								className={`absolute inset-0 bg-linear-to-br ${feature.bgGradient} rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300`}
 							></div>
 							<Card className="relative h-full shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-white/20 group-hover:scale-105">
 								<CardHeader>
 									<div
-										className={`mb-4 p-3 bg-gradient-to-br ${feature.gradient} rounded-full w-fit shadow-lg`}
+										className={`mb-4 p-3 bg-linear-to-br ${feature.gradient} rounded-full w-fit shadow-lg`}
 									>
 										<feature.icon className="h-6 w-6 text-white" />
 									</div>
